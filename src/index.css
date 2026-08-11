@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-[#f8fafc] text-[#1e293b] font-sans antialiased selection:bg-[#2563eb] selection:text-white;
+  }
+}
+
+/* Custom Clean Scrollbar for Light Theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.pulse-dot {
+  animation: pulse-simple 2s infinite;
+}
+
+@keyframes pulse-simple {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
