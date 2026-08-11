@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -39,18 +39,6 @@ jobs:
       - name: Build Web Application
         run: npm run build
 
-      - name: Sync dist to assets and docs folder
-        run: |
-          mkdir -p assets docs
-          cp -r dist/assets/* assets/
-          cp -r dist/* docs/
-
-      - name: Deploy to gh-pages Branch
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-
       - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -59,4 +47,3 @@ jobs:
       - name: Deploy to GitHub Pages Action
         id: deployment
         uses: actions/deploy-pages@v4
-        continue-on-error: true
