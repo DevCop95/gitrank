@@ -13,8 +13,8 @@ export default function Navbar({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 mb-6 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col md:flex-row items-center justify-between gap-3">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 mb-4 sm:mb-6 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-3">
         
         {/* Brand Logo Header */}
         <div className="flex items-center justify-between w-full md:w-auto">
@@ -33,25 +33,26 @@ export default function Navbar({
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-slate-600 hover:text-slate-900 rounded-xl border border-slate-200 bg-slate-50"
+            className="md:hidden min-h-11 min-w-11 p-2 text-slate-600 hover:text-slate-900 rounded-xl border border-slate-200 bg-slate-50"
             aria-label="Toggle Navigation Menu"
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
         {/* Desktop Controls (Search, Sort, Layout Switcher) */}
-        <div className={`w-full md:flex md:flex-1 md:max-w-2xl items-center gap-3 ${mobileMenuOpen ? 'flex flex-col mt-3' : 'hidden md:flex'}`}>
+        <div className={`w-full md:flex md:flex-1 md:max-w-2xl items-center gap-2.5 sm:gap-3 ${mobileMenuOpen ? 'flex flex-col mt-2 pt-3 border-t border-slate-200 md:border-0 md:pt-0 md:mt-0' : 'hidden md:flex'}`}>
           
           {/* Search Input */}
           <div className="relative flex-1 w-full">
-            <Search className="absolute left-3.5 top-2.5 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-slate-400" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search developer by name or username..."
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all placeholder-slate-400 font-medium"
+              className="w-full min-h-11 pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm md:text-xs text-slate-800 focus:outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 transition-all placeholder-slate-400 font-medium"
             />
           </div>
 
@@ -60,7 +61,7 @@ export default function Navbar({
             <select
               value={sortBy}
               onChange={(e) => onSortByChange(e.target.value)}
-              className="w-full md:w-auto bg-slate-50 border border-slate-200 text-xs text-slate-800 rounded-xl px-3.5 py-2 focus:outline-none focus:border-blue-600 font-mono cursor-pointer font-medium"
+              className="w-full md:w-auto min-h-11 bg-slate-50 border border-slate-200 text-sm md:text-xs text-slate-800 rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-blue-600 font-mono cursor-pointer font-medium"
             >
               <option value="rank">Order by Rank (#1, #2, #3...)</option>
               <option value="contributions">Order by Live Contributions</option>
@@ -72,10 +73,10 @@ export default function Navbar({
           </div>
 
           {/* View Switcher Buttons */}
-          <div className="flex items-center justify-center gap-1 bg-slate-100 p-1 border border-slate-200 rounded-xl w-full md:w-auto">
+          <div className="flex items-center justify-center gap-1 bg-slate-100 p-1 border border-slate-200 rounded-xl w-full md:w-auto min-h-11">
             <button
               onClick={() => onViewModeChange('grid')}
-              className={`flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+              className={`flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3 py-2 text-sm md:text-xs font-semibold rounded-lg transition-all ${
                 viewMode === 'grid'
                   ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
                   : 'text-slate-500 hover:text-slate-900'
@@ -87,7 +88,7 @@ export default function Navbar({
 
             <button
               onClick={() => onViewModeChange('table')}
-              className={`flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+              className={`flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3 py-2 text-sm md:text-xs font-semibold rounded-lg transition-all ${
                 viewMode === 'table'
                   ? 'bg-white text-slate-900 shadow-sm border border-slate-200'
                   : 'text-slate-500 hover:text-slate-900'

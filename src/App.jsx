@@ -5,11 +5,12 @@ import CountrySelector from './components/CountrySelector';
 import DeveloperCard from './components/DeveloperCard';
 import LeaderboardTable from './components/LeaderboardTable';
 import DeveloperModal from './components/DeveloperModal';
-import { Trophy, Activity, Search, RefreshCw } from 'lucide-react';
+import { Trophy, Activity, Search, RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function App() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('Colombia');
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState('grid');
@@ -19,6 +20,7 @@ export default function App() {
   const loadData = async () => {
     try {
       setLoading(true);
+      setLoadError(false);
       // Relative path guarantees fetching from ./data/committers.json under /gitrank/
       const res = await fetch('./data/committers.json?t=' + Date.now());
       if (!res.ok) throw new Error('Failed to load committers.json');
@@ -26,6 +28,7 @@ export default function App() {
       setData(json);
     } catch (err) {
       console.error('Error loading data:', err);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -96,13 +99,13 @@ export default function App() {
         />
 
         {/* Header Title Bar */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-600">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 p-3.5 sm:p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
+          <div className="flex items-start gap-3 min-w-0">
+            <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-600 shrink-0">
               <Trophy className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+              <h2 className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug">
                 Official GitHub Leaderboard: <span className="text-blue-600">{selectedCountry}</span>
               </h2>
               <p className="text-xs text-slate-500 font-medium">
@@ -111,7 +114,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono bg-slate-50 px-3.5 py-1.5 rounded-xl border border-slate-200 font-semibold text-slate-700">
+          <div className="self-stretch md:self-auto flex items-center gap-2 text-xs font-mono bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 font-semibold text-slate-700">
             <Activity className="w-3.5 h-3.5 text-emerald-600" />
             <span>Total Developers: <strong className="text-emerald-700 font-extrabold">{sortedDevelopers.length}</strong></span>
           </div>
@@ -126,10 +129,10 @@ export default function App() {
         )}
 
         {/* Profiles Grid / Table */}
-        {!loading && sortedDevelopers.length > 0 && (
+        {!loading && !loadError && sortedDevelopers.length > 0 && (
           <>
             {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                 {sortedDevelopers.map((developer) => (
                   <DeveloperCard
                     key={developer.login}
@@ -148,8 +151,24 @@ export default function App() {
         )}
 
         {/* Empty Search Result */}
-        {!loading && sortedDevelopers.length === 0 && (
-          <div className="bg-white border border-slate-200 rounded-2xl p-10 text-center max-w-md mx-auto shadow-sm">
+        {!loading && loadError && (
+          <div className="bg-white border border-rose-200 rounded-2xl p-6 sm:p-10 text-center max-w-md mx-auto shadow-sm">
+            <AlertCircle className="w-8 h-8 text-rose-500 mx-auto mb-3" />
+            <h3 className="text-sm font-bold text-slate-900 mb-1">Unable to load rankings</h3>
+            <p className="text-xs text-slate-500 mb-4">
+              Check your connection and try loading the data again.
+            </p>
+            <button
+              onClick={loadData}
+              className="min-h-11 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm sm:text-xs font-semibold rounded-xl transition-all shadow-sm"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {!loading && !loadError && sortedDevelopers.length === 0 && (
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-10 text-center max-w-md mx-auto shadow-sm">
             <Search className="w-8 h-8 text-slate-400 mx-auto mb-3 opacity-60" />
             <h3 className="text-sm font-bold text-slate-900 mb-1">No matching developers</h3>
             <p className="text-xs text-slate-500 mb-4">
@@ -157,7 +176,7 @@ export default function App() {
             </p>
             <button
               onClick={() => { setSearchTerm(''); setSelectedCountry('Colombia'); }}
-              className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-all shadow-sm"
+              className="min-h-11 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm sm:text-xs font-semibold rounded-xl transition-all shadow-sm"
             >
               Reset Filters
             </button>

@@ -27,19 +27,19 @@ export default function DeveloperCard({ developer, onOpenModal }) {
   const displayLanguages = languages && languages.length > 0 ? languages : ['OpenSource'];
 
   return (
-    <div className="group relative bg-white border border-slate-200 hover:border-slate-400 rounded-2xl p-5 flex flex-col justify-between h-full transition-all duration-200 shadow-sm hover:shadow-md">
+    <div className="group relative bg-white border border-slate-200 hover:border-slate-400 rounded-2xl p-4 sm:p-5 flex flex-col justify-between h-full transition-all duration-200 shadow-sm hover:shadow-md">
       
       {/* Top Section */}
       <div className="flex flex-col flex-1">
         
         {/* Header Profile Row */}
-        <div className="flex items-start justify-between gap-3 mb-4">
-          <div className="flex items-center gap-3.5 overflow-hidden">
+        <div className="flex items-start justify-between gap-2.5 sm:gap-3 mb-3.5 sm:mb-4">
+          <div className="flex items-center gap-3 overflow-hidden min-w-0">
             <div className="relative shrink-0">
               <img
                 src={avatar_url}
                 alt={login}
-                className="w-13 h-13 rounded-2xl object-cover border border-slate-200 group-hover:border-blue-600 transition-colors shadow-sm"
+                className="w-12 h-12 sm:w-13 sm:h-13 rounded-2xl object-cover border border-slate-200 group-hover:border-blue-600 transition-colors shadow-sm"
                 loading="lazy"
                 onError={(e) => {
                   e.target.onerror = null;
@@ -95,7 +95,7 @@ export default function DeveloperCard({ developer, onOpenModal }) {
         {/* Dual Primary Metrics (Live Contributions & Commits) */}
         <div className="grid grid-cols-2 gap-2.5 mb-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
           <div className="flex flex-col bg-white p-2 rounded-lg border border-emerald-200">
-            <span className="text-[10px] uppercase tracking-wider font-mono text-emerald-700 font-bold flex items-center gap-1">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-wider font-mono text-emerald-700 font-bold flex items-center gap-1">
               <Activity className="w-3 h-3 text-emerald-600" /> Contributions
             </span>
             <strong className="text-base font-mono text-emerald-700 font-extrabold mt-0.5">
@@ -104,7 +104,7 @@ export default function DeveloperCard({ developer, onOpenModal }) {
           </div>
 
           <div className="flex flex-col bg-white p-2 rounded-lg border border-indigo-200">
-            <span className="text-[10px] uppercase tracking-wider font-mono text-indigo-700 font-bold flex items-center gap-1">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-wider font-mono text-indigo-700 font-bold flex items-center gap-1">
               <GitCommit className="w-3 h-3 text-indigo-600" /> Commits
             </span>
             <strong className="text-base font-mono text-indigo-700 font-extrabold mt-0.5">
@@ -160,7 +160,7 @@ export default function DeveloperCard({ developer, onOpenModal }) {
       <div className="flex items-center gap-2 pt-3.5 border-t border-slate-200 mt-auto">
         <button
           onClick={() => onOpenModal(developer)}
-          className="flex-1 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl transition-all text-center shadow-sm"
+          className="flex-1 min-h-11 py-2.5 bg-slate-900 hover:bg-slate-800 text-sm sm:text-xs font-semibold rounded-xl transition-all text-center shadow-sm"
         >
           View Activity
         </button>
@@ -169,7 +169,7 @@ export default function DeveloperCard({ developer, onOpenModal }) {
           href={html_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-xl border border-slate-200 transition-all flex items-center justify-center shadow-sm"
+          className="min-h-11 min-w-11 p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-xl border border-slate-200 transition-all flex items-center justify-center shadow-sm"
           title="Open GitHub Profile"
         >
           <ExternalLink className="w-4 h-4" />

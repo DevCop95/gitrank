@@ -20,18 +20,18 @@ export default function SyncStatusBadge({ lastUpdated }) {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 bg-white border border-slate-200 rounded-2xl text-xs text-slate-600 mb-6 shadow-sm">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-1.5 text-slate-700 font-medium">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 sm:gap-3 p-3 sm:p-3.5 bg-white border border-slate-200 rounded-2xl text-xs text-slate-600 mb-4 sm:mb-6 shadow-sm">
+      <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex items-center gap-1.5 text-slate-700 font-medium min-h-8">
           <Clock className="w-3.5 h-3.5 text-blue-600" />
           <span>Last sync:</span>
           <strong className="text-slate-900 font-mono">{formatDate(lastUpdated)}</strong>
         </div>
       </div>
 
-      <div className="flex items-center gap-2 text-[11px] font-mono text-slate-600 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+      <div className="hidden sm:flex items-center gap-2 max-w-full text-[11px] font-mono text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
         <GitBranch className="w-3.5 h-3.5 text-slate-500" />
-        <span>Workflow `.github/workflows/update_rankings.yml`</span>
+        <span className="truncate">Workflow `.github/workflows/update_rankings.yml`</span>
       </div>
     </div>
   );

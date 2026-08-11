@@ -8,7 +8,7 @@ export default function LeaderboardTable({ developers, onOpenModal }) {
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-xs border-collapse">
+        <table className="min-w-[760px] w-full text-left text-xs border-collapse">
           <thead>
             <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-mono text-[11px] uppercase tracking-wider">
               <th className="py-3.5 px-4 font-semibold text-center w-16">Rank</th>
