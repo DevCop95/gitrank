@@ -10,7 +10,7 @@
 - **[REAL-DATA] Live Profile & Contribution Sync**: Contrasts candidate listings from `committers.top` with exact live contribution graph totals scraped directly from `https://github.com/users/{username}/contributions` and live profile HTML (`github.com/{username}`).
 - **[METRICS] Verified Metrics**: Zero artificial multipliers or mock estimates. Directly extracts real follower counts, public repository numbers, stargazers received, bios, avatars, and primary programming languages.
 - **[GLOBAL-COVERAGE] 73 Countries & Regional Tabs**: Filter developers by country or region (*Worldwide/Global*, *LATAM*, *North America*, *Europe*, *Asia & Oceania*, *Africa*).
-- **[AUTOMATED] 5-Hour Cron Workflow**: Integrated Python multithreaded engine running via **GitHub Actions** (`.github/workflows/update_rankings.yml`) every 5 hours.
+- **[AUTOMATED] Rotating 5-Hour Sync**: GitHub Actions updates an interleaved batch of up to 20 countries every 5 hours, completing all countries in four runs without exhausting API quotas.
 - **[PROFILES] Interactive Profile Modal**: Inspect 52-week contribution heatmaps, primary stack languages, company, location, and verified GitHub profile links.
 - **[LAYOUT] Strict Reading Order**: Clean cards and table views sorted strictly left-to-right (`#1`, `#2`, `#3`...).
 - **[PAGES] GitHub Pages Deploy**: Fully automated CI/CD deployment to GitHub Pages via GitHub Actions (`.github/workflows/deploy_gh_pages.yml`).
@@ -44,7 +44,7 @@ graph LR
     B -->|3. Scrape Profile HTML| D[github.com/username]
     C -->|Updated Contribution Total| E[public/data/committers.json]
     D -->|Real Followers, Repos, Stars, Stack| E
-    E -->|GitHub Actions 5h Cron| F[React + Vite Web App]
+    E -->|Rotating 20-country batches| F[React + Vite Web App]
     F -->|Deploy Pages Action| G[GitHub Pages Live Site]
 ```
 
@@ -97,7 +97,7 @@ Open `http://localhost:3000` in your browser.
 ```bash
 python scripts/build_fast_multithreaded_real_stats.py
 ```
-This updates `public/data/committers.json` with live updated contribution graph counts and profile metrics for all 73 countries.
+This updates the next rotating batch of countries in `public/data/committers.json`. Set `SCRAPE_MODE=full` only when a complete refresh is explicitly required.
 
 ---
 
@@ -107,7 +107,7 @@ This updates `public/data/committers.json` with live updated contribution graph 
 gittop/
 ├── .github/
 │   └── workflows/
-│       ├── update_rankings.yml     # 5-Hour Cron Scraper Workflow
+│       ├── update_rankings.yml     # 5-Hour Rotating Batch Workflow
 │       └── deploy_gh_pages.yml     # Automated GitHub Pages Deployment
 ├── public/
 │   └── data/

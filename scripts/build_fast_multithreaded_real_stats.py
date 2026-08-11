@@ -4,12 +4,67 @@ import re
 import time
 import datetime
 import urllib.request
+import urllib.error
+import urllib.parse
 import ssl
+import http.client
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 
 ctx = ssl.create_default_context()
-ctx.check_hostname = False
-ctx.verify_mode = ssl.CERT_NONE
+GITHUB_API_URL = "https://api.github.com"
+GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
+MAX_TRANSIENT_RETRIES = 3
+
+REPOSITORIES_QUERY = """
+query($login: String!, $cursor: String) {
+  user(login: $login) {
+    repositories(
+      first: 100
+      after: $cursor
+      ownerAffiliations: OWNER
+      privacy: PUBLIC
+      orderBy: {field: UPDATED_AT, direction: DESC}
+    ) {
+      nodes {
+        isFork
+        stargazerCount
+        primaryLanguage { name }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+  rateLimit {
+    remaining
+    resetAt
+  }
+}
+"""
+
+COUNTRY_ROTATION_LANES = (
+    (
+        "United States", "Brazil", "Canada", "Mexico", "Colombia", "Argentina",
+        "Chile", "Peru", "Venezuela", "Ecuador", "Uruguay", "Costa Rica",
+        "Dominican Republic", "Guatemala", "Panama", "Bolivia", "Paraguay",
+        "El Salvador", "Honduras", "Nicaragua", "Cuba",
+    ),
+    (
+        "China", "India", "South Korea", "Philippines", "Japan", "Indonesia",
+        "Australia", "Singapore", "Vietnam", "Taiwan", "Hong Kong", "Pakistan",
+        "Bangladesh", "Malaysia", "Thailand", "Israel", "Turkey", "New Zealand",
+    ),
+    (
+        "United Kingdom", "Germany", "France", "Spain", "Netherlands", "Italy",
+        "Poland", "Sweden", "Switzerland", "Ukraine", "Portugal", "Belgium",
+        "Austria", "Denmark", "Finland", "Norway", "Ireland", "Czech Republic",
+        "Romania", "Hungary", "Greece", "Bulgaria", "Croatia", "Serbia",
+        "Slovakia", "Slovenia", "Estonia", "Latvia", "Lithuania",
+    ),
+    ("Nigeria", "South Africa", "Egypt", "Kenya"),
+)
 
 COMMITTERS_TOP_SLUGS = [
     # Latin America
@@ -118,170 +173,297 @@ def parse_number(val_str):
 
 def fetch_committers_top_list(slug):
     url = f"https://committers.top/{slug}.html"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    try:
-        with urllib.request.urlopen(req, context=ctx, timeout=8) as resp:
-            if resp.status == 200:
+    for attempt in range(3):
+        req = urllib.request.Request(url, headers={"User-Agent": "GitTop-Rankings"})
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
                 html = resp.read().decode('utf-8', errors='ignore')
-                blocks = html.split('<tr id="')
-                parsed = []
-                for b in blocks[1:]:
-                    try:
-                        uname = b.split('"')[0].strip()
-                        if not uname or 'class=' in uname or 'users-list' in uname:
-                            continue
-                        cm_match = re.search(r'<td>(\d+)</td>', b)
-                        cm = int(cm_match.group(1)) if cm_match else 0
-                        
-                        nm_match = re.search(r'<br>\(([^)]+)\)', b)
-                        html_nm = nm_match.group(1).strip() if nm_match else uname
-
-                        parsed.append({"username": uname, "html_name": html_nm, "commits": cm})
-                    except Exception:
+            blocks = html.split('<tr id="')
+            parsed = []
+            for b in blocks[1:]:
+                try:
+                    uname = b.split('"')[0].strip()
+                    if not uname or 'class=' in uname or 'users-list' in uname:
                         continue
+                    cm_match = re.search(r'<td>(\d+)</td>', b)
+                    cm = int(cm_match.group(1)) if cm_match else 0
+
+                    nm_match = re.search(r'<br>\(([^)]+)\)', b)
+                    html_nm = nm_match.group(1).strip() if nm_match else uname
+                    parsed.append({"username": uname, "html_name": html_nm, "commits": cm})
+                except (ValueError, IndexError):
+                    continue
+            if len(parsed) >= 30:
                 return parsed
-    except Exception as e:
-        print(f"Error fetching committers.top/{slug}.html: {e}")
-    return []
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+            if attempt == 2:
+                raise RuntimeError(f"Failed to fetch committers.top/{slug}.html: {exc}") from exc
+        time.sleep(2 ** attempt)
+    raise RuntimeError(f"committers.top/{slug}.html returned fewer than 30 valid profiles")
+
+def github_api_get(path, params=None):
+    token = os.environ.get("GIT_TOKEN")
+    if not token:
+        raise RuntimeError("GIT_TOKEN is required for reliable GitHub metrics")
+
+    url = f"{GITHUB_API_URL}{path}"
+    if params:
+        url += "?" + urllib.parse.urlencode(params)
+    for attempt in range(MAX_TRANSIENT_RETRIES):
+        req = urllib.request.Request(url, headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "GitTop-Rankings"
+        })
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+                body = resp.read()
+                headers = resp.headers
+            return json.loads(body), headers
+        except urllib.error.HTTPError as exc:
+            if exc.code == 403 and exc.headers.get("X-RateLimit-Remaining") == "0":
+                reset_at = int(exc.headers.get("X-RateLimit-Reset", time.time() + 60))
+                reset_time = datetime.datetime.fromtimestamp(
+                    reset_at, tz=datetime.timezone.utc
+                ).isoformat()
+                raise RuntimeError(
+                    "GitHub REST rate limit reached; aborting without waiting for "
+                    f"the reset at {reset_time}"
+                ) from exc
+            if exc.code in (403, 429):
+                raise RuntimeError(
+                    "GitHub REST request throttled; aborting without retrying. "
+                    "Run the workflow after the API quota recovers."
+                ) from exc
+            if exc.code not in (500, 502, 503, 504) or attempt == MAX_TRANSIENT_RETRIES - 1:
+                details = exc.read().decode("utf-8", errors="replace")
+                raise RuntimeError(f"GitHub REST HTTP {exc.code}: {details}") from exc
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            http.client.IncompleteRead,
+            http.client.RemoteDisconnected,
+            json.JSONDecodeError
+        ) as exc:
+            if attempt == MAX_TRANSIENT_RETRIES - 1:
+                raise RuntimeError(f"GitHub REST request failed: {exc}") from exc
+        time.sleep(2 ** attempt)
+
+
+def github_graphql(query, variables):
+    token = os.environ.get("GIT_TOKEN")
+    if not token:
+        raise RuntimeError("GIT_TOKEN is required for reliable GitHub metrics")
+
+    body = json.dumps({"query": query, "variables": variables}).encode("utf-8")
+    for attempt in range(MAX_TRANSIENT_RETRIES):
+        req = urllib.request.Request(GITHUB_GRAPHQL_URL, data=body, headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "GitTop-Rankings"
+        })
+        try:
+            with urllib.request.urlopen(req, context=ctx, timeout=30) as resp:
+                result = json.loads(resp.read())
+            if result.get("errors"):
+                error_types = {error.get("type") for error in result["errors"]}
+                if "RATE_LIMITED" in error_types:
+                    reset_at = (result.get("data") or {}).get("rateLimit", {}).get("resetAt", "unknown")
+                    raise RuntimeError(
+                        "GitHub GraphQL rate limit reached; aborting without waiting "
+                        f"for the reset at {reset_at}"
+                    )
+                messages = "; ".join(error.get("message", "Unknown error") for error in result["errors"])
+                raise RuntimeError(f"GitHub GraphQL error: {messages}")
+            return result["data"]
+        except urllib.error.HTTPError as exc:
+            if exc.code == 403 and exc.headers.get("X-RateLimit-Remaining") == "0":
+                raise RuntimeError(
+                    "GitHub GraphQL rate limit reached; aborting without waiting for reset"
+                ) from exc
+            if exc.code in (403, 429):
+                raise RuntimeError(
+                    "GitHub GraphQL request throttled; aborting without retrying. "
+                    "Run the workflow after the API quota recovers."
+                ) from exc
+            if exc.code not in (500, 502, 503, 504) or attempt == MAX_TRANSIENT_RETRIES - 1:
+                details = exc.read().decode("utf-8", errors="replace")
+                raise RuntimeError(f"GitHub GraphQL HTTP {exc.code}: {details}") from exc
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            http.client.IncompleteRead,
+            http.client.RemoteDisconnected,
+            json.JSONDecodeError
+        ) as exc:
+            if attempt == MAX_TRANSIENT_RETRIES - 1:
+                raise RuntimeError(f"GitHub GraphQL request failed: {exc}") from exc
+        time.sleep(2 ** attempt)
+
 
 def scrape_live_contributions_count(username, fallback_commits):
-    """Fetches exact live contributions from https://github.com/users/{username}/contributions"""
-    url = f"https://github.com/users/{username}/contributions"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
+    url = f"https://github.com/users/{urllib.parse.quote(username)}/contributions"
+    req = urllib.request.Request(url, headers={"User-Agent": "GitTop-Rankings"})
     try:
-        with urllib.request.urlopen(req, context=ctx, timeout=6) as resp:
-            if resp.status == 200:
-                html = resp.read().decode('utf-8', errors='ignore')
-                match = re.search(r'([\d,]+)\s+contributions', html, re.IGNORECASE)
-                if match:
-                    val = parse_number(match.group(1))
-                    if val > 0:
-                        return val
-    except Exception:
+        with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
+            html = resp.read().decode("utf-8", errors="ignore")
+        match = re.search(r'([\d,]+)\s+contributions', html, re.IGNORECASE)
+        if match:
+            return parse_number(match.group(1))
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
         pass
     return fallback_commits
 
-def scrape_real_github_profile(item, country_name):
+
+def fetch_github_repositories(username):
+    repositories = []
+    cursor = None
+    while True:
+        data = github_graphql(REPOSITORIES_QUERY, {
+            "login": username,
+            "cursor": cursor
+        })
+        user = data.get("user")
+        if not user:
+            raise RuntimeError(f"GitHub GraphQL user not found: {username}")
+        connection = user["repositories"]
+        repositories.extend({
+            "fork": repository["isFork"],
+            "stargazers_count": repository["stargazerCount"],
+            "language": (
+                repository["primaryLanguage"]["name"]
+                if repository.get("primaryLanguage") else None
+            )
+        } for repository in connection["nodes"])
+        if not connection["pageInfo"]["hasNextPage"]:
+            break
+        cursor = connection["pageInfo"]["endCursor"]
+    return repositories
+
+
+def fetch_github_profile(item, country_name):
     username = item["username"]
-    html_name = item["html_name"]
-    estimated_commits = item["commits"]
+    if not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?", username):
+        raise RuntimeError(f"Invalid GitHub username from committers.top: {username!r}")
 
-    # Fetch both estimated_commits AND live_contributions count
-    live_contributions = scrape_live_contributions_count(username, estimated_commits)
+    profile, _ = github_api_get(f"/users/{urllib.parse.quote(username)}")
+    repositories = fetch_github_repositories(profile["login"])
+    live_contributions = scrape_live_contributions_count(profile["login"], item["commits"])
 
-    url = f"https://github.com/{username}"
-    
-    followers = 0
-    following = 0
-    repos = 0
-    stars = 0
-    display_name = html_name or username
-    avatar_url = f"https://avatars.githubusercontent.com/{username}"
-    company = ""
-    location = country_name
-    bio = f"Active open source contributor on GitHub ({country_name})."
-    real_languages = []
-
-    for attempt in range(2):
-        try:
-            time.sleep(0.05 * (attempt + 1))
-            req = urllib.request.Request(url, headers={
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                "Accept-Language": "en-US,en;q=0.9"
-            })
-            with urllib.request.urlopen(req, context=ctx, timeout=8) as resp:
-                if resp.status == 200:
-                    html = resp.read().decode('utf-8', errors='ignore')
-
-                    # 100% REAL Languages from pinned/popular repos
-                    raw_langs = re.findall(r'itemprop="programmingLanguage">([^<]+)</span>', html)
-                    for l in raw_langs:
-                        l_clean = l.strip()
-                        if l_clean and l_clean not in real_languages:
-                            real_languages.append(l_clean)
-
-                    # 100% REAL Followers
-                    fw_match = re.search(r'href="[^"]*tab=followers"[^>]*>.*?<span[^>]*class="text-bold[^"]*"[^>]*>([^<]+)</span>\s*followers', html, re.DOTALL)
-                    if fw_match:
-                        followers = parse_number(fw_match.group(1))
-
-                    # 100% REAL Following
-                    fl_match = re.search(r'href="[^"]*tab=following"[^>]*>.*?<span[^>]*class="text-bold[^"]*"[^>]*>([^<]+)</span>\s*following', html, re.DOTALL)
-                    if fl_match:
-                        following = parse_number(fl_match.group(1))
-
-                    # 100% REAL Public Repositories
-                    repo_match = re.search(r'data-tab-item="repositories"[^>]*>.*?<span[^>]*class="Counter[^"]*"[^>]*>([^<]+)</span>', html, re.DOTALL)
-                    if repo_match:
-                        repos = parse_number(repo_match.group(1))
-
-                    # 100% REAL Stars
-                    stars_match = re.search(r'data-tab-item="stars"[^>]*>.*?<span[^>]*class="Counter[^"]*"[^>]*>([^<]+)</span>', html, re.DOTALL)
-                    if stars_match:
-                        stars = parse_number(stars_match.group(1))
-
-                    # Display Name
-                    name_match = re.search(r'<span class="p-name vcard-fullname d-block overflow-hidden" itemprop="name">\s*([^<]+)\s*</span>', html)
-                    if name_match:
-                        display_name = name_match.group(1).strip()
-
-                    # Bio
-                    bio_match = re.search(r'<div class="p-note user-profile-bio[^"]*"[^>]*>\s*<div>\s*([^<]+)\s*</div>', html)
-                    if bio_match:
-                        bio = bio_match.group(1).strip()
-
-                    # Company
-                    comp_match = re.search(r'itemprop="worksFor"[^>]*>\s*<span[^>]*>\s*([^<]+)\s*</span>', html)
-                    if comp_match:
-                        company = comp_match.group(1).strip()
-
-                    # Location
-                    loc_match = re.search(r'itemprop="homeLocation"[^>]*>\s*<span[^>]*>\s*([^<]+)\s*</span>', html)
-                    if loc_match:
-                        location = loc_match.group(1).strip()
-
-                    # Avatar
-                    avatar_match = re.search(r'<img[^>]*class="[^"]*avatar-user[^"]*"[^>]*src="([^"]+)"', html)
-                    if avatar_match:
-                        avatar_url = avatar_match.group(1).replace('&amp;', '&')
-
-                    if followers > 0 or repos > 0 or stars > 0 or len(real_languages) > 0:
-                        break
-        except Exception:
-            time.sleep(0.3 * (attempt + 1))
-
-    if not real_languages:
-        bio_lower = bio.lower()
-        if 'python' in bio_lower: real_languages.append('Python')
-        if 'javascript' in bio_lower or 'js' in bio_lower: real_languages.append('JavaScript')
-        if 'typescript' in bio_lower or 'ts' in bio_lower: real_languages.append('TypeScript')
-        if 'rust' in bio_lower: real_languages.append('Rust')
-        if 'go' in bio_lower or 'golang' in bio_lower: real_languages.append('Go')
-        if 'java' in bio_lower: real_languages.append('Java')
-        if 'c++' in bio_lower or 'cpp' in bio_lower: real_languages.append('C++')
-        if 'ruby' in bio_lower: real_languages.append('Ruby')
-
-    if not real_languages:
-        real_languages = ["OpenSource"]
+    language_counts = Counter(
+        repo.get("language")
+        for repo in repositories
+        if repo.get("language")
+    )
+    languages = [name for name, _ in language_counts.most_common(3)] or ["OpenSource"]
 
     return {
         "rank": 0,
-        "login": username,
-        "name": display_name,
-        "avatar_url": avatar_url,
-        "html_url": f"https://github.com/{username}",
-        "company": company,
-        "location": location,
-        "bio": bio,
-        "blog": f"https://github.com/{username}",
-        "public_repos": repos,
-        "followers": followers,
-        "following": following,
-        "estimated_commits": estimated_commits,
+        "login": profile["login"],
+        "name": profile["name"] or item["html_name"] or profile["login"],
+        "avatar_url": profile["avatar_url"],
+        "html_url": profile["html_url"],
+        "company": profile["company"] or "",
+        "location": profile["location"] or country_name,
+        "bio": profile["bio"] or "",
+        "blog": profile["blog"] or profile["html_url"],
+        "public_repos": profile["public_repos"],
+        "followers": profile["followers"],
+        "following": profile["following"],
+        "estimated_commits": item["commits"],
         "live_contributions": live_contributions,
-        "stars_received": stars,
+        "stars_received": sum(repo["stargazers_count"] for repo in repositories if not repo["fork"]),
         "country": country_name,
-        "languages": real_languages
+        "languages": languages
+    }
+
+
+def fetch_github_profiles(items, country_name):
+    if not items:
+        raise RuntimeError(f"No GitHub profiles found for {country_name}")
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        return list(executor.map(
+            lambda item: fetch_github_profile(item, country_name),
+            items
+        ))
+
+
+def validate_dataset(dataset):
+    required_metrics = (
+        "public_repos", "followers", "following", "estimated_commits",
+        "live_contributions", "stars_received"
+    )
+    expected_countries = {country["code"] for country in COMMITTERS_TOP_SLUGS} | {"World"}
+    if set(dataset["countries"]) != expected_countries:
+        raise RuntimeError("Dataset does not contain the complete country list")
+
+    for country_code, country in dataset["countries"].items():
+        developers = country["top_developers"]
+        if len(developers) != 30 or country["count"] != 30:
+            raise RuntimeError(f"{country_code} has {len(developers)} profiles instead of 30")
+        if len({developer["login"].lower() for developer in developers}) != 30:
+            raise RuntimeError(f"{country_code} contains duplicate profiles")
+        for expected_rank, developer in enumerate(developers, 1):
+            if developer["rank"] != expected_rank:
+                raise RuntimeError(f"{country_code} has an invalid rank for {developer['login']}")
+            for metric in required_metrics:
+                value = developer.get(metric)
+                if not isinstance(value, int) or value < 0:
+                    raise RuntimeError(f"{country_code}/{developer['login']} has invalid {metric}: {value!r}")
+
+
+def get_country_rotation():
+    rotation = []
+    for index in range(max(map(len, COUNTRY_ROTATION_LANES))):
+        rotation.extend(lane[index] for lane in COUNTRY_ROTATION_LANES if index < len(lane))
+
+    expected = {country["code"] for country in COMMITTERS_TOP_SLUGS}
+    if len(rotation) != len(expected) or set(rotation) != expected:
+        raise RuntimeError("Country rotation must contain every configured country exactly once")
+    return rotation
+
+
+def select_country_batch(next_country=None, batch_size=20):
+    rotation = get_country_rotation()
+    try:
+        start = rotation.index(next_country) if next_country else 0
+    except ValueError:
+        start = 0
+    end = min(start + batch_size, len(rotation))
+    selected_codes = rotation[start:end]
+    next_code = rotation[end] if end < len(rotation) else rotation[0]
+    return selected_codes, next_code, end == len(rotation)
+
+
+def build_global_country(countries):
+    candidates = []
+    for code, country in countries.items():
+        if code != "World":
+            candidates.extend(dict(developer) for developer in country["top_developers"][:10])
+
+    candidates.sort(key=lambda developer: developer["estimated_commits"], reverse=True)
+    unique_global = []
+    seen = set()
+    for developer in candidates:
+        login = developer["login"].lower()
+        if login not in seen:
+            seen.add(login)
+            unique_global.append(developer)
+        if len(unique_global) >= 30:
+            break
+
+    for rank, developer in enumerate(unique_global, 1):
+        developer["rank"] = rank
+
+    return {
+        "code": "World",
+        "name": "Global / Worldwide",
+        "iso": "GLOBAL",
+        "count": len(unique_global),
+        "top_developers": unique_global
     }
 
 def process_country(c):
@@ -290,78 +472,99 @@ def process_country(c):
     iso = c["iso"]
     slug = c["slug"]
 
-    print(f"Scraping live contributions & profiles for {name} ({slug})...")
+    print(f"Scraping live contributions & profiles for {name} ({slug})...", flush=True)
     targets = fetch_committers_top_list(slug)
     top_30 = targets[:30]
 
-    country_devs = []
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        futures = [executor.submit(scrape_real_github_profile, target, name) for target in top_30]
-        for f in futures:
-            country_devs.append(f.result())
+    country_devs = fetch_github_profiles(top_30, name)
 
     # Sort strictly by Commits descending (or Live Contributions) and assign rank 1..N
     country_devs.sort(key=lambda x: x["estimated_commits"], reverse=True)
     for idx, dev in enumerate(country_devs, 1):
         dev["rank"] = idx
 
-    print(f"  -> Extracted {len(country_devs)} LIVE updated profiles for {name}")
+    print(f"  -> Extracted {len(country_devs)} LIVE updated profiles for {name}", flush=True)
 
     return code, {
         "code": code,
         "name": name,
         "iso": iso,
         "count": len(country_devs),
+        "last_updated": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "top_developers": country_devs
     }
 
 def main():
-    print("Starting dual metric scraper for ALL COUNTRIES...")
-    dataset = {
-        "last_updated": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "update_frequency": "Actualización automática cada 5 horas vía GitHub Actions",
-        "countries": {}
-    }
+    mode = os.environ.get("SCRAPE_MODE", "batch").lower()
+    if mode not in ("batch", "full"):
+        raise RuntimeError("SCRAPE_MODE must be 'batch' or 'full'")
 
-    all_global_devs = []
+    out_file = "public/data/committers.json"
+    existing_dataset = {}
+    if os.path.exists(out_file):
+        with open(out_file, encoding="utf-8") as existing_file:
+            existing_dataset = json.load(existing_file)
+
+    existing_countries = existing_dataset.get("countries", {})
+    if mode == "batch" and not existing_countries:
+        raise RuntimeError("Batch mode requires an existing complete dataset; run full mode once")
+
+    rotation = get_country_rotation()
+    previous_sync = existing_dataset.get("sync_state", {})
+    if mode == "batch":
+        batch_size = int(os.environ.get("COUNTRY_BATCH_SIZE", "20"))
+        if batch_size < 1:
+            raise RuntimeError("COUNTRY_BATCH_SIZE must be greater than zero")
+        selected_codes, next_country, cycle_completed = select_country_batch(
+            previous_sync.get("next_country"), batch_size
+        )
+    else:
+        selected_codes = rotation
+        next_country = rotation[0]
+        cycle_completed = True
+
+    countries_by_code = {country["code"]: country for country in COMMITTERS_TOP_SLUGS}
+    selected_countries = [countries_by_code[code] for code in selected_codes]
+    print(
+        f"Starting {mode} scraper for {len(selected_countries)} countries: "
+        + ", ".join(selected_codes),
+        flush=True
+    )
+
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    dataset = {
+        "last_updated": now,
+        "update_frequency": "20 países por corrida, rotación automática cada 5 horas",
+        "sync_state": {
+            "mode": mode,
+            "batch_size": len(selected_codes),
+            "updated_countries": selected_codes,
+            "next_country": next_country,
+            "cycle": previous_sync.get("cycle", 0) + int(cycle_completed),
+            "cycle_completed": cycle_completed,
+        },
+        "countries": {
+            code: country for code, country in existing_countries.items() if code != "World"
+        }
+    }
 
     # Process 3 countries in parallel
     with ThreadPoolExecutor(max_workers=3) as c_executor:
-        c_futures = [c_executor.submit(process_country, c) for c in COMMITTERS_TOP_SLUGS]
+        c_futures = [c_executor.submit(process_country, c) for c in selected_countries]
         for cf in c_futures:
             code, country_data = cf.result()
             dataset["countries"][code] = country_data
-            for d in country_data["top_developers"][:10]:
-                all_global_devs.append(dict(d))
+            print(f"Completed {code}: {country_data['count']} profiles", flush=True)
 
-    # Global ranking compilation
-    all_global_devs.sort(key=lambda x: x["estimated_commits"], reverse=True)
-    unique_global = []
-    seen = set()
-    for d in all_global_devs:
-        if d["login"] not in seen:
-            seen.add(d["login"])
-            unique_global.append(d)
-        if len(unique_global) >= 30:
-            break
+    dataset["countries"]["World"] = build_global_country(dataset["countries"])
 
-    for r_idx, dev in enumerate(unique_global, 1):
-        dev["rank"] = r_idx
-
-    dataset["countries"]["World"] = {
-        "code": "World",
-        "name": "Global / Worldwide",
-        "iso": "GLOBAL",
-        "count": len(unique_global),
-        "top_developers": unique_global
-    }
+    validate_dataset(dataset)
 
     os.makedirs("public/data", exist_ok=True)
-    out_file = "public/data/committers.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(dataset, f, ensure_ascii=False, indent=2)
 
-    print(f"\nSUCCESS! Dual metric dataset saved to {out_file}!")
+    print(f"\nSUCCESS! Dual metric dataset saved to {out_file}!", flush=True)
 
 if __name__ == "__main__":
     main()

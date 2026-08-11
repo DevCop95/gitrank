@@ -5,6 +5,8 @@ node_modules
 # Production build output (built automatically by GitHub Actions)
 dist
 dist-ssr
+__pycache__/
+*.py[cod]
 *.local
 
 # Environment variables

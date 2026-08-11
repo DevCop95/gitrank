@@ -4,14 +4,28 @@ on:
   schedule:
     # Se ejecuta automáticamente cada 5 horas (4-5 veces al día)
     - cron: '0 */5 * * *'
-  workflow_dispatch: # Permite ejecución manual desde la pestaña Actions de GitHub
+  workflow_dispatch:
+    inputs:
+      run_mode:
+        description: Run fast tests or the next country batch
+        required: true
+        default: test
+        type: choice
+        options:
+          - test
+          - batch
 
 permissions:
   contents: write
 
+concurrency:
+  group: update-rankings
+  cancel-in-progress: false
+
 jobs:
   scrape-and-update:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout Repository
@@ -22,13 +36,19 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Run Fast Unit Tests
+        run: python -m unittest discover -s scripts -p "test_*.py" -v
+
       - name: Run 100% Real GitHub Multithreaded Scraper
+        if: github.event_name == 'schedule' || inputs.run_mode != 'test'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          SCRAPE_MODE: ${{ github.event_name == 'schedule' && 'batch' || inputs.run_mode }}
         run: |
-          python scripts/build_fast_multithreaded_real_stats.py
+          python -u scripts/build_fast_multithreaded_real_stats.py
 
       - name: Commit and Push Updated Data
+        if: github.event_name == 'schedule' || inputs.run_mode != 'test'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
