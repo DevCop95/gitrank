@@ -9,12 +9,13 @@ import urllib.parse
 import ssl
 import http.client
 from collections import Counter
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 ctx = ssl.create_default_context()
 GITHUB_API_URL = "https://api.github.com"
 GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 MAX_TRANSIENT_RETRIES = 3
+MAX_REPOSITORY_PAGES = 1
 
 REPOSITORIES_QUERY = """
 query($login: String!, $cursor: String) {
@@ -321,7 +322,7 @@ def scrape_live_contributions_count(username, fallback_commits):
 def fetch_github_repositories(username):
     repositories = []
     cursor = None
-    while True:
+    for _ in range(MAX_REPOSITORY_PAGES):
         data = github_graphql(REPOSITORIES_QUERY, {
             "login": username,
             "cursor": cursor
@@ -534,7 +535,7 @@ def main():
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     dataset = {
         "last_updated": now,
-        "update_frequency": "20 países por corrida, rotación automática cada 5 horas",
+        "update_frequency": "20 países por corrida, rotación automática cada 12 horas",
         "sync_state": {
             "mode": mode,
             "batch_size": len(selected_codes),
@@ -548,11 +549,22 @@ def main():
         }
     }
 
-    # Process 3 countries in parallel
+    # Process 3 countries in parallel and keep prior data when one country fails.
     with ThreadPoolExecutor(max_workers=3) as c_executor:
-        c_futures = [c_executor.submit(process_country, c) for c in selected_countries]
-        for cf in c_futures:
-            code, country_data = cf.result()
+        future_countries = {
+            c_executor.submit(process_country, country): country
+            for country in selected_countries
+        }
+        for cf in as_completed(future_countries):
+            country = future_countries[cf]
+            try:
+                code, country_data = cf.result()
+            except Exception as exc:
+                print(
+                    f"WARNING: {country['name']} failed; retaining previous data: {exc}",
+                    flush=True,
+                )
+                continue
             dataset["countries"][code] = country_data
             print(f"Completed {code}: {country_data['count']} profiles", flush=True)
 

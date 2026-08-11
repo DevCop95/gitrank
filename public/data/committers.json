@@ -1,6 +1,6 @@
 {
   "last_updated": "2026-08-11T18:12:58.794819+00:00",
-  "update_frequency": "20 países por corrida, rotación automática cada 5 horas",
+  "update_frequency": "20 países por corrida, rotación automática cada 12 horas",
   "sync_state": {
     "mode": "batch",
     "batch_size": 20,

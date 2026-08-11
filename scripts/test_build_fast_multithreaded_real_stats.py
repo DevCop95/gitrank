@@ -66,7 +66,7 @@ class CountryRotationTests(unittest.TestCase):
         self.assertFalse(cycle_completed)
 
     @patch("build_fast_multithreaded_real_stats.github_graphql")
-    def test_repository_metrics_use_graphql_pagination(self, graphql):
+    def test_repository_metrics_limit_graphql_pagination(self, graphql):
         graphql.side_effect = [
             {
                 "user": {
@@ -98,14 +98,10 @@ class CountryRotationTests(unittest.TestCase):
 
         self.assertEqual(
             repositories,
-            [
-                {"fork": False, "stargazers_count": 8, "language": "Python"},
-                {"fork": True, "stargazers_count": 3, "language": None},
-            ],
+            [{"fork": False, "stargazers_count": 8, "language": "Python"}],
         )
-        self.assertEqual(graphql.call_count, 2)
+        self.assertEqual(graphql.call_count, 1)
         self.assertEqual(graphql.call_args_list[0].args[1]["cursor"], None)
-        self.assertEqual(graphql.call_args_list[1].args[1]["cursor"], "next")
 
     def test_graphql_rate_limit_aborts_without_sleeping_until_reset(self):
         response = io.BytesIO(json.dumps({

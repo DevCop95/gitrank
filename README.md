@@ -10,7 +10,7 @@
 - **[REAL-DATA] Live Profile & Contribution Sync**: Contrasts candidate listings from `committers.top` with exact live contribution graph totals scraped directly from `https://github.com/users/{username}/contributions` and live profile HTML (`github.com/{username}`).
 - **[METRICS] Verified Metrics**: Zero artificial multipliers or mock estimates. Directly extracts real follower counts, public repository numbers, stargazers received, bios, avatars, and primary programming languages.
 - **[GLOBAL-COVERAGE] 73 Countries & Regional Tabs**: Filter developers by country or region (*Worldwide/Global*, *LATAM*, *North America*, *Europe*, *Asia & Oceania*, *Africa*).
-- **[AUTOMATED] Rotating 5-Hour Sync**: GitHub Actions updates an interleaved batch of up to 20 countries every 5 hours, completing all countries in four runs without exhausting API quotas.
+- **[AUTOMATED] Rotating 12-Hour Sync**: GitHub Actions updates an interleaved batch of up to 20 countries every 12 hours, completing all countries in four runs without exhausting API quotas.
 - **[PROFILES] Interactive Profile Modal**: Inspect 52-week contribution heatmaps, primary stack languages, company, location, and verified GitHub profile links.
 - **[LAYOUT] Strict Reading Order**: Clean cards and table views sorted strictly left-to-right (`#1`, `#2`, `#3`...).
 - **[PAGES] GitHub Pages Deploy**: Fully automated CI/CD deployment to GitHub Pages via GitHub Actions (`.github/workflows/deploy_gh_pages.yml`).

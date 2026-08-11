@@ -5,8 +5,11 @@ on:
     branches:
       - main
       - master
-  schedule:
-    - cron: '15 */5 * * *'
+  workflow_run:
+    workflows:
+      - GitTop Automated Scraper & 12-Hour Sync
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -20,6 +23,7 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

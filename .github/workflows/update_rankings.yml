@@ -1,4 +1,4 @@
-name: GitTop Automated Scraper & Daily Sync
+name: GitTop Automated Scraper & 12-Hour Sync
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
     paths-ignore:
       - public/data/committers.json
   schedule:
-    # Se ejecuta automáticamente cada 5 horas (4-5 veces al día)
-    - cron: '0 */5 * * *'
+    # Se ejecuta automáticamente cada 12 horas
+    - cron: '0 */12 * * *'
   workflow_dispatch:
     inputs:
       run_mode:
