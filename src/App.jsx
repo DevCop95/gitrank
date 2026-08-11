@@ -19,7 +19,8 @@ export default function App() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const res = await fetch('/data/committers.json?t=' + Date.now());
+      // Relative path guarantees fetching from ./data/committers.json under /gitrank/
+      const res = await fetch('./data/committers.json?t=' + Date.now());
       if (!res.ok) throw new Error('Failed to load committers.json');
       const json = await res.json();
       setData(json);
