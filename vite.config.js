@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './', // Ensures relative paths work seamlessly on GitHub Pages
+  base: './', // Relative base path guarantees assets load from /gitrank/assets/ on GitHub Pages
   plugins: [
     react(),
     tailwindcss()
