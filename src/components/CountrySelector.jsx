@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { COUNTRIES, REGIONS } from '../data/countriesList';
+import { COUNTRIES } from '../data/countriesList';
 import { Search, Globe, ChevronDown, Check } from 'lucide-react';
 
 export default function CountrySelector({ selectedCountry, onSelectCountry }) {
-  const [activeRegion, setActiveRegion] = useState('All');
   const [countryFilter, setCountryFilter] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const filteredCountries = COUNTRIES.filter(c => {
-    const matchesRegion = activeRegion === 'All' || c.region === activeRegion;
     const q = countryFilter.toLowerCase().trim();
     const matchesQuery = !q || c.name.toLowerCase().includes(q) || c.iso.toLowerCase().includes(q);
-    return matchesRegion && matchesQuery;
+    return matchesQuery;
   });
 
   const activeCountryObj = COUNTRIES.find(
@@ -33,7 +31,27 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-4 md:p-5 mb-6 shadow-sm">
-      
+      {/* Quick Access ISO Pill Bar */}
+      <div className="flex items-center gap-2 flex-wrap mb-4 pb-4 border-b border-slate-200">
+        <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mr-1 font-semibold">Quick Access:</span>
+        {quickPills.map((pill) => {
+          const isSelected = pill.code.toLowerCase() === selectedCountry.toLowerCase();
+          return (
+            <button
+              key={pill.code}
+              onClick={() => onSelectCountry(pill.code)}
+              className={`px-2.5 py-1 rounded-xl text-xs font-mono font-medium transition-all ${
+                isSelected
+                  ? 'bg-emerald-600 text-white shadow-sm'
+                  : 'bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300'
+              }`}
+            >
+              {pill.label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Top Bar: Active Country Info & Dropdown Trigger */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
@@ -110,44 +128,6 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
             </div>
           )}
         </div>
-      </div>
-
-      {/* Region Tabs (Horizontal Scroll on Mobile) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none mb-3">
-        {REGIONS.map((region) => (
-          <button
-            key={region}
-            onClick={() => setActiveRegion(region)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-              activeRegion === region
-                ? 'bg-slate-900 text-white shadow-sm'
-                : 'bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 border border-slate-200'
-            }`}
-          >
-            {region}
-          </button>
-        ))}
-      </div>
-
-      {/* Quick Access ISO Pill Bar */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mr-1 font-semibold">Quick Access:</span>
-        {quickPills.map((pill) => {
-          const isSelected = pill.code.toLowerCase() === selectedCountry.toLowerCase();
-          return (
-            <button
-              key={pill.code}
-              onClick={() => onSelectCountry(pill.code)}
-              className={`px-2.5 py-1 rounded-xl text-xs font-mono font-medium transition-all ${
-                isSelected
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300'
-              }`}
-            >
-              {pill.label}
-            </button>
-          );
-        })}
       </div>
 
     </div>

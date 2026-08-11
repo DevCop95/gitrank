@@ -1,6 +1,12 @@
 name: GitTop Automated Scraper & Daily Sync
 
 on:
+  push:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - public/data/committers.json
   schedule:
     # Se ejecuta automáticamente cada 5 horas (4-5 veces al día)
     - cron: '0 */5 * * *'
@@ -40,18 +46,18 @@ jobs:
         run: python -m unittest discover -s scripts -p "test_*.py" -v
 
       - name: Run 100% Real GitHub Multithreaded Scraper
-        if: github.event_name == 'schedule' || inputs.run_mode != 'test'
+        if: github.event_name != 'workflow_dispatch' || inputs.run_mode != 'test'
         env:
           GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
-          SCRAPE_MODE: ${{ github.event_name == 'schedule' && 'batch' || inputs.run_mode }}
+          SCRAPE_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.run_mode || 'batch' }}
         run: |
           python -u scripts/build_fast_multithreaded_real_stats.py
 
       - name: Commit and Push Updated Data
-        if: github.event_name == 'schedule' || inputs.run_mode != 'test'
+        if: github.event_name != 'workflow_dispatch' || inputs.run_mode != 'test'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/committers.json
           git status
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): auto-update top committers dataset 100% real [skip ci]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): auto-update top committers dataset 100% real" && git push)

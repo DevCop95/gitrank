@@ -22,11 +22,6 @@ export default function SyncStatusBadge({ lastUpdated }) {
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 bg-white border border-slate-200 rounded-2xl text-xs text-slate-600 mb-6 shadow-sm">
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full border border-emerald-200 font-semibold text-[11px]">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 pulse-dot inline-block"></span>
-          <span>GitHub Actions Cron (Every 5 Hours)</span>
-        </div>
-
         <div className="flex items-center gap-1.5 text-slate-700 font-medium">
           <Clock className="w-3.5 h-3.5 text-blue-600" />
           <span>Last sync:</span>
