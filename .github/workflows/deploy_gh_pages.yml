@@ -39,9 +39,10 @@ jobs:
       - name: Build Web Application
         run: npm run build
 
-      - name: Sync dist to docs folder
+      - name: Sync dist to assets and docs folder
         run: |
-          mkdir -p docs
+          mkdir -p assets docs
+          cp -r dist/assets/* assets/
           cp -r dist/* docs/
 
       - name: Deploy to gh-pages Branch
