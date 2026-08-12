@@ -116,10 +116,10 @@ export default function LeaderboardTable({ developers, onOpenModal }) {
                       <button
                         onClick={() => onOpenModal(dev)}
                         aria-label={`View statistics for ${cleanText(name || login)}`}
-                        className="inline-flex items-center gap-1.5 min-h-10 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-[11px] font-semibold rounded-lg transition-all"
+                        className="inline-flex items-center gap-1.5 min-h-10 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-semibold rounded-lg transition-all cursor-pointer shadow-sm active:scale-[0.98]"
                       >
-                        <Activity className="w-3.5 h-3.5" />
-                        <span>Statistics</span>
+                        <Activity className="w-3.5 h-3.5 text-white" />
+                        <span className="text-white">Statistics</span>
                       </button>
 
                       <a

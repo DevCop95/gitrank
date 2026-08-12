@@ -213,10 +213,10 @@ export default function DeveloperModal({ developer, onClose }) {
             href={html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 min-h-11 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-sm sm:text-xs font-bold rounded-xl transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 min-h-11 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm sm:text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer active:scale-[0.98]"
           >
-            <span>Visit Full GitHub Profile</span>
-            <ExternalLink className="w-3.5 h-3.5" />
+            <span className="text-white">Visit Full GitHub Profile</span>
+            <ExternalLink className="w-3.5 h-3.5 text-white" />
           </a>
         </div>
 

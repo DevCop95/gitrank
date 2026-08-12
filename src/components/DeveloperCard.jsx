@@ -161,11 +161,11 @@ export default function DeveloperCard({ developer, onOpenModal }) {
         <button
           onClick={() => onOpenModal(developer)}
           aria-label={`View statistics for ${cleanedName}`}
-          className="flex-1 min-h-11 py-2.5 bg-slate-900 hover:bg-slate-800 text-sm sm:text-xs font-semibold rounded-xl transition-all text-center shadow-sm"
+          className="flex-1 min-h-11 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm sm:text-xs font-semibold rounded-xl transition-all text-center shadow-sm cursor-pointer hover:shadow active:scale-[0.98] flex items-center justify-center"
         >
-          <span className="inline-flex items-center justify-center gap-1.5">
-            <Activity className="w-4 h-4" />
-            <span>View Statistics</span>
+          <span className="inline-flex items-center justify-center gap-1.5 text-white">
+            <Activity className="w-4 h-4 text-white" />
+            <span className="text-white">View Statistics</span>
           </span>
         </button>
 
