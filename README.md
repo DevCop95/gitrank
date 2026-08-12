@@ -1,7 +1,54 @@
 # GitTop
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Release-v1.0-007ACC?style=for-the-badge&logo=github&logoColor=white" alt="Release v1.0" />
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white" alt="GitHub Actions" />
+  <img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License MIT" />
+</p>
+
 > **[HIGH-PRECISION] [GLOBAL-LEADERBOARD] [OPEN-SOURCE]**  
 > Top 30 most active open-source developers worldwide and across 73+ countries with 100% real live profile metrics and updated contribution graph stats.
+
+---
+
+## 🚀 Release v1.0 Overview
+
+GitTop **v1.0** delivers a high-precision, real-time leaderboard platform for tracking open-source contributions globally.
+
+### Key Highlights of Release v1.0
+- **⚡ Real-Time Multithreaded Engine**: Scrapes exact live contribution graph totals and profile stats directly from GitHub profiles without API rate-limit bottlenecks.
+- **🌍 73+ Country & Regional Filters**: Quick access pill bar + search-enabled drawer supporting ISO codes (`[CO]`, `[GLOBAL]`, `[US]`, etc.).
+- **📊 Responsive Views & Heatmaps**: Interactive Grid and Table layout options with 52-week activity heatmap preview and direct profile modals.
+- **🤖 Automated 12-Hour Sync**: GitHub Actions scheduled background sync updating 20-country rotating batches seamlessly.
+- **✨ Enhanced UX**: Click-outside auto-close dropdowns, smooth country switching, and high-contrast accessible layout tags.
+
+---
+
+## 🛠️ Technologies & Stack
+
+### Frontend & UI
+| Technology | Description | Badge |
+| :--- | :--- | :--- |
+| **React 18** | UI component library powering dynamic state and modals | `![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black)` |
+| **Vite 5** | Next-generation fast frontend build tool | `![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite&logoColor=white)` |
+| **Tailwind CSS** | Utility-first CSS framework for modern styling | `![Tailwind](https://img.shields.io/badge/-Tailwind-38B2AC?logo=tailwind-css&logoColor=white)` |
+| **Lucide Icons** | Clean, modern UI icon system | `![Lucide](https://img.shields.io/badge/-Lucide_Icons-F59E0B)` |
+
+### Data Pipeline & Backend Engine
+| Technology | Description | Badge |
+| :--- | :--- | :--- |
+| **Python 3.10+** | Multithreaded scraping engine (`ThreadPoolExecutor`) | `![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white)` |
+| **BeautifulSoup4 / Requests** | Live HTML parsing of GitHub profiles & contribution graphs | `![Scraping](https://img.shields.io/badge/-Web_Scraping-FF6F61)` |
+
+### Automation & CI/CD
+| Technology | Description | Badge |
+| :--- | :--- | :--- |
+| **GitHub Actions** | Automated 12-hour scheduled background scraper workflows | `![GitHub Actions](https://img.shields.io/badge/-GitHub_Actions-2088FF?logo=github-actions&logoColor=white)` |
+| **GitHub Pages** | Automated deployment workflow via GH-Pages action | `![GitHub Pages](https://img.shields.io/badge/-GitHub_Pages-22C55E?logo=github&logoColor=white)` |
 
 ---
 
@@ -82,8 +129,8 @@ Hosting **GitTop** on **GitHub Pages** is 100% free and automated.
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/gittop.git
-cd gittop
+git clone https://github.com/DevCop95/gitrank.git
+cd gitrank
 npm install
 ```
 
@@ -139,3 +186,4 @@ gittop/
 ## License
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
+

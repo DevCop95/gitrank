@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { COUNTRIES } from '../data/countriesList';
 import { Search, Globe, ChevronDown, Check } from 'lucide-react';
 
 export default function CountrySelector({ selectedCountry, onSelectCountry }) {
   const [countryFilter, setCountryFilter] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dropdownOpen]);
 
   const filteredCountries = COUNTRIES.filter(c => {
     const q = countryFilter.toLowerCase().trim();
@@ -55,7 +71,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
       {/* Top Bar: Active Country Info & Dropdown Trigger */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b border-slate-200">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-mono font-bold text-xs text-blue-600 shadow-inner shrink-0">
+          <div className="min-w-10 px-2.5 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-mono font-bold text-xs text-blue-600 shadow-inner shrink-0">
             [{activeCountryObj.iso}]
           </div>
           <div className="min-w-0">
@@ -72,7 +88,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
         </div>
 
         {/* Dropdown Selector Button */}
-        <div className="relative w-full sm:w-auto">
+        <div className="relative w-full sm:w-auto" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className="w-full sm:w-64 min-h-11 flex items-center justify-between gap-2 px-4 py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-sm sm:text-xs font-semibold text-slate-800 transition-all shadow-sm"
@@ -120,11 +136,13 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                           : 'text-slate-700 hover:bg-slate-100'
                       }`}
                     >
-                      <span className="flex items-center gap-2">
-                        <strong className="text-slate-400 w-8">[{c.iso}]</strong>
-                        <span>{c.name}</span>
+                      <span className="flex items-center gap-2.5 min-w-0">
+                        <strong className={`font-mono text-xs shrink-0 inline-block min-w-[4.25rem] ${isSelected ? 'text-blue-100' : 'text-slate-400'}`}>
+                          [{c.iso}]
+                        </strong>
+                        <span className="truncate">{c.name}</span>
                       </span>
-                      {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
+                      {isSelected && <Check className="w-3.5 h-3.5 text-white shrink-0 ml-2" />}
                     </button>
                   );
                 })}
