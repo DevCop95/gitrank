@@ -160,9 +160,13 @@ export default function DeveloperCard({ developer, onOpenModal }) {
       <div className="flex items-center gap-2 pt-3.5 border-t border-slate-200 mt-auto">
         <button
           onClick={() => onOpenModal(developer)}
+          aria-label={`View statistics for ${cleanedName}`}
           className="flex-1 min-h-11 py-2.5 bg-slate-900 hover:bg-slate-800 text-sm sm:text-xs font-semibold rounded-xl transition-all text-center shadow-sm"
         >
-          View Activity
+          <span className="inline-flex items-center justify-center gap-1.5">
+            <Activity className="w-4 h-4" />
+            <span>View Statistics</span>
+          </span>
         </button>
 
         <a
@@ -171,6 +175,7 @@ export default function DeveloperCard({ developer, onOpenModal }) {
           rel="noopener noreferrer"
           className="min-h-11 min-w-11 p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-xl border border-slate-200 transition-all flex items-center justify-center shadow-sm"
           title="Open GitHub Profile"
+          aria-label={`Open GitHub profile for ${cleanedName}`}
         >
           <ExternalLink className="w-4 h-4" />
         </a>

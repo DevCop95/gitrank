@@ -115,9 +115,11 @@ export default function LeaderboardTable({ developers, onOpenModal }) {
                     <div className="flex items-center justify-center gap-1.5">
                       <button
                         onClick={() => onOpenModal(dev)}
-                        className="px-3 py-1 bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-semibold rounded-lg transition-all"
+                        aria-label={`View statistics for ${cleanText(name || login)}`}
+                        className="inline-flex items-center gap-1.5 min-h-10 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-[11px] font-semibold rounded-lg transition-all"
                       >
-                        View
+                        <Activity className="w-3.5 h-3.5" />
+                        <span>Statistics</span>
                       </button>
 
                       <a
@@ -126,6 +128,7 @@ export default function LeaderboardTable({ developers, onOpenModal }) {
                         rel="noopener noreferrer"
                         className="p-1 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 rounded-lg border border-slate-200 transition-all"
                         title="GitHub Profile"
+                        aria-label={`Open GitHub profile for ${cleanText(name || login)}`}
                       >
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
