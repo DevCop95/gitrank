@@ -1,28 +1,46 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
+  html {
+    color-scheme: light dark;
+  }
+
   body {
-    @apply bg-[#f8fafc] text-[#1e293b] font-sans antialiased selection:bg-[#2563eb] selection:text-white;
+    @apply bg-[#fafafa] text-neutral-900 font-sans antialiased selection:bg-black selection:text-white;
+  }
+
+  html.dark body {
+    @apply bg-[#09090b] text-neutral-100 selection:bg-white selection:text-black;
   }
 }
 
-/* Custom Clean Scrollbar for Light Theme */
+/* Minimalist Clean Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: #d4d4d8;
+  border-radius: 2px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #a1a1aa;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
 }
 
 .pulse-dot {
@@ -31,5 +49,29 @@
 
 @keyframes pulse-simple {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.35; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 16px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.15s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.1s ease-out forwards;
 }

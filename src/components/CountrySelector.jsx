@@ -4,6 +4,7 @@ import { Search, Globe, ChevronDown, Check } from 'lucide-react';
 
 export default function CountrySelector({ selectedCountry, onSelectCountry }) {
   const [countryFilter, setCountryFilter] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState('All');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -22,15 +23,21 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
     };
   }, [dropdownOpen]);
 
-  const filteredCountries = COUNTRIES.filter(c => {
+  const regions = ['All', 'LATAM', 'North America', 'Europe', 'Asia', 'Global'];
+
+  const filteredCountries = COUNTRIES.filter((c) => {
     const q = countryFilter.toLowerCase().trim();
     const matchesQuery = !q || c.name.toLowerCase().includes(q) || c.iso.toLowerCase().includes(q);
-    return matchesQuery;
+    const matchesRegion = selectedRegion === 'All' || c.region === selectedRegion;
+    return matchesQuery && matchesRegion;
   });
 
-  const activeCountryObj = COUNTRIES.find(
-    c => c.code.toLowerCase() === selectedCountry.toLowerCase() || c.name.toLowerCase() === selectedCountry.toLowerCase()
-  ) || COUNTRIES[0];
+  const activeCountryObj =
+    COUNTRIES.find(
+      (c) =>
+        c.code.toLowerCase() === selectedCountry.toLowerCase() ||
+        c.name.toLowerCase() === selectedCountry.toLowerCase()
+    ) || COUNTRIES[0];
 
   const quickPills = [
     { code: 'World', label: '[GLOBAL] Worldwide' },
@@ -46,20 +53,23 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
   ];
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-4 md:p-5 mb-4 sm:mb-6 shadow-sm">
+    <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-3.5 sm:p-4 md:p-5 mb-4 sm:mb-6 shadow-2xs transition-colors">
+      
       {/* Quick Access ISO Pill Bar */}
-      <div className="-mx-1 px-1 flex items-center gap-2 overflow-x-auto pb-3 mb-3 border-b border-slate-200">
-        <span className="text-[10px] sm:text-[11px] font-mono text-slate-400 uppercase tracking-wider mr-1 font-semibold whitespace-nowrap shrink-0">Quick Access:</span>
+      <div className="-mx-1 px-1 flex items-center gap-2 overflow-x-auto pb-3 mb-3 border-b border-neutral-200 dark:border-neutral-800">
+        <span className="text-[10px] sm:text-[11px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider mr-1 font-semibold whitespace-nowrap shrink-0">
+          Quick Access:
+        </span>
         {quickPills.map((pill) => {
           const isSelected = pill.code.toLowerCase() === selectedCountry.toLowerCase();
           return (
             <button
               key={pill.code}
               onClick={() => onSelectCountry(pill.code)}
-              className={`min-h-9 px-2.5 py-1 rounded-xl text-xs font-mono font-medium transition-all whitespace-nowrap shrink-0 ${
+              className={`min-h-9 px-2.5 py-1 rounded-xl text-xs font-mono font-medium transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                 isSelected
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300'
+                  ? 'bg-black text-white dark:bg-white dark:text-black font-bold shadow-xs'
+                  : 'bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-600'
               }`}
             >
               {pill.label}
@@ -69,19 +79,21 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
       </div>
 
       {/* Top Bar: Active Country Info & Dropdown Trigger */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-3 sm:mb-4 pb-3 sm:pb-4 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="min-w-10 px-2.5 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-mono font-bold text-xs text-blue-600 shadow-inner shrink-0">
+          <div className="min-w-10 px-2.5 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center font-mono font-bold text-xs text-neutral-900 dark:text-white shadow-2xs shrink-0">
             [{activeCountryObj.iso}]
           </div>
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[10px] sm:text-[11px] uppercase font-mono tracking-widest text-slate-400 font-semibold">Active Country Filter</span>
-              <span className="px-2 py-0.5 bg-slate-100 text-slate-700 text-[10px] font-mono rounded-md border border-slate-200 font-semibold">
-                Top 30
+              <span className="text-[10px] sm:text-[11px] uppercase font-mono tracking-widest text-neutral-400 dark:text-neutral-500 font-semibold">
+                Active Country Filter
+              </span>
+              <span className="px-2 py-0.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-[10px] font-mono rounded-md border border-neutral-200 dark:border-neutral-700 font-semibold">
+                {activeCountryObj.region || 'Region'}
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight truncate mt-0.5">
+            <h2 className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white tracking-tight truncate mt-0.5">
               {activeCountryObj.name}
             </h2>
           </div>
@@ -91,29 +103,47 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
         <div className="relative w-full sm:w-auto" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
-            className="w-full sm:w-64 min-h-11 flex items-center justify-between gap-2 px-4 py-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-sm sm:text-xs font-semibold text-slate-800 transition-all shadow-sm"
+            className="w-full sm:w-64 min-h-10 flex items-center justify-between gap-2 px-4 py-2 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700/80 border border-neutral-200 dark:border-neutral-700 rounded-xl text-sm sm:text-xs font-semibold text-neutral-800 dark:text-neutral-100 transition-all shadow-2xs cursor-pointer"
             aria-expanded={dropdownOpen}
             aria-haspopup="listbox"
           >
             <div className="flex items-center gap-2 truncate">
-              <Globe className="w-4 h-4 text-blue-600 shrink-0" />
+              <Globe className="w-4 h-4 text-neutral-500 dark:text-neutral-400 shrink-0" />
               <span className="truncate">{activeCountryObj.name} ({activeCountryObj.iso})</span>
             </div>
-            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`w-4 h-4 text-neutral-400 dark:text-neutral-500 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />
           </button>
 
           {/* Full Country Dropdown Drawer */}
           {dropdownOpen && (
-            <div className="absolute left-0 sm:left-auto right-0 top-full mt-2 w-full sm:w-80 max-w-[calc(100vw-2rem)] bg-white border border-slate-200 rounded-2xl shadow-2xl z-50 p-3 max-h-[min(24rem,calc(100vh-10rem))] overflow-y-auto">
+            <div className="absolute left-0 sm:left-auto right-0 top-full mt-2 w-full sm:w-88 max-w-[calc(100vw-2rem)] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl z-50 p-3 max-h-[min(26rem,calc(100vh-10rem))] overflow-y-auto">
+              
+              {/* Region Tabs inside Dropdown */}
+              <div className="flex items-center gap-1 overflow-x-auto pb-2 mb-2.5 border-b border-neutral-200 dark:border-neutral-800">
+                {regions.map((reg) => (
+                  <button
+                    key={reg}
+                    onClick={() => setSelectedRegion(reg)}
+                    className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors whitespace-nowrap cursor-pointer ${
+                      selectedRegion === reg
+                        ? 'bg-black text-white dark:bg-white dark:text-black font-bold'
+                        : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800'
+                    }`}
+                  >
+                    {reg}
+                  </button>
+                ))}
+              </div>
+
               {/* Internal Search */}
-              <div className="relative mb-3">
-                <Search className="absolute left-3 top-3 w-3.5 h-3.5 text-slate-400" />
+              <div className="relative mb-2.5">
+                <Search className="absolute left-3 top-3 w-3.5 h-3.5 text-neutral-400" />
                 <input
                   type="text"
                   value={countryFilter}
                   onChange={(e) => setCountryFilter(e.target.value)}
-                  placeholder="Filter country by name or ISO..."
-                  className="w-full min-h-10 pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 focus:outline-none focus:border-blue-600 font-medium"
+                  placeholder="Search by country or ISO..."
+                  className="w-full min-h-9 pl-9 pr-3 py-1.5 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-xs text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-black dark:focus:border-white font-medium"
                 />
               </div>
 
@@ -130,19 +160,19 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                         onSelectCountry(c.code);
                         setDropdownOpen(false);
                       }}
-                      className={`flex items-center justify-between min-h-10 px-3 py-2 rounded-xl text-sm font-mono transition-all text-left ${
+                      className={`flex items-center justify-between min-h-9 px-3 py-1.5 rounded-xl text-xs font-mono transition-all text-left cursor-pointer ${
                         isSelected
-                          ? 'bg-blue-600 text-white font-bold'
-                          : 'text-slate-700 hover:bg-slate-100'
+                          ? 'bg-black text-white dark:bg-white dark:text-black font-bold'
+                          : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
                       }`}
                     >
                       <span className="flex items-center gap-2.5 min-w-0">
-                        <strong className={`font-mono text-xs shrink-0 inline-block min-w-[4.25rem] ${isSelected ? 'text-blue-100' : 'text-slate-400'}`}>
+                        <strong className={`font-mono text-xs shrink-0 inline-block min-w-[3.5rem] ${isSelected ? 'text-neutral-300 dark:text-neutral-700' : 'text-neutral-400 dark:text-neutral-500'}`}>
                           [{c.iso}]
                         </strong>
                         <span className="truncate">{c.name}</span>
                       </span>
-                      {isSelected && <Check className="w-3.5 h-3.5 text-white shrink-0 ml-2" />}
+                      {isSelected && <Check className="w-3.5 h-3.5 text-white dark:text-black shrink-0 ml-2" />}
                     </button>
                   );
                 })}
