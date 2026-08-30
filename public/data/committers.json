@@ -1,34 +1,26 @@
 {
-  "last_updated": "2026-08-29T15:47:27.787468+00:00",
+  "last_updated": "2026-08-30T01:52:59.677197+00:00",
   "update_frequency": "20 países por corrida, rotación automática cada 12 horas",
   "sync_state": {
     "mode": "batch",
-    "batch_size": 20,
+    "batch_size": 12,
     "updated_countries": [
-      "Dominican Republic",
-      "Bangladesh",
-      "Austria",
-      "Guatemala",
-      "Malaysia",
-      "Denmark",
-      "Panama",
-      "Thailand",
-      "Finland",
-      "Bolivia",
-      "Israel",
-      "Norway",
-      "Paraguay",
-      "Turkey",
-      "Ireland",
-      "El Salvador",
-      "New Zealand",
-      "Czech Republic",
-      "Honduras",
-      "Romania"
+      "Nicaragua",
+      "Hungary",
+      "Cuba",
+      "Greece",
+      "Bulgaria",
+      "Croatia",
+      "Serbia",
+      "Slovakia",
+      "Slovenia",
+      "Estonia",
+      "Latvia",
+      "Lithuania"
     ],
-    "next_country": "Nicaragua",
-    "cycle": 10,
-    "cycle_completed": false
+    "next_country": "United States",
+    "cycle": 11,
+    "cycle_completed": true
   },
   "countries": {
     "Colombia": {
@@ -9808,7 +9800,7 @@
       "name": "Cuba",
       "iso": "CU",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:02.607684+00:00",
+      "last_updated": "2026-08-30T01:53:09.963189+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -9824,7 +9816,7 @@
           "followers": 68,
           "following": 6,
           "estimated_commits": 15323,
-          "live_contributions": 19947,
+          "live_contributions": 19992,
           "stars_received": 116,
           "country": "Cuba",
           "languages": [
@@ -9847,8 +9839,8 @@
           "followers": 6,
           "following": 9,
           "estimated_commits": 6772,
-          "live_contributions": 7578,
-          "stars_received": 21,
+          "live_contributions": 7627,
+          "stars_received": 23,
           "country": "Cuba",
           "languages": [
             "Java",
@@ -9867,7 +9859,7 @@
           "bio": "Wajahat Ali Mir | Software Engineer building reliable React Native & web apps. Focused on clean code, performance, scalable products & real-world solutions.",
           "blog": "https://wajahat-ali-mir-dev.vercel.app/",
           "public_repos": 33,
-          "followers": 198,
+          "followers": 197,
           "following": 1137,
           "estimated_commits": 5551,
           "live_contributions": 5691,
@@ -9893,7 +9885,7 @@
           "followers": 450,
           "following": 42,
           "estimated_commits": 5502,
-          "live_contributions": 14051,
+          "live_contributions": 14077,
           "stars_received": 508,
           "country": "Cuba",
           "languages": [
@@ -9939,7 +9931,7 @@
           "followers": 85,
           "following": 151,
           "estimated_commits": 2987,
-          "live_contributions": 3785,
+          "live_contributions": 3793,
           "stars_received": 101,
           "country": "Cuba",
           "languages": [
@@ -9962,7 +9954,7 @@
           "followers": 18,
           "following": 18,
           "estimated_commits": 2187,
-          "live_contributions": 6221,
+          "live_contributions": 6227,
           "stars_received": 16,
           "country": "Cuba",
           "languages": [
@@ -9985,7 +9977,7 @@
           "followers": 12,
           "following": 1,
           "estimated_commits": 1843,
-          "live_contributions": 1880,
+          "live_contributions": 1900,
           "stars_received": 1,
           "country": "Cuba",
           "languages": [
@@ -10008,7 +10000,7 @@
           "followers": 26,
           "following": 38,
           "estimated_commits": 1653,
-          "live_contributions": 2060,
+          "live_contributions": 2065,
           "stars_received": 55,
           "country": "Cuba",
           "languages": [
@@ -10027,12 +10019,12 @@
           "location": "La Habana, Cuba",
           "bio": "A simple full-stack developer",
           "blog": "https://rodny.is-a.dev",
-          "public_repos": 99,
+          "public_repos": 100,
           "followers": 131,
-          "following": 188,
+          "following": 189,
           "estimated_commits": 1428,
-          "live_contributions": 1833,
-          "stars_received": 155,
+          "live_contributions": 1839,
+          "stars_received": 156,
           "country": "Cuba",
           "languages": [
             "JavaScript",
@@ -10077,7 +10069,7 @@
           "followers": 5,
           "following": 3,
           "estimated_commits": 1361,
-          "live_contributions": 1391,
+          "live_contributions": 1395,
           "stars_received": 30,
           "country": "Cuba",
           "languages": [
@@ -10123,7 +10115,7 @@
           "followers": 22,
           "following": 23,
           "estimated_commits": 882,
-          "live_contributions": 992,
+          "live_contributions": 998,
           "stars_received": 28,
           "country": "Cuba",
           "languages": [
@@ -10192,7 +10184,7 @@
           "followers": 18,
           "following": 15,
           "estimated_commits": 618,
-          "live_contributions": 1060,
+          "live_contributions": 1061,
           "stars_received": 22,
           "country": "Cuba",
           "languages": [
@@ -10281,7 +10273,7 @@
           "bio": "👩🏻‍💻 If you can imagine it then you can code it 💚\r\n✨Estudiante 4to año de Ingeniería Informática🐳😼",
           "blog": "https://github.com/Eilen-Fonseca-Garrote",
           "public_repos": 26,
-          "followers": 129,
+          "followers": 130,
           "following": 111,
           "estimated_commits": 537,
           "live_contributions": 641,
@@ -10353,7 +10345,7 @@
           "followers": 5,
           "following": 2,
           "estimated_commits": 525,
-          "live_contributions": 529,
+          "live_contributions": 546,
           "stars_received": 0,
           "country": "Cuba",
           "languages": [
@@ -10372,12 +10364,12 @@
           "location": "La Habana, Cuba",
           "bio": "Software Engineer dedicated to backend, data and ai",
           "blog": "https://github.com/DaryllLorenzo",
-          "public_repos": 38,
+          "public_repos": 40,
           "followers": 17,
           "following": 27,
           "estimated_commits": 517,
-          "live_contributions": 577,
-          "stars_received": 14,
+          "live_contributions": 599,
+          "stars_received": 15,
           "country": "Cuba",
           "languages": [
             "Python",
@@ -10418,17 +10410,17 @@
           "location": "Ciego de Ávila, Cuba",
           "bio": "console.log(\"Hello World\")",
           "blog": "https://github.com/teby00",
-          "public_repos": 12,
+          "public_repos": 10,
           "followers": 6,
           "following": 8,
           "estimated_commits": 505,
-          "live_contributions": 737,
+          "live_contributions": 739,
           "stars_received": 6,
           "country": "Cuba",
           "languages": [
             "TypeScript",
             "Astro",
-            "Python"
+            "JavaScript"
           ]
         },
         {
@@ -11903,7 +11895,7 @@
       "name": "Nicaragua",
       "iso": "NI",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:03.507564+00:00",
+      "last_updated": "2026-08-30T01:53:09.933950+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -11919,7 +11911,7 @@
           "followers": 21,
           "following": 14,
           "estimated_commits": 4845,
-          "live_contributions": 6522,
+          "live_contributions": 6588,
           "stars_received": 3,
           "country": "Nicaragua",
           "languages": [
@@ -11938,17 +11930,17 @@
           "location": "Nicaragua",
           "bio": "Full-Stack Dev @Atomchat-io · Building Rumai, an IoT + AI livestock monitoring platform · Into Rust, LoRaWAN & AI agents",
           "blog": "antonygiomarx.dev",
-          "public_repos": 38,
+          "public_repos": 37,
           "followers": 5,
           "following": 11,
           "estimated_commits": 2033,
-          "live_contributions": 7804,
-          "stars_received": 73,
+          "live_contributions": 7810,
+          "stars_received": 79,
           "country": "Nicaragua",
           "languages": [
             "TypeScript",
             "Rust",
-            "Python"
+            "Shell"
           ]
         },
         {
@@ -11965,7 +11957,7 @@
           "followers": 18,
           "following": 12,
           "estimated_commits": 1811,
-          "live_contributions": 2577,
+          "live_contributions": 2616,
           "stars_received": 174,
           "country": "Nicaragua",
           "languages": [
@@ -11988,7 +11980,7 @@
           "followers": 19,
           "following": 21,
           "estimated_commits": 1713,
-          "live_contributions": 2178,
+          "live_contributions": 2225,
           "stars_received": 13,
           "country": "Nicaragua",
           "languages": [
@@ -12034,7 +12026,7 @@
           "followers": 15,
           "following": 13,
           "estimated_commits": 1080,
-          "live_contributions": 1280,
+          "live_contributions": 1281,
           "stars_received": 22,
           "country": "Nicaragua",
           "languages": [
@@ -12053,11 +12045,11 @@
           "location": "Managua, Nicaragua",
           "bio": "r0lm0",
           "blog": "https://github.com/R0LM0",
-          "public_repos": 33,
-          "followers": 31,
+          "public_repos": 34,
+          "followers": 36,
           "following": 40,
           "estimated_commits": 1022,
-          "live_contributions": 1205,
+          "live_contributions": 1214,
           "stars_received": 8,
           "country": "Nicaragua",
           "languages": [
@@ -12080,7 +12072,7 @@
           "followers": 4,
           "following": 1,
           "estimated_commits": 987,
-          "live_contributions": 1321,
+          "live_contributions": 1336,
           "stars_received": 6,
           "country": "Nicaragua",
           "languages": [
@@ -12126,7 +12118,7 @@
           "followers": 11,
           "following": 50,
           "estimated_commits": 886,
-          "live_contributions": 1315,
+          "live_contributions": 1357,
           "stars_received": 27,
           "country": "Nicaragua",
           "languages": [
@@ -12145,17 +12137,17 @@
           "location": "Nicaragua",
           "bio": "Lead Web Developer",
           "blog": "https://maycolljaramillo.vercel.app",
-          "public_repos": 83,
+          "public_repos": 88,
           "followers": 3,
           "following": 3,
           "estimated_commits": 864,
-          "live_contributions": 1229,
+          "live_contributions": 1239,
           "stars_received": 16,
           "country": "Nicaragua",
           "languages": [
             "TypeScript",
             "HTML",
-            "PHP"
+            "JavaScript"
           ]
         },
         {
@@ -12218,7 +12210,7 @@
           "followers": 26,
           "following": 34,
           "estimated_commits": 734,
-          "live_contributions": 868,
+          "live_contributions": 875,
           "stars_received": 56,
           "country": "Nicaragua",
           "languages": [
@@ -12260,11 +12252,11 @@
           "location": "Nicaragua",
           "bio": "Building and shipping software.",
           "blog": "fabmnt.dev",
-          "public_repos": 18,
+          "public_repos": 19,
           "followers": 15,
           "following": 10,
           "estimated_commits": 669,
-          "live_contributions": 3838,
+          "live_contributions": 3845,
           "stars_received": 1,
           "country": "Nicaragua",
           "languages": [
@@ -12287,7 +12279,7 @@
           "followers": 10,
           "following": 9,
           "estimated_commits": 664,
-          "live_contributions": 940,
+          "live_contributions": 948,
           "stars_received": 8,
           "country": "Nicaragua",
           "languages": [
@@ -12356,7 +12348,7 @@
           "followers": 17,
           "following": 35,
           "estimated_commits": 643,
-          "live_contributions": 3460,
+          "live_contributions": 3462,
           "stars_received": 5,
           "country": "Nicaragua",
           "languages": [
@@ -12399,10 +12391,10 @@
           "bio": "Fullstack Software Engineer",
           "blog": "https://www.stevenampaiz.com",
           "public_repos": 16,
-          "followers": 28,
+          "followers": 29,
           "following": 57,
           "estimated_commits": 593,
-          "live_contributions": 2482,
+          "live_contributions": 2709,
           "stars_received": 2,
           "country": "Nicaragua",
           "languages": [
@@ -12448,7 +12440,7 @@
           "followers": 4,
           "following": 2,
           "estimated_commits": 579,
-          "live_contributions": 636,
+          "live_contributions": 652,
           "stars_received": 10,
           "country": "Nicaragua",
           "languages": [
@@ -12471,7 +12463,7 @@
           "followers": 11,
           "following": 7,
           "estimated_commits": 574,
-          "live_contributions": 582,
+          "live_contributions": 621,
           "stars_received": 6,
           "country": "Nicaragua",
           "languages": [
@@ -12494,7 +12486,7 @@
           "followers": 16,
           "following": 9,
           "estimated_commits": 544,
-          "live_contributions": 1700,
+          "live_contributions": 1707,
           "stars_received": 8,
           "country": "Nicaragua",
           "languages": [
@@ -12517,7 +12509,7 @@
           "followers": 4,
           "following": 2,
           "estimated_commits": 540,
-          "live_contributions": 797,
+          "live_contributions": 819,
           "stars_received": 1,
           "country": "Nicaragua",
           "languages": [
@@ -12536,11 +12528,11 @@
           "location": "Managua, Nicaragua",
           "bio": "The Honored Code One | Systems Engineer Student",
           "blog": "https://github.com/THEGABOALE",
-          "public_repos": 40,
-          "followers": 12,
+          "public_repos": 41,
+          "followers": 13,
           "following": 17,
           "estimated_commits": 523,
-          "live_contributions": 634,
+          "live_contributions": 646,
           "stars_received": 2,
           "country": "Nicaragua",
           "languages": [
@@ -12563,7 +12555,7 @@
           "followers": 24,
           "following": 128,
           "estimated_commits": 465,
-          "live_contributions": 5739,
+          "live_contributions": 6333,
           "stars_received": 0,
           "country": "Nicaragua",
           "languages": [
@@ -12586,7 +12578,7 @@
           "followers": 5,
           "following": 5,
           "estimated_commits": 448,
-          "live_contributions": 441,
+          "live_contributions": 449,
           "stars_received": 2,
           "country": "Nicaragua",
           "languages": [
@@ -19526,7 +19518,7 @@
       "name": "Croatia",
       "iso": "HR",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:24.562386+00:00",
+      "last_updated": "2026-08-30T01:53:26.028167+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -19539,10 +19531,10 @@
           "bio": "",
           "blog": "https://italk.hr",
           "public_repos": 112,
-          "followers": 43,
+          "followers": 44,
           "following": 41,
           "estimated_commits": 35333,
-          "live_contributions": 37200,
+          "live_contributions": 37248,
           "stars_received": 49,
           "country": "Croatia",
           "languages": [
@@ -19565,7 +19557,7 @@
           "followers": 325,
           "following": 1,
           "estimated_commits": 7316,
-          "live_contributions": 7614,
+          "live_contributions": 7622,
           "stars_received": 571,
           "country": "Croatia",
           "languages": [
@@ -19585,10 +19577,10 @@
           "bio": "",
           "blog": "https://github.com/AleksandarDev",
           "public_repos": 62,
-          "followers": 109,
+          "followers": 110,
           "following": 43,
           "estimated_commits": 5133,
-          "live_contributions": 11688,
+          "live_contributions": 11858,
           "stars_received": 55,
           "country": "Croatia",
           "languages": [
@@ -19607,12 +19599,12 @@
           "location": "Split, Croatia",
           "bio": "experiments with AI agents — learnings https://nibzard.com/",
           "blog": "https://nibzard.com",
-          "public_repos": 281,
+          "public_repos": 282,
           "followers": 367,
           "following": 22,
           "estimated_commits": 4952,
-          "live_contributions": 10876,
-          "stars_received": 5132,
+          "live_contributions": 10959,
+          "stars_received": 5137,
           "country": "Croatia",
           "languages": [
             "Python",
@@ -19631,11 +19623,11 @@
           "bio": "",
           "blog": "https://www.linkedin.com/in/cyan051/",
           "public_repos": 80,
-          "followers": 1174,
+          "followers": 1176,
           "following": 0,
           "estimated_commits": 4909,
-          "live_contributions": 5175,
-          "stars_received": 13494,
+          "live_contributions": 5185,
+          "stars_received": 13500,
           "country": "Croatia",
           "languages": [
             "Python",
@@ -19657,7 +19649,7 @@
           "followers": 8,
           "following": 6,
           "estimated_commits": 4872,
-          "live_contributions": 7521,
+          "live_contributions": 7550,
           "stars_received": 12,
           "country": "Croatia",
           "languages": [
@@ -19680,7 +19672,7 @@
           "followers": 49,
           "following": 94,
           "estimated_commits": 3761,
-          "live_contributions": 4843,
+          "live_contributions": 4846,
           "stars_received": 0,
           "country": "Croatia",
           "languages": [
@@ -19703,7 +19695,7 @@
           "followers": 156,
           "following": 17,
           "estimated_commits": 3328,
-          "live_contributions": 4772,
+          "live_contributions": 4816,
           "stars_received": 27,
           "country": "Croatia",
           "languages": [
@@ -19727,7 +19719,7 @@
           "following": 7,
           "estimated_commits": 3186,
           "live_contributions": 3228,
-          "stars_received": 1164,
+          "stars_received": 1165,
           "country": "Croatia",
           "languages": [
             "Elixir",
@@ -19749,7 +19741,7 @@
           "followers": 36,
           "following": 31,
           "estimated_commits": 2665,
-          "live_contributions": 4945,
+          "live_contributions": 4985,
           "stars_received": 65,
           "country": "Croatia",
           "languages": [
@@ -19772,7 +19764,7 @@
           "followers": 44,
           "following": 26,
           "estimated_commits": 2096,
-          "live_contributions": 7169,
+          "live_contributions": 7223,
           "stars_received": 294,
           "country": "Croatia",
           "languages": [
@@ -19792,15 +19784,14 @@
           "bio": "74 → EB",
           "blog": "https://www.sekuripy.hr",
           "public_repos": 23,
-          "followers": 2928,
+          "followers": 2929,
           "following": 17,
           "estimated_commits": 2047,
-          "live_contributions": 2378,
-          "stars_received": 15886,
+          "live_contributions": 2541,
+          "stars_received": 15893,
           "country": "Croatia",
           "languages": [
             "Python",
-            "Rust",
             "C"
           ]
         },
@@ -19818,7 +19809,7 @@
           "followers": 24,
           "following": 1,
           "estimated_commits": 2025,
-          "live_contributions": 2416,
+          "live_contributions": 2434,
           "stars_received": 0,
           "country": "Croatia",
           "languages": [
@@ -19861,10 +19852,10 @@
           "bio": "",
           "blog": "https://ralforion.com",
           "public_repos": 156,
-          "followers": 203,
+          "followers": 202,
           "following": 123,
           "estimated_commits": 1902,
-          "live_contributions": 3403,
+          "live_contributions": 3498,
           "stars_received": 181,
           "country": "Croatia",
           "languages": [
@@ -19887,7 +19878,7 @@
           "followers": 43,
           "following": 30,
           "estimated_commits": 1900,
-          "live_contributions": 4949,
+          "live_contributions": 4996,
           "stars_received": 1,
           "country": "Croatia",
           "languages": [
@@ -19910,7 +19901,7 @@
           "followers": 14,
           "following": 14,
           "estimated_commits": 1896,
-          "live_contributions": 2776,
+          "live_contributions": 2823,
           "stars_received": 0,
           "country": "Croatia",
           "languages": [
@@ -19931,7 +19922,7 @@
           "followers": 79,
           "following": 4,
           "estimated_commits": 1886,
-          "live_contributions": 3083,
+          "live_contributions": 3103,
           "stars_received": 59,
           "country": "Croatia",
           "languages": [
@@ -19954,7 +19945,7 @@
           "followers": 152,
           "following": 4,
           "estimated_commits": 1565,
-          "live_contributions": 1586,
+          "live_contributions": 1598,
           "stars_received": 183,
           "country": "Croatia",
           "languages": [
@@ -19999,7 +19990,7 @@
           "followers": 44,
           "following": 18,
           "estimated_commits": 1488,
-          "live_contributions": 4153,
+          "live_contributions": 4154,
           "stars_received": 20,
           "country": "Croatia",
           "languages": [
@@ -20069,7 +20060,7 @@
           "following": 10,
           "estimated_commits": 1360,
           "live_contributions": 1372,
-          "stars_received": 200,
+          "stars_received": 201,
           "country": "Croatia",
           "languages": [
             "Python",
@@ -20114,7 +20105,7 @@
           "followers": 67,
           "following": 3,
           "estimated_commits": 1280,
-          "live_contributions": 2765,
+          "live_contributions": 2807,
           "stars_received": 1,
           "country": "Croatia",
           "languages": [
@@ -20160,7 +20151,7 @@
           "followers": 36,
           "following": 50,
           "estimated_commits": 1253,
-          "live_contributions": 6601,
+          "live_contributions": 6972,
           "stars_received": 2,
           "country": "Croatia",
           "languages": [
@@ -20183,7 +20174,7 @@
           "followers": 40,
           "following": 2,
           "estimated_commits": 1227,
-          "live_contributions": 2308,
+          "live_contributions": 2311,
           "stars_received": 56,
           "country": "Croatia",
           "languages": [
@@ -20206,7 +20197,7 @@
           "followers": 128,
           "following": 105,
           "estimated_commits": 1224,
-          "live_contributions": 1232,
+          "live_contributions": 1236,
           "stars_received": 17,
           "country": "Croatia",
           "languages": [
@@ -21620,7 +21611,7 @@
       "name": "Estonia",
       "iso": "EE",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:47.397244+00:00",
+      "last_updated": "2026-08-30T01:53:52.700658+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -21633,11 +21624,11 @@
           "bio": " Totally 👨 not a 🤖 // 📆 for all time - Father 👍 // 📆 other times (if I have) 🎃 Back-end Developer 🗡️ System Administrator 🌵 DevOps ",
           "blog": "http://www.ersinkoc.com",
           "public_repos": 184,
-          "followers": 491,
+          "followers": 492,
           "following": 64,
           "estimated_commits": 21362,
-          "live_contributions": 24017,
-          "stars_received": 802,
+          "live_contributions": 24091,
+          "stars_received": 804,
           "country": "Estonia",
           "languages": [
             "TypeScript",
@@ -21659,7 +21650,7 @@
           "followers": 62,
           "following": 27,
           "estimated_commits": 8914,
-          "live_contributions": 9456,
+          "live_contributions": 9557,
           "stars_received": 33,
           "country": "Estonia",
           "languages": [
@@ -21682,8 +21673,8 @@
           "followers": 64,
           "following": 15,
           "estimated_commits": 6937,
-          "live_contributions": 8982,
-          "stars_received": 656,
+          "live_contributions": 9013,
+          "stars_received": 658,
           "country": "Estonia",
           "languages": [
             "C",
@@ -21705,7 +21696,7 @@
           "followers": 22,
           "following": 35,
           "estimated_commits": 5361,
-          "live_contributions": 11450,
+          "live_contributions": 11528,
           "stars_received": 9,
           "country": "Estonia",
           "languages": [
@@ -21728,7 +21719,7 @@
           "followers": 14,
           "following": 6,
           "estimated_commits": 4614,
-          "live_contributions": 10626,
+          "live_contributions": 10645,
           "stars_received": 13,
           "country": "Estonia",
           "languages": [
@@ -21751,7 +21742,7 @@
           "followers": 46,
           "following": 33,
           "estimated_commits": 4410,
-          "live_contributions": 6890,
+          "live_contributions": 6967,
           "stars_received": 420,
           "country": "Estonia",
           "languages": [
@@ -21770,11 +21761,11 @@
           "location": "Tallinn",
           "bio": "",
           "blog": "https://github.com/AmbientLighter",
-          "public_repos": 58,
+          "public_repos": 59,
           "followers": 26,
           "following": 10,
           "estimated_commits": 3918,
-          "live_contributions": 4286,
+          "live_contributions": 4303,
           "stars_received": 36,
           "country": "Estonia",
           "languages": [
@@ -21794,11 +21785,11 @@
           "bio": "",
           "blog": "rasmuswiding.com",
           "public_repos": 47,
-          "followers": 393,
+          "followers": 392,
           "following": 1,
           "estimated_commits": 3357,
-          "live_contributions": 9553,
-          "stars_received": 2620,
+          "live_contributions": 9883,
+          "stars_received": 2622,
           "country": "Estonia",
           "languages": [
             "Python",
@@ -21816,17 +21807,17 @@
           "location": "Tallinn, Estonia",
           "bio": "",
           "blog": "https://github.com/ddanila",
-          "public_repos": 42,
+          "public_repos": 43,
           "followers": 16,
           "following": 0,
           "estimated_commits": 3261,
-          "live_contributions": 6794,
-          "stars_received": 90,
+          "live_contributions": 7207,
+          "stars_received": 91,
           "country": "Estonia",
           "languages": [
             "C",
-            "C++",
-            "Assembly"
+            "Assembly",
+            "C++"
           ]
         },
         {
@@ -21840,10 +21831,10 @@
           "bio": "",
           "blog": "www.fotki.com",
           "public_repos": 2,
-          "followers": 32,
+          "followers": 33,
           "following": 55,
           "estimated_commits": 3205,
-          "live_contributions": 3252,
+          "live_contributions": 3283,
           "stars_received": 0,
           "country": "Estonia",
           "languages": [
@@ -21860,12 +21851,12 @@
           "location": "Estonia, Tartu",
           "bio": "",
           "blog": "egonelbre.com",
-          "public_repos": 127,
+          "public_repos": 128,
           "followers": 604,
           "following": 58,
           "estimated_commits": 2513,
-          "live_contributions": 7979,
-          "stars_received": 4180,
+          "live_contributions": 8030,
+          "stars_received": 4181,
           "country": "Estonia",
           "languages": [
             "Go",
@@ -21887,8 +21878,8 @@
           "followers": 13,
           "following": 7,
           "estimated_commits": 2498,
-          "live_contributions": 9768,
-          "stars_received": 190,
+          "live_contributions": 9921,
+          "stars_received": 194,
           "country": "Estonia",
           "languages": [
             "HTML",
@@ -21910,7 +21901,7 @@
           "followers": 1480,
           "following": 9,
           "estimated_commits": 2457,
-          "live_contributions": 3793,
+          "live_contributions": 3814,
           "stars_received": 3024,
           "country": "Estonia",
           "languages": [
@@ -21929,11 +21920,11 @@
           "location": "Tallinn, Estonia",
           "bio": "IT Pro, Cybersecurity guy",
           "blog": "https://zaferbalkan.com",
-          "public_repos": 138,
+          "public_repos": 139,
           "followers": 91,
-          "following": 531,
+          "following": 532,
           "estimated_commits": 2224,
-          "live_contributions": 3054,
+          "live_contributions": 3056,
           "stars_received": 113,
           "country": "Estonia",
           "languages": [
@@ -21956,7 +21947,7 @@
           "followers": 16,
           "following": 14,
           "estimated_commits": 2116,
-          "live_contributions": 2148,
+          "live_contributions": 2154,
           "stars_received": 152,
           "country": "Estonia",
           "languages": [
@@ -21976,10 +21967,10 @@
           "bio": "",
           "blog": "http://asolntsev.github.io",
           "public_repos": 82,
-          "followers": 456,
+          "followers": 457,
           "following": 22,
           "estimated_commits": 2059,
-          "live_contributions": 2716,
+          "live_contributions": 2736,
           "stars_received": 81,
           "country": "Estonia",
           "languages": [
@@ -22025,7 +22016,7 @@
           "followers": 643,
           "following": 0,
           "estimated_commits": 1987,
-          "live_contributions": 2069,
+          "live_contributions": 2078,
           "stars_received": 789,
           "country": "Estonia",
           "languages": [
@@ -22048,7 +22039,7 @@
           "followers": 72,
           "following": 80,
           "estimated_commits": 1787,
-          "live_contributions": 2093,
+          "live_contributions": 2108,
           "stars_received": 67,
           "country": "Estonia",
           "languages": [
@@ -22071,7 +22062,7 @@
           "followers": 56,
           "following": 24,
           "estimated_commits": 1765,
-          "live_contributions": 1881,
+          "live_contributions": 1901,
           "stars_received": 345,
           "country": "Estonia",
           "languages": [
@@ -22094,8 +22085,8 @@
           "followers": 72,
           "following": 60,
           "estimated_commits": 1633,
-          "live_contributions": 4684,
-          "stars_received": 126,
+          "live_contributions": 4707,
+          "stars_received": 127,
           "country": "Estonia",
           "languages": [
             "Elixir",
@@ -22117,7 +22108,7 @@
           "followers": 60,
           "following": 9,
           "estimated_commits": 1552,
-          "live_contributions": 3319,
+          "live_contributions": 3384,
           "stars_received": 6,
           "country": "Estonia",
           "languages": [
@@ -22140,8 +22131,8 @@
           "followers": 1002,
           "following": 65,
           "estimated_commits": 1518,
-          "live_contributions": 3126,
-          "stars_received": 12879,
+          "live_contributions": 3137,
+          "stars_received": 12882,
           "country": "Estonia",
           "languages": [
             "Go",
@@ -22163,7 +22154,7 @@
           "followers": 111,
           "following": 23,
           "estimated_commits": 1500,
-          "live_contributions": 2235,
+          "live_contributions": 2241,
           "stars_received": 493,
           "country": "Estonia",
           "languages": [
@@ -22183,15 +22174,15 @@
           "bio": "AI, Kotlin, Java, Open-Source",
           "blog": "kpavlov.me",
           "public_repos": 77,
-          "followers": 133,
+          "followers": 132,
           "following": 84,
           "estimated_commits": 1385,
-          "live_contributions": 3989,
+          "live_contributions": 4013,
           "stars_received": 682,
           "country": "Estonia",
           "languages": [
-            "Kotlin",
             "Java",
+            "Kotlin",
             "Shell"
           ]
         },
@@ -22206,10 +22197,10 @@
           "bio": "",
           "blog": "https://github.com/vmikk",
           "public_repos": 102,
-          "followers": 57,
+          "followers": 58,
           "following": 39,
           "estimated_commits": 1347,
-          "live_contributions": 2314,
+          "live_contributions": 2325,
           "stars_received": 104,
           "country": "Estonia",
           "languages": [
@@ -22232,7 +22223,7 @@
           "followers": 115,
           "following": 21,
           "estimated_commits": 1233,
-          "live_contributions": 4511,
+          "live_contributions": 4534,
           "stars_received": 269,
           "country": "Estonia",
           "languages": [
@@ -22255,7 +22246,7 @@
           "followers": 26,
           "following": 2,
           "estimated_commits": 1214,
-          "live_contributions": 3703,
+          "live_contributions": 3713,
           "stars_received": 35,
           "country": "Estonia",
           "languages": [
@@ -22301,7 +22292,7 @@
           "followers": 22,
           "following": 14,
           "estimated_commits": 1147,
-          "live_contributions": 1305,
+          "live_contributions": 1308,
           "stars_received": 16,
           "country": "Estonia",
           "languages": [
@@ -23016,7 +23007,7 @@
       "name": "Greece",
       "iso": "GR",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:18.387970+00:00",
+      "last_updated": "2026-08-30T01:53:24.560945+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -23028,11 +23019,11 @@
           "location": "Kalymnos, Greece",
           "bio": "",
           "blog": "https://f7z.io",
-          "public_repos": 215,
-          "followers": 562,
+          "public_repos": 217,
+          "followers": 561,
           "following": 82,
           "estimated_commits": 16366,
-          "live_contributions": 24432,
+          "live_contributions": 24611,
           "stars_received": 5378,
           "country": "Greece",
           "languages": [
@@ -23055,7 +23046,7 @@
           "followers": 268,
           "following": 1,
           "estimated_commits": 8850,
-          "live_contributions": 9158,
+          "live_contributions": 9165,
           "stars_received": 609,
           "country": "Greece",
           "languages": [
@@ -23078,7 +23069,7 @@
           "followers": 143,
           "following": 138,
           "estimated_commits": 8059,
-          "live_contributions": 11233,
+          "live_contributions": 11288,
           "stars_received": 96,
           "country": "Greece",
           "languages": [
@@ -23101,7 +23092,7 @@
           "followers": 580,
           "following": 311,
           "estimated_commits": 6493,
-          "live_contributions": 11593,
+          "live_contributions": 11781,
           "stars_received": 303,
           "country": "Greece",
           "languages": [
@@ -23124,8 +23115,8 @@
           "followers": 125,
           "following": 0,
           "estimated_commits": 5483,
-          "live_contributions": 18734,
-          "stars_received": 4751,
+          "live_contributions": 18776,
+          "stars_received": 4756,
           "country": "Greece",
           "languages": [
             "Python",
@@ -23147,7 +23138,7 @@
           "followers": 85,
           "following": 169,
           "estimated_commits": 5204,
-          "live_contributions": 5355,
+          "live_contributions": 5377,
           "stars_received": 19,
           "country": "Greece",
           "languages": [
@@ -23170,7 +23161,7 @@
           "followers": 53,
           "following": 111,
           "estimated_commits": 3903,
-          "live_contributions": 4651,
+          "live_contributions": 4763,
           "stars_received": 1,
           "country": "Greece",
           "languages": [
@@ -23189,17 +23180,17 @@
           "location": "Greece",
           "bio": "Founder and CEO of netdata",
           "blog": "http://www.linkedin.com/in/costatsaousis",
-          "public_repos": 83,
-          "followers": 708,
+          "public_repos": 96,
+          "followers": 711,
           "following": 19,
           "estimated_commits": 3589,
-          "live_contributions": 4439,
+          "live_contributions": 4498,
           "stars_received": 12,
           "country": "Greece",
           "languages": [
             "JavaScript",
-            "C",
-            "Python"
+            "Python",
+            "C"
           ]
         },
         {
@@ -23216,7 +23207,7 @@
           "followers": 50,
           "following": 5,
           "estimated_commits": 3577,
-          "live_contributions": 3592,
+          "live_contributions": 3604,
           "stars_received": 46,
           "country": "Greece",
           "languages": [
@@ -23239,7 +23230,7 @@
           "followers": 77,
           "following": 1,
           "estimated_commits": 3049,
-          "live_contributions": 15161,
+          "live_contributions": 15369,
           "stars_received": 78,
           "country": "Greece",
           "languages": [
@@ -23262,8 +23253,8 @@
           "followers": 181,
           "following": 52,
           "estimated_commits": 2677,
-          "live_contributions": 3479,
-          "stars_received": 3642,
+          "live_contributions": 3592,
+          "stars_received": 3643,
           "country": "Greece",
           "languages": [
             "Python",
@@ -23285,8 +23276,8 @@
           "followers": 86,
           "following": 31,
           "estimated_commits": 2559,
-          "live_contributions": 8501,
-          "stars_received": 194,
+          "live_contributions": 8505,
+          "stars_received": 195,
           "country": "Greece",
           "languages": [
             "TypeScript",
@@ -23305,11 +23296,11 @@
           "bio": "cto @paradigmxyz / @tempoxyz. rustacean/devtools/security/high performance. crypto 10yrs.",
           "blog": "https://gakonst.com",
           "public_repos": 261,
-          "followers": 5463,
+          "followers": 5462,
           "following": 741,
           "estimated_commits": 2481,
-          "live_contributions": 13246,
-          "stars_received": 5066,
+          "live_contributions": 13273,
+          "stars_received": 5067,
           "country": "Greece",
           "languages": [
             "Rust",
@@ -23331,7 +23322,7 @@
           "followers": 131,
           "following": 67,
           "estimated_commits": 2302,
-          "live_contributions": 19450,
+          "live_contributions": 19811,
           "stars_received": 124,
           "country": "Greece",
           "languages": [
@@ -23351,11 +23342,11 @@
           "bio": "",
           "blog": "https://github.com/sgoudelis",
           "public_repos": 13,
-          "followers": 243,
+          "followers": 244,
           "following": 13,
           "estimated_commits": 2237,
-          "live_contributions": 2473,
-          "stars_received": 4762,
+          "live_contributions": 2494,
+          "stars_received": 4764,
           "country": "Greece",
           "languages": [
             "Python",
@@ -23374,10 +23365,10 @@
           "bio": "",
           "blog": "https://coaxion.net",
           "public_repos": 205,
-          "followers": 465,
+          "followers": 464,
           "following": 3,
           "estimated_commits": 2228,
-          "live_contributions": 2800,
+          "live_contributions": 2843,
           "stars_received": 1798,
           "country": "Greece",
           "languages": [
@@ -23400,7 +23391,7 @@
           "followers": 45,
           "following": 38,
           "estimated_commits": 2174,
-          "live_contributions": 2211,
+          "live_contributions": 2223,
           "stars_received": 13,
           "country": "Greece",
           "languages": [
@@ -23423,7 +23414,7 @@
           "followers": 138,
           "following": 126,
           "estimated_commits": 2031,
-          "live_contributions": 2291,
+          "live_contributions": 2295,
           "stars_received": 1000,
           "country": "Greece",
           "languages": [
@@ -23446,7 +23437,7 @@
           "followers": 91,
           "following": 6,
           "estimated_commits": 1991,
-          "live_contributions": 3610,
+          "live_contributions": 3672,
           "stars_received": 19,
           "country": "Greece",
           "languages": [
@@ -23469,7 +23460,7 @@
           "followers": 34,
           "following": 82,
           "estimated_commits": 1984,
-          "live_contributions": 4434,
+          "live_contributions": 4551,
           "stars_received": 37,
           "country": "Greece",
           "languages": [
@@ -23515,7 +23506,7 @@
           "followers": 377,
           "following": 0,
           "estimated_commits": 1763,
-          "live_contributions": 3810,
+          "live_contributions": 3828,
           "stars_received": 67,
           "country": "Greece",
           "languages": [
@@ -23534,11 +23525,11 @@
           "location": "thessaloniki, greece",
           "bio": "cs undergrad",
           "blog": "https://podikoglou.eu",
-          "public_repos": 57,
-          "followers": 43,
+          "public_repos": 58,
+          "followers": 41,
           "following": 525,
           "estimated_commits": 1677,
-          "live_contributions": 1794,
+          "live_contributions": 1799,
           "stars_received": 25,
           "country": "Greece",
           "languages": [
@@ -23607,8 +23598,8 @@
           "followers": 943,
           "following": 2,
           "estimated_commits": 1539,
-          "live_contributions": 3322,
-          "stars_received": 11094,
+          "live_contributions": 3354,
+          "stars_received": 11096,
           "country": "Greece",
           "languages": [
             "Python",
@@ -23627,11 +23618,11 @@
           "bio": "iOS/Mac Developer with Elixir abilities.",
           "blog": "www.spirosgerokostas.com",
           "public_repos": 60,
-          "followers": 228,
+          "followers": 227,
           "following": 274,
           "estimated_commits": 1533,
-          "live_contributions": 1655,
-          "stars_received": 7192,
+          "live_contributions": 1662,
+          "stars_received": 7194,
           "country": "Greece",
           "languages": [
             "Go",
@@ -23653,7 +23644,7 @@
           "followers": 119,
           "following": 133,
           "estimated_commits": 1528,
-          "live_contributions": 2341,
+          "live_contributions": 2348,
           "stars_received": 370,
           "country": "Greece",
           "languages": [
@@ -23672,11 +23663,11 @@
           "location": "Greece",
           "bio": "@twbs maintainer, open-source software believer",
           "blog": "https://github.com/XhmikosR",
-          "public_repos": 40,
+          "public_repos": 37,
           "followers": 3470,
           "following": 72,
           "estimated_commits": 1495,
-          "live_contributions": 2339,
+          "live_contributions": 2345,
           "stars_received": 2171,
           "country": "Greece",
           "languages": [
@@ -23699,7 +23690,7 @@
           "followers": 42,
           "following": 105,
           "estimated_commits": 1424,
-          "live_contributions": 1702,
+          "live_contributions": 1706,
           "stars_received": 31,
           "country": "Greece",
           "languages": [
@@ -23715,7 +23706,7 @@
       "name": "Hungary",
       "iso": "HU",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:11.889413+00:00",
+      "last_updated": "2026-08-30T01:53:14.240353+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -23731,7 +23722,7 @@
           "followers": 29,
           "following": 33,
           "estimated_commits": 6943,
-          "live_contributions": 7251,
+          "live_contributions": 7261,
           "stars_received": 8,
           "country": "Hungary",
           "languages": [
@@ -23751,10 +23742,10 @@
           "bio": "Founder of coolLabs.io | ❤️ OSS & simplicity | 2 x dad, Entrepreneur.",
           "blog": "https://coollabs.io",
           "public_repos": 61,
-          "followers": 1829,
+          "followers": 1831,
           "following": 15,
           "estimated_commits": 6908,
-          "live_contributions": 23112,
+          "live_contributions": 23125,
           "stars_received": 115,
           "country": "Hungary",
           "languages": [
@@ -23777,7 +23768,7 @@
           "followers": 26,
           "following": 2,
           "estimated_commits": 4547,
-          "live_contributions": 6168,
+          "live_contributions": 6227,
           "stars_received": 46,
           "country": "Hungary",
           "languages": [
@@ -23800,7 +23791,7 @@
           "followers": 1386,
           "following": 3,
           "estimated_commits": 3950,
-          "live_contributions": 16717,
+          "live_contributions": 16749,
           "stars_received": 2193,
           "country": "Hungary",
           "languages": [
@@ -23823,7 +23814,7 @@
           "followers": 27,
           "following": 85,
           "estimated_commits": 3626,
-          "live_contributions": 5147,
+          "live_contributions": 5169,
           "stars_received": 27,
           "country": "Hungary",
           "languages": [
@@ -23846,7 +23837,7 @@
           "followers": 125,
           "following": 3,
           "estimated_commits": 3141,
-          "live_contributions": 4809,
+          "live_contributions": 4868,
           "stars_received": 366,
           "country": "Hungary",
           "languages": [
@@ -23869,7 +23860,7 @@
           "followers": 74,
           "following": 1,
           "estimated_commits": 3091,
-          "live_contributions": 24422,
+          "live_contributions": 24500,
           "stars_received": 180,
           "country": "Hungary",
           "languages": [
@@ -23889,10 +23880,10 @@
           "bio": "Maintainer of @pnpm",
           "blog": "https://www.kochan.io",
           "public_repos": 294,
-          "followers": 2231,
+          "followers": 2235,
           "following": 135,
           "estimated_commits": 2866,
-          "live_contributions": 21275,
+          "live_contributions": 21406,
           "stars_received": 325,
           "country": "Hungary",
           "languages": [
@@ -23915,7 +23906,7 @@
           "followers": 96,
           "following": 0,
           "estimated_commits": 2833,
-          "live_contributions": 4759,
+          "live_contributions": 4777,
           "stars_received": 0,
           "country": "Hungary",
           "languages": [
@@ -23935,10 +23926,10 @@
           "bio": "AI & Data with Rust",
           "blog": "https://www.vectorian.be/",
           "public_repos": 75,
-          "followers": 145,
+          "followers": 144,
           "following": 619,
           "estimated_commits": 2259,
-          "live_contributions": 2668,
+          "live_contributions": 2700,
           "stars_received": 93,
           "country": "Hungary",
           "languages": [
@@ -23961,7 +23952,7 @@
           "followers": 40,
           "following": 55,
           "estimated_commits": 2099,
-          "live_contributions": 3256,
+          "live_contributions": 3299,
           "stars_received": 8,
           "country": "Hungary",
           "languages": [
@@ -23980,12 +23971,12 @@
           "location": "Hungary",
           "bio": "",
           "blog": "https://gbtami.github.io",
-          "public_repos": 236,
+          "public_repos": 237,
           "followers": 92,
           "following": 2,
           "estimated_commits": 1976,
-          "live_contributions": 2263,
-          "stars_received": 376,
+          "live_contributions": 2296,
+          "stars_received": 373,
           "country": "Hungary",
           "languages": [
             "Python",
@@ -24004,11 +23995,11 @@
           "bio": "I'm learning to be a programmer. I have knowledge in html/css, JS/TS, React, Python and C# (favorite).",
           "blog": "https://gurge44.eu",
           "public_repos": 28,
-          "followers": 31,
+          "followers": 32,
           "following": 0,
           "estimated_commits": 1824,
           "live_contributions": 2022,
-          "stars_received": 165,
+          "stars_received": 166,
           "country": "Hungary",
           "languages": [
             "C#",
@@ -24027,11 +24018,11 @@
           "bio": "Author of Hister, Searx, Colly and a bunch of smaller projects",
           "blog": "https://github.com/asciimoo",
           "public_repos": 77,
-          "followers": 1429,
+          "followers": 1435,
           "following": 77,
           "estimated_commits": 1679,
-          "live_contributions": 1959,
-          "stars_received": 21335,
+          "live_contributions": 1970,
+          "stars_received": 21471,
           "country": "Hungary",
           "languages": [
             "Python",
@@ -24053,7 +24044,7 @@
           "followers": 95,
           "following": 215,
           "estimated_commits": 1643,
-          "live_contributions": 5048,
+          "live_contributions": 5050,
           "stars_received": 35,
           "country": "Hungary",
           "languages": [
@@ -24076,7 +24067,7 @@
           "followers": 47,
           "following": 31,
           "estimated_commits": 1633,
-          "live_contributions": 5942,
+          "live_contributions": 5951,
           "stars_received": 20,
           "country": "Hungary",
           "languages": [
@@ -24099,7 +24090,7 @@
           "followers": 156,
           "following": 94,
           "estimated_commits": 1620,
-          "live_contributions": 3085,
+          "live_contributions": 3116,
           "stars_received": 21,
           "country": "Hungary",
           "languages": [
@@ -24122,7 +24113,7 @@
           "followers": 61,
           "following": 164,
           "estimated_commits": 1616,
-          "live_contributions": 5046,
+          "live_contributions": 5457,
           "stars_received": 14,
           "country": "Hungary",
           "languages": [
@@ -24168,7 +24159,7 @@
           "followers": 138,
           "following": 2,
           "estimated_commits": 1539,
-          "live_contributions": 3883,
+          "live_contributions": 3927,
           "stars_received": 164,
           "country": "Hungary",
           "languages": [
@@ -24191,8 +24182,8 @@
           "followers": 157,
           "following": 364,
           "estimated_commits": 1424,
-          "live_contributions": 2891,
-          "stars_received": 1174,
+          "live_contributions": 2951,
+          "stars_received": 1175,
           "country": "Hungary",
           "languages": [
             "Swift",
@@ -24237,7 +24228,7 @@
           "followers": 60,
           "following": 30,
           "estimated_commits": 1397,
-          "live_contributions": 1820,
+          "live_contributions": 1844,
           "stars_received": 1,
           "country": "Hungary",
           "languages": [
@@ -24260,8 +24251,8 @@
           "followers": 112,
           "following": 8,
           "estimated_commits": 1378,
-          "live_contributions": 1389,
-          "stars_received": 1031,
+          "live_contributions": 1390,
+          "stars_received": 1032,
           "country": "Hungary",
           "languages": [
             "C++",
@@ -24283,7 +24274,7 @@
           "followers": 22,
           "following": 26,
           "estimated_commits": 1354,
-          "live_contributions": 4925,
+          "live_contributions": 4935,
           "stars_received": 2,
           "country": "Hungary",
           "languages": [
@@ -24306,7 +24297,7 @@
           "followers": 125,
           "following": 20,
           "estimated_commits": 1353,
-          "live_contributions": 9037,
+          "live_contributions": 9117,
           "stars_received": 1805,
           "country": "Hungary",
           "languages": [
@@ -24326,10 +24317,10 @@
           "bio": "",
           "blog": "https://renascentelements.hu/",
           "public_repos": 97,
-          "followers": 77,
+          "followers": 78,
           "following": 30,
           "estimated_commits": 1345,
-          "live_contributions": 4114,
+          "live_contributions": 4130,
           "stars_received": 172,
           "country": "Hungary",
           "languages": [
@@ -24346,19 +24337,19 @@
           "html_url": "https://github.com/Nagraggini",
           "company": "",
           "location": "Budapest",
-          "bio": "I aim to practice and strengthen my backend development skills by building real server-side systems, working with databases, and designing robust REST APIs.",
+          "bio": "Java Developer & Test Automation Engineer | Java • Selenium • Playwright • REST Assured",
           "blog": "https://nagraggini.github.io/",
-          "public_repos": 16,
-          "followers": 205,
-          "following": 328,
+          "public_repos": 17,
+          "followers": 217,
+          "following": 339,
           "estimated_commits": 1332,
-          "live_contributions": 1833,
+          "live_contributions": 1871,
           "stars_received": 8,
           "country": "Hungary",
           "languages": [
             "Java",
-            "HTML",
-            "TypeScript"
+            "TypeScript",
+            "HTML"
           ]
         },
         {
@@ -24398,7 +24389,7 @@
           "followers": 49,
           "following": 9,
           "estimated_commits": 1226,
-          "live_contributions": 4962,
+          "live_contributions": 5018,
           "stars_received": 3,
           "country": "Hungary",
           "languages": [
@@ -25810,7 +25801,7 @@
       "name": "Latvia",
       "iso": "LV",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:45.823356+00:00",
+      "last_updated": "2026-08-30T01:53:52.145550+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -25825,7 +25816,7 @@
           "public_repos": 43,
           "followers": 23,
           "following": 0,
-          "estimated_commits": 70748,
+          "estimated_commits": 60624,
           "live_contributions": 61412,
           "stars_received": 7,
           "country": "Latvia",
@@ -25869,8 +25860,8 @@
           "public_repos": 177,
           "followers": 192,
           "following": 30,
-          "estimated_commits": 4584,
-          "live_contributions": 4871,
+          "estimated_commits": 4775,
+          "live_contributions": 4960,
           "stars_received": 801,
           "country": "Latvia",
           "languages": [
@@ -25892,7 +25883,7 @@
           "public_repos": 88,
           "followers": 9,
           "following": 2,
-          "estimated_commits": 3108,
+          "estimated_commits": 2960,
           "live_contributions": 3012,
           "stars_received": 458,
           "country": "Latvia",
@@ -25913,10 +25904,10 @@
           "bio": "",
           "blog": "https://yarlson.dev",
           "public_repos": 86,
-          "followers": 67,
+          "followers": 68,
           "following": 104,
-          "estimated_commits": 1762,
-          "live_contributions": 12508,
+          "estimated_commits": 1636,
+          "live_contributions": 12514,
           "stars_received": 1517,
           "country": "Latvia",
           "languages": [
@@ -25938,9 +25929,9 @@
           "public_repos": 32,
           "followers": 2402,
           "following": 46,
-          "estimated_commits": 1562,
-          "live_contributions": 4517,
-          "stars_received": 13037,
+          "estimated_commits": 1600,
+          "live_contributions": 4521,
+          "stars_received": 13042,
           "country": "Latvia",
           "languages": [
             "HTML",
@@ -25961,7 +25952,7 @@
           "public_repos": 32,
           "followers": 18,
           "following": 0,
-          "estimated_commits": 1536,
+          "estimated_commits": 1478,
           "live_contributions": 1648,
           "stars_received": 134,
           "country": "Latvia",
@@ -25973,48 +25964,48 @@
         },
         {
           "rank": 8,
-          "login": "andis-sprinkis",
-          "name": "Andis Spriņķis",
-          "avatar_url": "https://avatars.githubusercontent.com/u/52537705?v=4",
-          "html_url": "https://github.com/andis-sprinkis",
+          "login": "kristoferssolo",
+          "name": "Kristofers Solo",
+          "avatar_url": "https://avatars.githubusercontent.com/u/67258855?v=4",
+          "html_url": "https://github.com/kristoferssolo",
           "company": "",
           "location": "Latvia",
-          "bio": "",
-          "blog": "https://github.com/andis-sprinkis",
-          "public_repos": 24,
-          "followers": 0,
-          "following": 0,
-          "estimated_commits": 1514,
-          "live_contributions": 0,
-          "stars_received": 53,
+          "bio": "The less I touch grass, the more I touch the clouds",
+          "blog": "https://github.com/kristoferssolo",
+          "public_repos": 69,
+          "followers": 17,
+          "following": 9,
+          "estimated_commits": 1412,
+          "live_contributions": 1796,
+          "stars_received": 21,
           "country": "Latvia",
           "languages": [
-            "Shell",
-            "Lua",
-            "Vim Script"
+            "Rust",
+            "Python",
+            "Typst"
           ]
         },
         {
           "rank": 9,
-          "login": "dmytropolizhai",
-          "name": "Dmytro Polizhai",
-          "avatar_url": "https://avatars.githubusercontent.com/u/56214152?v=4",
-          "html_url": "https://github.com/dmytropolizhai",
-          "company": "",
-          "location": "Latvia, Riga",
-          "bio": "Google & Meta Certified Full-stack developer",
-          "blog": "https://github.com/dmytropolizhai",
-          "public_repos": 27,
-          "followers": 22,
-          "following": 34,
-          "estimated_commits": 1359,
-          "live_contributions": 1500,
-          "stars_received": 2,
+          "login": "ar2rsawseen",
+          "name": "Arturs Sosins",
+          "avatar_url": "https://avatars.githubusercontent.com/u/399992?v=4",
+          "html_url": "https://github.com/ar2rsawseen",
+          "company": "@Countly ",
+          "location": "Latvia",
+          "bio": "",
+          "blog": "https://count.ly/",
+          "public_repos": 41,
+          "followers": 103,
+          "following": 37,
+          "estimated_commits": 1308,
+          "live_contributions": 6039,
+          "stars_received": 109,
           "country": "Latvia",
           "languages": [
-            "TypeScript",
-            "Python",
-            "JavaScript"
+            "Lua",
+            "JavaScript",
+            "Java"
           ]
         },
         {
@@ -26030,8 +26021,8 @@
           "public_repos": 80,
           "followers": 29,
           "following": 12,
-          "estimated_commits": 1292,
-          "live_contributions": 2946,
+          "estimated_commits": 1276,
+          "live_contributions": 2965,
           "stars_received": 44,
           "country": "Latvia",
           "languages": [
@@ -26042,6 +26033,29 @@
         },
         {
           "rank": 11,
+          "login": "dmytropolizhai",
+          "name": "Dmytro Polizhai",
+          "avatar_url": "https://avatars.githubusercontent.com/u/56214152?v=4",
+          "html_url": "https://github.com/dmytropolizhai",
+          "company": "",
+          "location": "Latvia, Riga",
+          "bio": "Google & Meta Certified Full-stack developer",
+          "blog": "https://github.com/dmytropolizhai",
+          "public_repos": 27,
+          "followers": 22,
+          "following": 34,
+          "estimated_commits": 1248,
+          "live_contributions": 1500,
+          "stars_received": 2,
+          "country": "Latvia",
+          "languages": [
+            "TypeScript",
+            "Python",
+            "JavaScript"
+          ]
+        },
+        {
+          "rank": 12,
           "login": "DEgITx",
           "name": "Alexey Kasyanchuk",
           "avatar_url": "https://avatars.githubusercontent.com/u/207785?v=4",
@@ -26053,8 +26067,8 @@
           "public_repos": 32,
           "followers": 100,
           "following": 1,
-          "estimated_commits": 1207,
-          "live_contributions": 2327,
+          "estimated_commits": 1227,
+          "live_contributions": 2351,
           "stars_received": 56,
           "country": "Latvia",
           "languages": [
@@ -26064,53 +26078,7 @@
           ]
         },
         {
-          "rank": 12,
-          "login": "kristoferssolo",
-          "name": "Kristofers Solo",
-          "avatar_url": "https://avatars.githubusercontent.com/u/67258855?v=4",
-          "html_url": "https://github.com/kristoferssolo",
-          "company": "",
-          "location": "Latvia",
-          "bio": "The less I touch grass, the more I touch the clouds",
-          "blog": "https://github.com/kristoferssolo",
-          "public_repos": 69,
-          "followers": 17,
-          "following": 9,
-          "estimated_commits": 1198,
-          "live_contributions": 1728,
-          "stars_received": 21,
-          "country": "Latvia",
-          "languages": [
-            "Rust",
-            "Python",
-            "Typst"
-          ]
-        },
-        {
           "rank": 13,
-          "login": "ar2rsawseen",
-          "name": "Arturs Sosins",
-          "avatar_url": "https://avatars.githubusercontent.com/u/399992?v=4",
-          "html_url": "https://github.com/ar2rsawseen",
-          "company": "@Countly ",
-          "location": "Latvia",
-          "bio": "",
-          "blog": "https://count.ly/",
-          "public_repos": 41,
-          "followers": 103,
-          "following": 37,
-          "estimated_commits": 1168,
-          "live_contributions": 5899,
-          "stars_received": 109,
-          "country": "Latvia",
-          "languages": [
-            "Lua",
-            "JavaScript",
-            "Java"
-          ]
-        },
-        {
-          "rank": 14,
           "login": "Takosaga",
           "name": "Gonzalo Gamez",
           "avatar_url": "https://avatars.githubusercontent.com/u/32805901?v=4",
@@ -26133,7 +26101,7 @@
           ]
         },
         {
-          "rank": 15,
+          "rank": 14,
           "login": "kamikaze",
           "name": "Oleg Korsak",
           "avatar_url": "https://avatars.githubusercontent.com/u/52880?v=4",
@@ -26145,14 +26113,36 @@
           "public_repos": 30,
           "followers": 31,
           "following": 2,
-          "estimated_commits": 1106,
-          "live_contributions": 2109,
+          "estimated_commits": 1120,
+          "live_contributions": 2111,
           "stars_received": 62,
           "country": "Latvia",
           "languages": [
             "Python",
             "Rust",
             "TypeScript"
+          ]
+        },
+        {
+          "rank": 15,
+          "login": "Qaevix",
+          "name": "Qaevix",
+          "avatar_url": "https://avatars.githubusercontent.com/u/159261663?v=4",
+          "html_url": "https://github.com/Qaevix",
+          "company": "",
+          "location": "Riga",
+          "bio": "CEH | TryHackMe  #72 | 1%",
+          "blog": "https://qaevix.github.io",
+          "public_repos": 14,
+          "followers": 9,
+          "following": 7,
+          "estimated_commits": 1101,
+          "live_contributions": 1115,
+          "stars_received": 15,
+          "country": "Latvia",
+          "languages": [
+            "CSS",
+            "Python"
           ]
         },
         {
@@ -26168,8 +26158,8 @@
           "public_repos": 22,
           "followers": 69,
           "following": 183,
-          "estimated_commits": 1103,
-          "live_contributions": 6634,
+          "estimated_commits": 1088,
+          "live_contributions": 6636,
           "stars_received": 44,
           "country": "Latvia",
           "languages": [
@@ -26191,7 +26181,7 @@
           "public_repos": 201,
           "followers": 94,
           "following": 0,
-          "estimated_commits": 1083,
+          "estimated_commits": 1082,
           "live_contributions": 1653,
           "stars_received": 286,
           "country": "Latvia",
@@ -26214,8 +26204,8 @@
           "public_repos": 81,
           "followers": 532,
           "following": 2,
-          "estimated_commits": 1074,
-          "live_contributions": 1445,
+          "estimated_commits": 1080,
+          "live_contributions": 1459,
           "stars_received": 812,
           "country": "Latvia",
           "languages": [
@@ -26226,28 +26216,6 @@
         },
         {
           "rank": 19,
-          "login": "Qaevix",
-          "name": "Qaevix",
-          "avatar_url": "https://avatars.githubusercontent.com/u/159261663?v=4",
-          "html_url": "https://github.com/Qaevix",
-          "company": "",
-          "location": "Riga",
-          "bio": "CEH | TryHackMe  #72 | 1%",
-          "blog": "https://qaevix.github.io",
-          "public_repos": 14,
-          "followers": 9,
-          "following": 7,
-          "estimated_commits": 1052,
-          "live_contributions": 1100,
-          "stars_received": 15,
-          "country": "Latvia",
-          "languages": [
-            "CSS",
-            "Python"
-          ]
-        },
-        {
-          "rank": 20,
           "login": "skakri",
           "name": "Kristaps Karlsons",
           "avatar_url": "https://avatars.githubusercontent.com/u/693982?v=4",
@@ -26259,8 +26227,8 @@
           "public_repos": 8,
           "followers": 41,
           "following": 58,
-          "estimated_commits": 1034,
-          "live_contributions": 7960,
+          "estimated_commits": 1043,
+          "live_contributions": 7968,
           "stars_received": 60,
           "country": "Latvia",
           "languages": [
@@ -26270,7 +26238,7 @@
           ]
         },
         {
-          "rank": 21,
+          "rank": 20,
           "login": "orzazade",
           "name": "Orkhan Rzazade",
           "avatar_url": "https://avatars.githubusercontent.com/u/14540879?v=4",
@@ -26282,14 +26250,37 @@
           "public_repos": 25,
           "followers": 21,
           "following": 53,
-          "estimated_commits": 1022,
-          "live_contributions": 4559,
+          "estimated_commits": 1020,
+          "live_contributions": 4560,
           "stars_received": 85,
           "country": "Latvia",
           "languages": [
             "TypeScript",
             "JavaScript",
             "Swift"
+          ]
+        },
+        {
+          "rank": 21,
+          "login": "resoltico",
+          "name": "Ervins Strauhmanis",
+          "avatar_url": "https://avatars.githubusercontent.com/u/17160191?v=4",
+          "html_url": "https://github.com/resoltico",
+          "company": "",
+          "location": "Riga, Latvia",
+          "bio": "",
+          "blog": "https://github.com/resoltico",
+          "public_repos": 10,
+          "followers": 9,
+          "following": 1,
+          "estimated_commits": 991,
+          "live_contributions": 1345,
+          "stars_received": 0,
+          "country": "Latvia",
+          "languages": [
+            "Rust",
+            "Java",
+            "Python"
           ]
         },
         {
@@ -26305,8 +26296,8 @@
           "public_repos": 32,
           "followers": 7,
           "following": 16,
-          "estimated_commits": 1005,
-          "live_contributions": 1402,
+          "estimated_commits": 955,
+          "live_contributions": 1414,
           "stars_received": 0,
           "country": "Latvia",
           "languages": [
@@ -26317,24 +26308,24 @@
         },
         {
           "rank": 23,
-          "login": "resoltico",
-          "name": "Ervins Strauhmanis",
-          "avatar_url": "https://avatars.githubusercontent.com/u/17160191?v=4",
-          "html_url": "https://github.com/resoltico",
-          "company": "",
-          "location": "Riga, Latvia",
+          "login": "rabestro",
+          "name": "Jegors Čemisovs",
+          "avatar_url": "https://avatars.githubusercontent.com/u/52966251?v=4",
+          "html_url": "https://github.com/rabestro",
+          "company": "@evolution-gaming",
+          "location": "Latvia",
           "bio": "",
-          "blog": "https://github.com/resoltico",
-          "public_repos": 10,
-          "followers": 9,
-          "following": 1,
-          "estimated_commits": 982,
-          "live_contributions": 1345,
-          "stars_received": 0,
+          "blog": "https://jc.id.lv",
+          "public_repos": 155,
+          "followers": 114,
+          "following": 43,
+          "estimated_commits": 953,
+          "live_contributions": 4603,
+          "stars_received": 180,
           "country": "Latvia",
           "languages": [
-            "Rust",
             "Java",
+            "Groovy",
             "Python"
           ]
         },
@@ -26351,9 +26342,9 @@
           "public_repos": 14,
           "followers": 12,
           "following": 3,
-          "estimated_commits": 862,
-          "live_contributions": 4002,
-          "stars_received": 168,
+          "estimated_commits": 863,
+          "live_contributions": 4016,
+          "stars_received": 175,
           "country": "Latvia",
           "languages": [
             "TypeScript",
@@ -26363,24 +26354,24 @@
         },
         {
           "rank": 25,
-          "login": "rabestro",
-          "name": "Jegors Čemisovs",
-          "avatar_url": "https://avatars.githubusercontent.com/u/52966251?v=4",
-          "html_url": "https://github.com/rabestro",
-          "company": "@evolution-gaming",
-          "location": "Latvia",
+          "login": "TheStalwart",
+          "name": "Pavel Shevchuk",
+          "avatar_url": "https://avatars.githubusercontent.com/u/291658?v=4",
+          "html_url": "https://github.com/TheStalwart",
+          "company": "",
+          "location": "Riga, Latvia",
           "bio": "",
-          "blog": "https://jc.id.lv",
-          "public_repos": 155,
-          "followers": 114,
-          "following": 43,
-          "estimated_commits": 857,
-          "live_contributions": 4483,
-          "stars_received": 180,
+          "blog": "https://github.com/TheStalwart",
+          "public_repos": 52,
+          "followers": 12,
+          "following": 3,
+          "estimated_commits": 770,
+          "live_contributions": 779,
+          "stars_received": 26,
           "country": "Latvia",
           "languages": [
-            "Java",
-            "Groovy",
+            "Objective-C",
+            "HTML",
             "Python"
           ]
         },
@@ -26397,7 +26388,7 @@
           "public_repos": 52,
           "followers": 16,
           "following": 22,
-          "estimated_commits": 828,
+          "estimated_commits": 751,
           "live_contributions": 3403,
           "stars_received": 12,
           "country": "Latvia",
@@ -26409,29 +26400,6 @@
         },
         {
           "rank": 27,
-          "login": "TheStalwart",
-          "name": "Pavel Shevchuk",
-          "avatar_url": "https://avatars.githubusercontent.com/u/291658?v=4",
-          "html_url": "https://github.com/TheStalwart",
-          "company": "",
-          "location": "Riga, Latvia",
-          "bio": "",
-          "blog": "https://github.com/TheStalwart",
-          "public_repos": 52,
-          "followers": 12,
-          "following": 3,
-          "estimated_commits": 761,
-          "live_contributions": 776,
-          "stars_received": 26,
-          "country": "Latvia",
-          "languages": [
-            "Objective-C",
-            "HTML",
-            "Python"
-          ]
-        },
-        {
-          "rank": 28,
           "login": "AndrewKirkovski",
           "name": "Andrew Kirkovski",
           "avatar_url": "https://avatars.githubusercontent.com/u/16134699?v=4",
@@ -26443,8 +26411,8 @@
           "public_repos": 31,
           "followers": 9,
           "following": 0,
-          "estimated_commits": 692,
-          "live_contributions": 825,
+          "estimated_commits": 732,
+          "live_contributions": 835,
           "stars_received": 1,
           "country": "Latvia",
           "languages": [
@@ -26454,7 +26422,53 @@
           ]
         },
         {
+          "rank": 28,
+          "login": "ampatspell",
+          "name": "Arnis Vuskans",
+          "avatar_url": "https://avatars.githubusercontent.com/u/7923?v=4",
+          "html_url": "https://github.com/ampatspell",
+          "company": "amateurinmotion",
+          "location": "Latvia, Riga",
+          "bio": "Svelte 5, Vue.js, Ember.js, Rust, Firebase. Writing apps, addons, tutoring. Also street photography.",
+          "blog": "https://www.amateurinmotion.com",
+          "public_repos": 62,
+          "followers": 29,
+          "following": 1,
+          "estimated_commits": 716,
+          "live_contributions": 925,
+          "stars_received": 68,
+          "country": "Latvia",
+          "languages": [
+            "JavaScript",
+            "TypeScript",
+            "Svelte"
+          ]
+        },
+        {
           "rank": 29,
+          "login": "Marcisbee",
+          "name": "Marcis Bergmanis",
+          "avatar_url": "https://avatars.githubusercontent.com/u/16621507?v=4",
+          "html_url": "https://github.com/Marcisbee",
+          "company": "Kasko",
+          "location": "Latvia",
+          "bio": "JavaScript wizard 🧙‍♂️",
+          "blog": "https://marcisbee.com",
+          "public_repos": 91,
+          "followers": 103,
+          "following": 74,
+          "estimated_commits": 699,
+          "live_contributions": 4648,
+          "stars_received": 1380,
+          "country": "Latvia",
+          "languages": [
+            "TypeScript",
+            "JavaScript",
+            "Go"
+          ]
+        },
+        {
+          "rank": 30,
           "login": "kasparsd",
           "name": "Kaspars Dambis",
           "avatar_url": "https://avatars.githubusercontent.com/u/169055?v=4",
@@ -26465,38 +26479,15 @@
           "blog": "https://kaspars.net",
           "public_repos": 164,
           "followers": 302,
-          "following": 370,
-          "estimated_commits": 683,
-          "live_contributions": 2571,
+          "following": 371,
+          "estimated_commits": 690,
+          "live_contributions": 2578,
           "stars_received": 1510,
           "country": "Latvia",
           "languages": [
             "PHP",
             "JavaScript",
             "Python"
-          ]
-        },
-        {
-          "rank": 30,
-          "login": "justgook",
-          "name": "Romāns Potašovs",
-          "avatar_url": "https://avatars.githubusercontent.com/u/306976?v=4",
-          "html_url": "https://github.com/justgook",
-          "company": "",
-          "location": "Riga, Latvia",
-          "bio": "Elm-slack @Kalabibishkis",
-          "blog": "z0.lv",
-          "public_repos": 130,
-          "followers": 58,
-          "following": 1,
-          "estimated_commits": 677,
-          "live_contributions": 716,
-          "stars_received": 148,
-          "country": "Latvia",
-          "languages": [
-            "JavaScript",
-            "Elm",
-            "C"
           ]
         }
       ]
@@ -26506,7 +26497,7 @@
       "name": "Lithuania",
       "iso": "LT",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:53.451994+00:00",
+      "last_updated": "2026-08-30T01:53:53.794730+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -26522,7 +26513,7 @@
           "followers": 14,
           "following": 13,
           "estimated_commits": 12244,
-          "live_contributions": 14911,
+          "live_contributions": 14915,
           "stars_received": 0,
           "country": "Lithuania",
           "languages": [
@@ -26542,10 +26533,10 @@
           "bio": "",
           "blog": "https://github.com/NathaliaLietuvaite",
           "public_repos": 26,
-          "followers": 44,
+          "followers": 51,
           "following": 45,
           "estimated_commits": 3243,
-          "live_contributions": 3256,
+          "live_contributions": 3265,
           "stars_received": 38,
           "country": "Lithuania",
           "languages": [
@@ -26560,16 +26551,16 @@
           "name": "Xianpeng Shen",
           "avatar_url": "https://avatars.githubusercontent.com/u/3353385?v=4",
           "html_url": "https://github.com/shenxianpeng",
-          "company": "@keelapps",
+          "company": "",
           "location": "Lithuania",
           "bio": "Engineer. Builder. Maintainer.\r\n\r\nCreator of @cpp-linter @commit-check @conventional-branch. @jenkinsci contributor.",
           "blog": "shenxianpeng.github.io",
           "public_repos": 186,
           "followers": 42,
-          "following": 138,
+          "following": 137,
           "estimated_commits": 3239,
-          "live_contributions": 6001,
-          "stars_received": 163,
+          "live_contributions": 6048,
+          "stars_received": 164,
           "country": "Lithuania",
           "languages": [
             "Python",
@@ -26591,7 +26582,7 @@
           "followers": 395,
           "following": 5,
           "estimated_commits": 3220,
-          "live_contributions": 6537,
+          "live_contributions": 6557,
           "stars_received": 895,
           "country": "Lithuania",
           "languages": [
@@ -26614,7 +26605,7 @@
           "followers": 47,
           "following": 60,
           "estimated_commits": 2691,
-          "live_contributions": 2863,
+          "live_contributions": 2904,
           "stars_received": 50,
           "country": "Lithuania",
           "languages": [
@@ -26634,10 +26625,10 @@
           "bio": "Web Engineer | 2 decades exp of building business value through web tech.",
           "blog": "https://github.com/liesislukas",
           "public_repos": 112,
-          "followers": 52,
+          "followers": 53,
           "following": 10,
           "estimated_commits": 1911,
-          "live_contributions": 3959,
+          "live_contributions": 4573,
           "stars_received": 65,
           "country": "Lithuania",
           "languages": [
@@ -26683,7 +26674,7 @@
           "followers": 120,
           "following": 74,
           "estimated_commits": 1740,
-          "live_contributions": 3355,
+          "live_contributions": 3358,
           "stars_received": 260,
           "country": "Lithuania",
           "languages": [
@@ -26729,7 +26720,7 @@
           "followers": 36,
           "following": 72,
           "estimated_commits": 1642,
-          "live_contributions": 2752,
+          "live_contributions": 3039,
           "stars_received": 75,
           "country": "Lithuania",
           "languages": [
@@ -26752,7 +26743,7 @@
           "followers": 224,
           "following": 55,
           "estimated_commits": 1590,
-          "live_contributions": 2795,
+          "live_contributions": 2810,
           "stars_received": 97,
           "country": "Lithuania",
           "languages": [
@@ -26775,7 +26766,7 @@
           "followers": 29,
           "following": 4,
           "estimated_commits": 1547,
-          "live_contributions": 13159,
+          "live_contributions": 13168,
           "stars_received": 24,
           "country": "Lithuania",
           "languages": [
@@ -26794,10 +26785,10 @@
           "bio": "AI Engineer | ex-@uber",
           "blog": "elijas.ai",
           "public_repos": 60,
-          "followers": 222,
+          "followers": 224,
           "following": 419,
           "estimated_commits": 1508,
-          "live_contributions": 5932,
+          "live_contributions": 5934,
           "stars_received": 494,
           "country": "Lithuania",
           "languages": [
@@ -26816,17 +26807,17 @@
           "location": "Lithuania",
           "bio": "Kubernetes (K8S),\r\nSynpseHQ,\r\nFarosHQ,\r\nkcp",
           "blog": "https://judeikis.LT/ ",
-          "public_repos": 283,
+          "public_repos": 284,
           "followers": 112,
           "following": 50,
           "estimated_commits": 1502,
-          "live_contributions": 3577,
-          "stars_received": 58,
+          "live_contributions": 3599,
+          "stars_received": 59,
           "country": "Lithuania",
           "languages": [
             "Go",
             "Shell",
-            "Python"
+            "Vue"
           ]
         },
         {
@@ -26843,7 +26834,7 @@
           "followers": 78,
           "following": 78,
           "estimated_commits": 1407,
-          "live_contributions": 1526,
+          "live_contributions": 1533,
           "stars_received": 189,
           "country": "Lithuania",
           "languages": [
@@ -26866,7 +26857,7 @@
           "followers": 15,
           "following": 3,
           "estimated_commits": 1397,
-          "live_contributions": 2950,
+          "live_contributions": 3024,
           "stars_received": 16,
           "country": "Lithuania",
           "languages": [
@@ -26912,7 +26903,7 @@
           "followers": 16,
           "following": 25,
           "estimated_commits": 1222,
-          "live_contributions": 1426,
+          "live_contributions": 1428,
           "stars_received": 1,
           "country": "Lithuania",
           "languages": [
@@ -26958,7 +26949,7 @@
           "followers": 118,
           "following": 12,
           "estimated_commits": 1189,
-          "live_contributions": 1634,
+          "live_contributions": 1635,
           "stars_received": 33,
           "country": "Lithuania",
           "languages": [
@@ -27005,7 +26996,7 @@
           "following": 5,
           "estimated_commits": 1140,
           "live_contributions": 1680,
-          "stars_received": 1266,
+          "stars_received": 1267,
           "country": "Lithuania",
           "languages": [
             "Nix",
@@ -27048,7 +27039,7 @@
           "followers": 18,
           "following": 6,
           "estimated_commits": 1053,
-          "live_contributions": 10897,
+          "live_contributions": 10987,
           "stars_received": 93,
           "country": "Lithuania",
           "languages": [
@@ -27071,7 +27062,7 @@
           "followers": 142,
           "following": 29,
           "estimated_commits": 1028,
-          "live_contributions": 2854,
+          "live_contributions": 2857,
           "stars_received": 58,
           "country": "Lithuania",
           "languages": [
@@ -27090,11 +27081,11 @@
           "location": "Lithuania, Klaipėda",
           "bio": "",
           "blog": "https://github.com/VladasZ",
-          "public_repos": 119,
+          "public_repos": 120,
           "followers": 22,
           "following": 14,
           "estimated_commits": 1025,
-          "live_contributions": 4493,
+          "live_contributions": 4545,
           "stars_received": 34,
           "country": "Lithuania",
           "languages": [
@@ -27136,17 +27127,17 @@
           "location": "Lithuania",
           "bio": ":3",
           "blog": "https://deniz.blue/",
-          "public_repos": 106,
+          "public_repos": 80,
           "followers": 84,
           "following": 128,
           "estimated_commits": 974,
-          "live_contributions": 2035,
-          "stars_received": 423,
+          "live_contributions": 2132,
+          "stars_received": 428,
           "country": "Lithuania",
           "languages": [
             "TypeScript",
             "JavaScript",
-            "Rust"
+            "C#"
           ]
         },
         {
@@ -27164,7 +27155,7 @@
           "following": 24,
           "estimated_commits": 931,
           "live_contributions": 1430,
-          "stars_received": 1573,
+          "stars_received": 1574,
           "country": "Lithuania",
           "languages": [
             "Lua",
@@ -27183,11 +27174,11 @@
           "bio": "robert droptable the third; proud computer owner",
           "blog": "lung.fyi",
           "public_repos": 32,
-          "followers": 61,
-          "following": 6,
+          "followers": 69,
+          "following": 7,
           "estimated_commits": 923,
-          "live_contributions": 952,
-          "stars_received": 310,
+          "live_contributions": 964,
+          "stars_received": 338,
           "country": "Lithuania",
           "languages": [
             "Go",
@@ -29943,7 +29934,7 @@
       "name": "Serbia",
       "iso": "RS",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:32.941930+00:00",
+      "last_updated": "2026-08-30T01:53:37.409768+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -29959,7 +29950,7 @@
           "followers": 58,
           "following": 44,
           "estimated_commits": 24712,
-          "live_contributions": 42053,
+          "live_contributions": 42068,
           "stars_received": 142,
           "country": "Serbia",
           "languages": [
@@ -29978,12 +29969,12 @@
           "location": "Belgrade, Serbia",
           "bio": "I tell computers to do things.\r\nSometimes they listen.",
           "blog": "https://pejcic.rs",
-          "public_repos": 121,
-          "followers": 89,
+          "public_repos": 123,
+          "followers": 88,
           "following": 49,
           "estimated_commits": 8223,
-          "live_contributions": 9463,
-          "stars_received": 1009,
+          "live_contributions": 9545,
+          "stars_received": 1011,
           "country": "Serbia",
           "languages": [
             "PHP",
@@ -30001,17 +29992,17 @@
           "location": "Serbia",
           "bio": "Product Engineer at @respawn-app.",
           "blog": "nek12.dev",
-          "public_repos": 19,
+          "public_repos": 20,
           "followers": 82,
           "following": 15,
           "estimated_commits": 8092,
-          "live_contributions": 11518,
+          "live_contributions": 11728,
           "stars_received": 7,
           "country": "Serbia",
           "languages": [
             "Kotlin",
             "Python",
-            "TypeScript"
+            "Shell"
           ]
         },
         {
@@ -30051,7 +30042,7 @@
           "followers": 94,
           "following": 22,
           "estimated_commits": 6784,
-          "live_contributions": 9341,
+          "live_contributions": 9473,
           "stars_received": 208,
           "country": "Serbia",
           "languages": [
@@ -30074,7 +30065,7 @@
           "followers": 44,
           "following": 21,
           "estimated_commits": 5823,
-          "live_contributions": 17307,
+          "live_contributions": 17470,
           "stars_received": 21,
           "country": "Serbia",
           "languages": [
@@ -30097,7 +30088,7 @@
           "followers": 221,
           "following": 19,
           "estimated_commits": 4054,
-          "live_contributions": 4359,
+          "live_contributions": 4391,
           "stars_received": 21,
           "country": "Serbia",
           "languages": [
@@ -30120,7 +30111,7 @@
           "followers": 52,
           "following": 4,
           "estimated_commits": 3534,
-          "live_contributions": 4074,
+          "live_contributions": 4086,
           "stars_received": 291,
           "country": "Serbia",
           "languages": [
@@ -30139,11 +30130,11 @@
           "location": "Belgrade, Serbia",
           "bio": "CTO @ MailerLite",
           "blog": "https://nikola.milojevic.me",
-          "public_repos": 59,
+          "public_repos": 60,
           "followers": 55,
           "following": 9,
           "estimated_commits": 3422,
-          "live_contributions": 4629,
+          "live_contributions": 4705,
           "stars_received": 81,
           "country": "Serbia",
           "languages": [
@@ -30167,7 +30158,7 @@
           "following": 216,
           "estimated_commits": 3284,
           "live_contributions": 3286,
-          "stars_received": 912,
+          "stars_received": 915,
           "country": "Serbia",
           "languages": [
             "CSS",
@@ -30189,7 +30180,7 @@
           "followers": 32,
           "following": 49,
           "estimated_commits": 2906,
-          "live_contributions": 3899,
+          "live_contributions": 3993,
           "stars_received": 25,
           "country": "Serbia",
           "languages": [
@@ -30212,7 +30203,7 @@
           "followers": 65,
           "following": 7,
           "estimated_commits": 2878,
-          "live_contributions": 4835,
+          "live_contributions": 4841,
           "stars_received": 57,
           "country": "Serbia",
           "languages": [
@@ -30235,7 +30226,7 @@
           "followers": 112,
           "following": 6,
           "estimated_commits": 2712,
-          "live_contributions": 3647,
+          "live_contributions": 3683,
           "stars_received": 518,
           "country": "Serbia",
           "languages": [
@@ -30258,7 +30249,7 @@
           "followers": 33,
           "following": 43,
           "estimated_commits": 2656,
-          "live_contributions": 2905,
+          "live_contributions": 2922,
           "stars_received": 51,
           "country": "Serbia",
           "languages": [
@@ -30281,8 +30272,8 @@
           "followers": 427,
           "following": 0,
           "estimated_commits": 2357,
-          "live_contributions": 2517,
-          "stars_received": 10128,
+          "live_contributions": 2568,
+          "stars_received": 10134,
           "country": "Serbia",
           "languages": [
             "Go",
@@ -30301,11 +30292,11 @@
           "bio": "Knowledge is power. Keep learning. Keep sharing.",
           "blog": "https://github.com/proffesor-for-testing",
           "public_repos": 23,
-          "followers": 195,
+          "followers": 196,
           "following": 66,
           "estimated_commits": 2281,
-          "live_contributions": 10154,
-          "stars_received": 560,
+          "live_contributions": 10208,
+          "stars_received": 561,
           "country": "Serbia",
           "languages": [
             "TypeScript",
@@ -30324,16 +30315,16 @@
           "bio": "Founder of Harmonica",
           "blog": "zhgnv.com",
           "public_repos": 22,
-          "followers": 28,
-          "following": 223,
+          "followers": 29,
+          "following": 224,
           "estimated_commits": 2077,
-          "live_contributions": 2737,
+          "live_contributions": 2767,
           "stars_received": 24,
           "country": "Serbia",
           "languages": [
             "TypeScript",
-            "JavaScript",
-            "PowerShell"
+            "PowerShell",
+            "JavaScript"
           ]
         },
         {
@@ -30350,8 +30341,8 @@
           "followers": 65,
           "following": 81,
           "estimated_commits": 2069,
-          "live_contributions": 2570,
-          "stars_received": 263,
+          "live_contributions": 2631,
+          "stars_received": 262,
           "country": "Serbia",
           "languages": [
             "JavaScript",
@@ -30373,7 +30364,7 @@
           "followers": 48,
           "following": 1,
           "estimated_commits": 1764,
-          "live_contributions": 5301,
+          "live_contributions": 5324,
           "stars_received": 0,
           "country": "Serbia",
           "languages": [
@@ -30395,7 +30386,7 @@
           "followers": 107,
           "following": 30,
           "estimated_commits": 1748,
-          "live_contributions": 4496,
+          "live_contributions": 4615,
           "stars_received": 3779,
           "country": "Serbia",
           "languages": [
@@ -30441,7 +30432,7 @@
           "followers": 54,
           "following": 36,
           "estimated_commits": 1655,
-          "live_contributions": 7696,
+          "live_contributions": 7799,
           "stars_received": 78,
           "country": "Serbia",
           "languages": [
@@ -30461,10 +30452,10 @@
           "bio": "How to open open source?",
           "blog": "https://github.com/kirilinsky",
           "public_repos": 61,
-          "followers": 81,
-          "following": 72,
+          "followers": 89,
+          "following": 78,
           "estimated_commits": 1517,
-          "live_contributions": 1685,
+          "live_contributions": 1690,
           "stars_received": 30,
           "country": "Serbia",
           "languages": [
@@ -30487,7 +30478,7 @@
           "followers": 30,
           "following": 0,
           "estimated_commits": 1514,
-          "live_contributions": 22975,
+          "live_contributions": 23019,
           "stars_received": 66,
           "country": "Serbia",
           "languages": [
@@ -30510,7 +30501,7 @@
           "followers": 121,
           "following": 123,
           "estimated_commits": 1467,
-          "live_contributions": 1550,
+          "live_contributions": 1553,
           "stars_received": 173,
           "country": "Serbia",
           "languages": [
@@ -30533,7 +30524,7 @@
           "followers": 36,
           "following": 41,
           "estimated_commits": 1409,
-          "live_contributions": 1844,
+          "live_contributions": 1847,
           "stars_received": 45,
           "country": "Serbia",
           "languages": [
@@ -30556,13 +30547,13 @@
           "followers": 42,
           "following": 16,
           "estimated_commits": 1382,
-          "live_contributions": 3185,
+          "live_contributions": 3194,
           "stars_received": 0,
           "country": "Serbia",
           "languages": [
             "Go",
             "JavaScript",
-            "Python"
+            "Shell"
           ]
         },
         {
@@ -30579,7 +30570,7 @@
           "followers": 175,
           "following": 67,
           "estimated_commits": 1311,
-          "live_contributions": 1507,
+          "live_contributions": 1514,
           "stars_received": 71,
           "country": "Serbia",
           "languages": [
@@ -30602,7 +30593,7 @@
           "followers": 226,
           "following": 42,
           "estimated_commits": 1295,
-          "live_contributions": 1822,
+          "live_contributions": 1824,
           "stars_received": 344,
           "country": "Serbia",
           "languages": [
@@ -30625,7 +30616,7 @@
           "followers": 24,
           "following": 14,
           "estimated_commits": 1292,
-          "live_contributions": 7016,
+          "live_contributions": 7033,
           "stars_received": 122,
           "country": "Serbia",
           "languages": [
@@ -30641,7 +30632,7 @@
       "name": "Slovakia",
       "iso": "SK",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:32.234301+00:00",
+      "last_updated": "2026-08-30T01:53:38.190682+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -30657,7 +30648,7 @@
           "followers": 10,
           "following": 0,
           "estimated_commits": 4678,
-          "live_contributions": 6859,
+          "live_contributions": 6861,
           "stars_received": 5,
           "country": "Slovakia",
           "languages": [
@@ -30680,7 +30671,7 @@
           "followers": 77,
           "following": 0,
           "estimated_commits": 4617,
-          "live_contributions": 8181,
+          "live_contributions": 8208,
           "stars_received": 8,
           "country": "Slovakia",
           "languages": [
@@ -30703,7 +30694,7 @@
           "followers": 22,
           "following": 53,
           "estimated_commits": 3259,
-          "live_contributions": 7381,
+          "live_contributions": 7407,
           "stars_received": 7,
           "country": "Slovakia",
           "languages": [
@@ -30723,7 +30714,7 @@
           "bio": "Onto-Epistemic Field Framework © 2026 Vectaetos — Developed by Richard Fonfára\r\nAll projections are descriptive and non-prescriptive. Licensing layering.",
           "blog": "https://vectaetos.eu/",
           "public_repos": 3,
-          "followers": 53,
+          "followers": 54,
           "following": 114,
           "estimated_commits": 3058,
           "live_contributions": 4194,
@@ -30748,7 +30739,7 @@
           "following": 16,
           "estimated_commits": 2981,
           "live_contributions": 3223,
-          "stars_received": 175,
+          "stars_received": 177,
           "country": "Slovakia",
           "languages": [
             "Python",
@@ -30770,8 +30761,8 @@
           "followers": 351,
           "following": 29,
           "estimated_commits": 2832,
-          "live_contributions": 5209,
-          "stars_received": 1027,
+          "live_contributions": 5221,
+          "stars_received": 1028,
           "country": "Slovakia",
           "languages": [
             "Python",
@@ -30793,7 +30784,7 @@
           "followers": 17,
           "following": 9,
           "estimated_commits": 2432,
-          "live_contributions": 12138,
+          "live_contributions": 12253,
           "stars_received": 36,
           "country": "Slovakia",
           "languages": [
@@ -30837,9 +30828,9 @@
           "blog": "https://github.com/PavolUlicny",
           "public_repos": 8,
           "followers": 108,
-          "following": 181,
+          "following": 183,
           "estimated_commits": 2296,
-          "live_contributions": 3094,
+          "live_contributions": 3095,
           "stars_received": 15,
           "country": "Slovakia",
           "languages": [
@@ -30858,12 +30849,12 @@
           "location": "Bratislava, Slovakia",
           "bio": "",
           "blog": "https://github.com/WizzardSK",
-          "public_repos": 265,
+          "public_repos": 270,
           "followers": 14,
           "following": 13,
           "estimated_commits": 2145,
-          "live_contributions": 2538,
-          "stars_received": 56,
+          "live_contributions": 2568,
+          "stars_received": 58,
           "country": "Slovakia",
           "languages": [
             "C",
@@ -30885,7 +30876,7 @@
           "followers": 149,
           "following": 46,
           "estimated_commits": 2135,
-          "live_contributions": 3507,
+          "live_contributions": 3602,
           "stars_received": 603,
           "country": "Slovakia",
           "languages": [
@@ -30902,13 +30893,13 @@
           "html_url": "https://github.com/pilot2254",
           "company": "High School",
           "location": "Slovakia",
-          "bio": "all this struggle just for a life to end on a random day",
+          "bio": "oh no i'm 17 now...",
           "blog": "https://pilot2254.github.io",
-          "public_repos": 29,
+          "public_repos": 31,
           "followers": 36,
           "following": 36,
           "estimated_commits": 1936,
-          "live_contributions": 3343,
+          "live_contributions": 3365,
           "stars_received": 37,
           "country": "Slovakia",
           "languages": [
@@ -30931,7 +30922,7 @@
           "followers": 38,
           "following": 27,
           "estimated_commits": 1887,
-          "live_contributions": 3273,
+          "live_contributions": 3286,
           "stars_received": 15,
           "country": "Slovakia",
           "languages": [
@@ -30954,7 +30945,7 @@
           "followers": 62,
           "following": 2,
           "estimated_commits": 1781,
-          "live_contributions": 5438,
+          "live_contributions": 5465,
           "stars_received": 188,
           "country": "Slovakia",
           "languages": [
@@ -30977,7 +30968,7 @@
           "followers": 23,
           "following": 79,
           "estimated_commits": 1754,
-          "live_contributions": 11703,
+          "live_contributions": 11798,
           "stars_received": 1,
           "country": "Slovakia",
           "languages": [
@@ -31000,7 +30991,7 @@
           "followers": 33,
           "following": 2,
           "estimated_commits": 1630,
-          "live_contributions": 1755,
+          "live_contributions": 1771,
           "stars_received": 33,
           "country": "Slovakia",
           "languages": [
@@ -31023,8 +31014,8 @@
           "followers": 191,
           "following": 5,
           "estimated_commits": 1614,
-          "live_contributions": 8829,
-          "stars_received": 709,
+          "live_contributions": 8862,
+          "stars_received": 711,
           "country": "Slovakia",
           "languages": [
             "Python",
@@ -31043,7 +31034,7 @@
           "bio": "Just ordinary Java BE developer",
           "blog": "https://github.com/karafra",
           "public_repos": 18,
-          "followers": 12,
+          "followers": 11,
           "following": 0,
           "estimated_commits": 1591,
           "live_contributions": 2473,
@@ -31069,13 +31060,13 @@
           "followers": 95,
           "following": 13,
           "estimated_commits": 1564,
-          "live_contributions": 2706,
+          "live_contributions": 2882,
           "stars_received": 16,
           "country": "Slovakia",
           "languages": [
             "JavaScript",
             "TypeScript",
-            "Python"
+            "HTML"
           ]
         },
         {
@@ -31092,8 +31083,8 @@
           "followers": 349,
           "following": 61,
           "estimated_commits": 1542,
-          "live_contributions": 1635,
-          "stars_received": 440,
+          "live_contributions": 1644,
+          "stars_received": 439,
           "country": "Slovakia",
           "languages": [
             "HTML",
@@ -31115,7 +31106,7 @@
           "followers": 15,
           "following": 5,
           "estimated_commits": 1518,
-          "live_contributions": 5858,
+          "live_contributions": 5898,
           "stars_received": 32,
           "country": "Slovakia",
           "languages": [
@@ -31158,10 +31149,10 @@
           "bio": "@redroselinux creator & dev - C, C++, D, Nim, Python - I hate systemd with a passion",
           "blog": "https://mostypc123.is-a.dev",
           "public_repos": 66,
-          "followers": 95,
+          "followers": 96,
           "following": 255,
           "estimated_commits": 1458,
-          "live_contributions": 1700,
+          "live_contributions": 1701,
           "stars_received": 47,
           "country": "Slovakia",
           "languages": [
@@ -31184,7 +31175,7 @@
           "followers": 11,
           "following": 8,
           "estimated_commits": 1411,
-          "live_contributions": 7298,
+          "live_contributions": 7438,
           "stars_received": 87,
           "country": "Slovakia",
           "languages": [
@@ -31207,7 +31198,7 @@
           "followers": 19,
           "following": 36,
           "estimated_commits": 1376,
-          "live_contributions": 2969,
+          "live_contributions": 2992,
           "stars_received": 0,
           "country": "Slovakia",
           "languages": [
@@ -31253,7 +31244,7 @@
           "followers": 15,
           "following": 6,
           "estimated_commits": 1260,
-          "live_contributions": 3284,
+          "live_contributions": 3307,
           "stars_received": 24,
           "country": "Slovakia",
           "languages": [
@@ -31276,7 +31267,7 @@
           "followers": 51,
           "following": 2,
           "estimated_commits": 1173,
-          "live_contributions": 1155,
+          "live_contributions": 1167,
           "stars_received": 224,
           "country": "Slovakia",
           "languages": [
@@ -31322,7 +31313,7 @@
           "followers": 13,
           "following": 37,
           "estimated_commits": 1147,
-          "live_contributions": 1757,
+          "live_contributions": 1758,
           "stars_received": 5,
           "country": "Slovakia",
           "languages": [
@@ -31338,7 +31329,7 @@
       "name": "Slovenia",
       "iso": "SI",
       "count": 30,
-      "last_updated": "2026-08-28T07:13:38.556056+00:00",
+      "last_updated": "2026-08-30T01:53:39.850181+00:00",
       "top_developers": [
         {
           "rank": 1,
@@ -31354,7 +31345,7 @@
           "followers": 180,
           "following": 172,
           "estimated_commits": 7282,
-          "live_contributions": 29732,
+          "live_contributions": 29915,
           "stars_received": 40,
           "country": "Slovenia",
           "languages": [
@@ -31374,10 +31365,10 @@
           "bio": "Professionaly developing high-performance electronics for space applications. An amateur astronomer, space ethusiast and language learner.",
           "blog": "https://si.linkedin.com/in/matej-gomboc",
           "public_repos": 50,
-          "followers": 33,
+          "followers": 34,
           "following": 85,
           "estimated_commits": 2985,
-          "live_contributions": 4931,
+          "live_contributions": 5069,
           "stars_received": 88,
           "country": "Slovenia",
           "languages": [
@@ -31423,7 +31414,7 @@
           "followers": 24,
           "following": 0,
           "estimated_commits": 2637,
-          "live_contributions": 2880,
+          "live_contributions": 2905,
           "stars_received": 8,
           "country": "Slovenia",
           "languages": [
@@ -31447,7 +31438,7 @@
           "following": 0,
           "estimated_commits": 2587,
           "live_contributions": 2901,
-          "stars_received": 420,
+          "stars_received": 421,
           "country": "Slovenia",
           "languages": [
             "Kotlin",
@@ -31466,10 +31457,10 @@
           "bio": "Developer of 86Box since 2016 (PCem-X since 2015).\r\nJetBrains Request ID=13042024/14204272",
           "blog": "http://forum.softhistory.org",
           "public_repos": 9,
-          "followers": 136,
+          "followers": 137,
           "following": 0,
           "estimated_commits": 2319,
-          "live_contributions": 2350,
+          "live_contributions": 2362,
           "stars_received": 63,
           "country": "Slovenia",
           "languages": [
@@ -31492,7 +31483,7 @@
           "followers": 920,
           "following": 355,
           "estimated_commits": 2286,
-          "live_contributions": 5089,
+          "live_contributions": 5192,
           "stars_received": 122,
           "country": "Slovenia",
           "languages": [
@@ -31515,7 +31506,7 @@
           "followers": 38,
           "following": 14,
           "estimated_commits": 2133,
-          "live_contributions": 11608,
+          "live_contributions": 11728,
           "stars_received": 124,
           "country": "Slovenia",
           "languages": [
@@ -31538,7 +31529,7 @@
           "followers": 331,
           "following": 27,
           "estimated_commits": 1726,
-          "live_contributions": 2164,
+          "live_contributions": 2228,
           "stars_received": 1112,
           "country": "Slovenia",
           "languages": [
@@ -31584,7 +31575,7 @@
           "followers": 240,
           "following": 0,
           "estimated_commits": 1630,
-          "live_contributions": 11483,
+          "live_contributions": 11583,
           "stars_received": 150,
           "country": "Slovenia",
           "languages": [
@@ -31607,8 +31598,8 @@
           "followers": 285,
           "following": 307,
           "estimated_commits": 1554,
-          "live_contributions": 4854,
-          "stars_received": 2481,
+          "live_contributions": 4858,
+          "stars_received": 2483,
           "country": "Slovenia",
           "languages": [
             "C",
@@ -31630,7 +31621,7 @@
           "followers": 15,
           "following": 15,
           "estimated_commits": 1475,
-          "live_contributions": 1818,
+          "live_contributions": 1840,
           "stars_received": 7,
           "country": "Slovenia",
           "languages": [
@@ -31653,7 +31644,7 @@
           "followers": 10,
           "following": 16,
           "estimated_commits": 1428,
-          "live_contributions": 2815,
+          "live_contributions": 2817,
           "stars_received": 6,
           "country": "Slovenia",
           "languages": [
@@ -31676,7 +31667,7 @@
           "followers": 21,
           "following": 4,
           "estimated_commits": 1362,
-          "live_contributions": 1736,
+          "live_contributions": 1752,
           "stars_received": 72,
           "country": "Slovenia",
           "languages": [
@@ -31699,7 +31690,7 @@
           "followers": 49,
           "following": 0,
           "estimated_commits": 1359,
-          "live_contributions": 2077,
+          "live_contributions": 2086,
           "stars_received": 67,
           "country": "Slovenia",
           "languages": [
@@ -31723,7 +31714,7 @@
           "following": 1,
           "estimated_commits": 1345,
           "live_contributions": 1431,
-          "stars_received": 1557,
+          "stars_received": 1558,
           "country": "Slovenia",
           "languages": [
             "C#",
@@ -31745,7 +31736,7 @@
           "followers": 26,
           "following": 0,
           "estimated_commits": 1322,
-          "live_contributions": 3743,
+          "live_contributions": 3754,
           "stars_received": 172,
           "country": "Slovenia",
           "languages": [
@@ -31768,7 +31759,7 @@
           "followers": 115,
           "following": 0,
           "estimated_commits": 1307,
-          "live_contributions": 1408,
+          "live_contributions": 1409,
           "stars_received": 27,
           "country": "Slovenia",
           "languages": [
@@ -31814,7 +31805,7 @@
           "followers": 8,
           "following": 0,
           "estimated_commits": 1289,
-          "live_contributions": 3938,
+          "live_contributions": 4008,
           "stars_received": 18,
           "country": "Slovenia",
           "languages": [
@@ -31859,7 +31850,7 @@
           "followers": 70,
           "following": 5,
           "estimated_commits": 1182,
-          "live_contributions": 4208,
+          "live_contributions": 4236,
           "stars_received": 458,
           "country": "Slovenia",
           "languages": [
@@ -31879,10 +31870,10 @@
           "bio": "Researcher at Jozef Stefan Institute.",
           "blog": "http://auger.ijs.si/nano/",
           "public_repos": 21,
-          "followers": 36,
+          "followers": 37,
           "following": 24,
           "estimated_commits": 1178,
-          "live_contributions": 1844,
+          "live_contributions": 1867,
           "stars_received": 120,
           "country": "Slovenia",
           "languages": [
@@ -31902,11 +31893,11 @@
           "bio": "Mechanical Engineering Student",
           "blog": "tfourj.com",
           "public_repos": 30,
-          "followers": 30,
+          "followers": 31,
           "following": 2,
           "estimated_commits": 1092,
-          "live_contributions": 9555,
-          "stars_received": 86,
+          "live_contributions": 9572,
+          "stars_received": 90,
           "country": "Slovenia",
           "languages": [
             "TypeScript",
@@ -31928,7 +31919,7 @@
           "followers": 71,
           "following": 5,
           "estimated_commits": 1075,
-          "live_contributions": 4588,
+          "live_contributions": 4602,
           "stars_received": 82,
           "country": "Slovenia",
           "languages": [
@@ -31948,7 +31939,7 @@
           "bio": "professional dipshit",
           "blog": "https://github.com/Zanci19",
           "public_repos": 38,
-          "followers": 11,
+          "followers": 10,
           "following": 12,
           "estimated_commits": 1066,
           "live_contributions": 1294,
@@ -31974,7 +31965,7 @@
           "followers": 38,
           "following": 40,
           "estimated_commits": 1055,
-          "live_contributions": 1146,
+          "live_contributions": 1170,
           "stars_received": 982,
           "country": "Slovenia",
           "languages": [
@@ -31997,8 +31988,8 @@
           "followers": 26,
           "following": 5,
           "estimated_commits": 1037,
-          "live_contributions": 2501,
-          "stars_received": 236,
+          "live_contributions": 2505,
+          "stars_received": 239,
           "country": "Slovenia",
           "languages": [
             "TypeScript",
@@ -50586,29 +50577,6 @@
         },
         {
           "rank": 18,
-          "login": "ThePixelMoon",
-          "name": "ThePixelMoon",
-          "avatar_url": "https://avatars.githubusercontent.com/u/176160477?v=4",
-          "html_url": "https://github.com/ThePixelMoon",
-          "company": "",
-          "location": "Latvia",
-          "bio": "idk",
-          "blog": "https://github.com/ThePixelMoon",
-          "public_repos": 43,
-          "followers": 23,
-          "following": 0,
-          "estimated_commits": 70748,
-          "live_contributions": 61412,
-          "stars_received": 7,
-          "country": "Latvia",
-          "languages": [
-            "C++",
-            "Python",
-            "C"
-          ]
-        },
-        {
-          "rank": 19,
           "login": "bocaletto-luca",
           "name": "Bocaletto Luca",
           "avatar_url": "https://avatars.githubusercontent.com/u/58043613?v=4",
@@ -50631,7 +50599,7 @@
           ]
         },
         {
-          "rank": 20,
+          "rank": 19,
           "login": "jverkoey",
           "name": "Jeff Verkoeyen",
           "avatar_url": "https://avatars.githubusercontent.com/u/45670?v=4",
@@ -50654,7 +50622,7 @@
           ]
         },
         {
-          "rank": 21,
+          "rank": 20,
           "login": "buraksocial",
           "name": "Burak Doğan",
           "avatar_url": "https://avatars.githubusercontent.com/u/215418076?v=4",
@@ -50674,6 +50642,29 @@
             "Python",
             "PHP",
             "JavaScript"
+          ]
+        },
+        {
+          "rank": 21,
+          "login": "ThePixelMoon",
+          "name": "ThePixelMoon",
+          "avatar_url": "https://avatars.githubusercontent.com/u/176160477?v=4",
+          "html_url": "https://github.com/ThePixelMoon",
+          "company": "",
+          "location": "Latvia",
+          "bio": "idk",
+          "blog": "https://github.com/ThePixelMoon",
+          "public_repos": 43,
+          "followers": 23,
+          "following": 0,
+          "estimated_commits": 60624,
+          "live_contributions": 61412,
+          "stars_received": 7,
+          "country": "Latvia",
+          "languages": [
+            "C++",
+            "Python",
+            "C"
           ]
         },
         {
