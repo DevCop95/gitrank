@@ -3,7 +3,10 @@ import os
 import tempfile
 import unittest
 
-from PIL import Image
+try:
+    from PIL import Image
+except ImportError:  # the scraper workflow runs every test file without installing Pillow
+    raise unittest.SkipTest("Pillow is not installed")
 
 from build_share_pages import build, compact, page_html, pick_entries, render_card, safe_text
 
