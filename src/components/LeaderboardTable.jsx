@@ -2,6 +2,7 @@ import React from 'react';
 import { Activity, ExternalLink, CheckCircle2, Swords, Share2, Bookmark } from 'lucide-react';
 import { cleanText } from '../utils/cleanText';
 import { copyText } from '../utils/copyText';
+import { buildShareUrl } from '../utils/shareUrl';
 import { useI18n } from '../i18n/I18nContext';
 
 const iconButton =
@@ -14,8 +15,7 @@ function useRowActions({ dev, onNotify }) {
   const { t } = useI18n();
 
   const handleShareLink = async () => {
-    const baseUrl = window.location.origin + window.location.pathname;
-    const url = `${baseUrl}?country=${encodeURIComponent(dev.country || 'Worldwide')}&dev=${encodeURIComponent(dev.login)}`;
+    const url = buildShareUrl(dev.login);
     const ok = await copyText(url);
     if (onNotify) {
       onNotify(ok ? t('toast.linkCopied', { login: dev.login }) : t('toast.copyFailed'), ok ? 'success' : 'info');

@@ -2,6 +2,7 @@ import React from 'react';
 import { GitCommit, Activity, Star, FolderGit2, Users, ExternalLink, MapPin, CheckCircle2, Swords, Share2, Bookmark } from 'lucide-react';
 import { cleanText } from '../utils/cleanText';
 import { copyText } from '../utils/copyText';
+import { buildShareUrl } from '../utils/shareUrl';
 import { useI18n } from '../i18n/I18nContext';
 
 function DeveloperCard({
@@ -23,7 +24,6 @@ function DeveloperCard({
     html_url = `https://github.com/${developer.login}`,
     location,
     bio,
-    country = 'Worldwide',
     public_repos = 0,
     followers = 0,
     estimated_commits = 0,
@@ -39,8 +39,7 @@ function DeveloperCard({
 
   const handleShareLink = async (e) => {
     e.stopPropagation();
-    const baseUrl = window.location.origin + window.location.pathname;
-    const url = `${baseUrl}?country=${encodeURIComponent(country)}&dev=${encodeURIComponent(login)}`;
+    const url = buildShareUrl(login);
     const ok = await copyText(url);
     if (onNotify) {
       onNotify(ok ? t('toast.linkCopied', { login }) : t('toast.copyFailed'), ok ? 'success' : 'info');

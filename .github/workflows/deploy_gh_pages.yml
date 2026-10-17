@@ -49,8 +49,22 @@ jobs:
       - name: Validate dataset
         run: npm run check:data
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Pillow
+        run: pip install pillow
+
+      - name: Python tests
+        run: python -m unittest discover -s scripts -p "test_*.py"
+
       - name: Build Web Application
         run: npm run build
+
+      - name: Build per-developer share pages (Open Graph preview cards)
+        run: python scripts/build_share_pages.py public/data/committers.json dist
 
       - name: Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3

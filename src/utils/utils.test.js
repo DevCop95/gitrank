@@ -3,6 +3,7 @@ import { normalizeText } from './normalizeText';
 import { filterDevelopers, sortDevelopers } from './filterDevelopers';
 import { csvCell } from './exportData';
 import { cleanText } from './cleanText';
+import { buildShareUrl } from './shareUrl';
 
 describe('normalizeText', () => {
   it('lowercases and strips accents', () => {
@@ -85,5 +86,13 @@ describe('cleanText', () => {
   it('decodes entities and collapses whitespace', () => {
     expect(cleanText('Tom &amp; Jerry\n  rock')).toBe('Tom & Jerry rock');
     expect(cleanText(null)).toBe('');
+  });
+});
+
+describe('buildShareUrl', () => {
+  it('points to the per-developer share page under the app base path', () => {
+    expect(buildShareUrl('ana', 'https://x.io', '/gitrank/')).toBe('https://x.io/gitrank/share/ana/');
+    expect(buildShareUrl('ana', 'https://x.io', '/gitrank/index.html')).toBe('https://x.io/gitrank/share/ana/');
+    expect(buildShareUrl('a b', 'https://x.io', '/')).toBe('https://x.io/share/a%20b/');
   });
 });

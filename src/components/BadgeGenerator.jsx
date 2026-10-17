@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check, Sparkles, Share2, Code } from 'lucide-react';
 import { copyText } from '../utils/copyText';
+import { buildShareUrl } from '../utils/shareUrl';
 import { useI18n } from '../i18n/I18nContext';
 
 export default function BadgeGenerator({ developer, onNotify }) {
@@ -12,8 +13,7 @@ export default function BadgeGenerator({ developer, onNotify }) {
   if (!developer) return null;
 
   const { rank, login, country = 'Worldwide' } = developer;
-  const baseUrl = window.location.origin + window.location.pathname;
-  const shareUrl = `${baseUrl}?country=${encodeURIComponent(country)}&dev=${encodeURIComponent(login)}`;
+  const shareUrl = buildShareUrl(login);
 
   const badgeText = `GitTop Rank`;
   const badgeMessage = `#${rank} in ${country}`;

@@ -28,6 +28,7 @@ GitTop **v1.0** delivers a high-precision, real-time leaderboard platform for tr
 - **🌐 Bilingual UI (EN / ES)**: Language toggle in the header; defaults to the browser language and is remembered. Country search understands Spanish names and ignores accents.
 - **📱 Mobile-first popups**: Every dropdown/menu closes when you tap outside (pointer events, so it also works on iOS), with `Esc` and keyboard navigation (arrow keys, focus trap in dialogs).
 - **🔎 Smarter search**: Accent-insensitive developer search across name, login, bio, location and company.
+- **🖼️ Per-developer share previews**: The share button copies `…/gitrank/share/<login>/`, a static page whose preview card (avatar, name, rank in country, contributions/commits/stars/followers) is generated at deploy time, so each shared link shows that developer on WhatsApp, X, LinkedIn, Slack, etc.
 
 ---
 
@@ -149,6 +150,8 @@ npm run lint        # ESLint (React + hooks rules)
 npm test            # Vitest: utils, i18n parity, components, App smoke tests
 npm run check:data  # Validates public/data/committers.json
 npm run assets      # Regenerates icons / og-image (needs: pip install pillow)
+python scripts/build_share_pages.py public/data/committers.json dist   # Per-developer share pages (after npm run build)
+python -m unittest discover -s scripts -p "test_*.py"                  # Python tests
 ```
 The deploy workflow runs lint, tests and the dataset check before building, so a broken dataset is never published.
 
@@ -174,6 +177,7 @@ gittop/
 ├── scripts/
 │   ├── build_fast_multithreaded_real_stats.py   # Live Python engine (+ unit tests)
 │   ├── check-dataset.mjs            # Dataset sanity check used by CI
+│   ├── build_share_pages.py         # Per-developer share pages + preview cards (run at deploy)
 │   └── generate_assets.py           # Icons / social preview generator
 ├── src/
 │   ├── components/                  # Navbar, CountrySelector, DeveloperCard, LeaderboardTable,

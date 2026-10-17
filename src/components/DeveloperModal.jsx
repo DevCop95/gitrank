@@ -3,6 +3,7 @@ import { X, ExternalLink, GitCommit, Activity, Star, FolderGit2, Users, MapPin, 
 import { cleanText } from '../utils/cleanText';
 import BadgeGenerator from './BadgeGenerator';
 import { copyText } from '../utils/copyText';
+import { buildShareUrl } from '../utils/shareUrl';
 import { useFocusTrap } from '../utils/useFocusTrap';
 import { useI18n } from '../i18n/I18nContext';
 
@@ -70,8 +71,7 @@ export default function DeveloperModal({
   const compActive = isCompared ? isCompared(login) : false;
 
   const handleShareLink = async () => {
-    const baseUrl = window.location.origin + window.location.pathname;
-    const url = `${baseUrl}?country=${encodeURIComponent(country)}&dev=${encodeURIComponent(login)}`;
+    const url = buildShareUrl(login);
     const ok = await copyText(url);
     if (onNotify) {
       onNotify(ok ? t('toast.profileLinkCopied', { login }) : t('toast.copyFailed'), ok ? 'success' : 'info');
