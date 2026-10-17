@@ -1,36 +1,90 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { COUNTRIES } from '../data/countriesList';
-import { Search, Globe, ChevronDown, Check } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { COUNTRIES, REGIONS } from '../data/countriesList';
+import { Search, Globe, ChevronDown, Check, X } from 'lucide-react';
+import { useDismiss } from '../utils/useDismiss';
+import { normalizeText } from '../utils/normalizeText';
+
+// Spanish names so "españa" or "alemania" find the English-named entries.
+const SPANISH_ALIASES = {
+  World: 'mundo mundial global',
+  'United States': 'estados unidos eeuu usa',
+  'United Kingdom': 'reino unido uk inglaterra',
+  Spain: 'espana',
+  Germany: 'alemania',
+  Brazil: 'brasil',
+  France: 'francia',
+  Italy: 'italia',
+  Japan: 'japon',
+  Netherlands: 'paises bajos holanda',
+  Switzerland: 'suiza',
+  Sweden: 'suecia',
+  Norway: 'noruega',
+  Denmark: 'dinamarca',
+  Finland: 'finlandia',
+  Poland: 'polonia',
+  Greece: 'grecia',
+  Hungary: 'hungria',
+  Ireland: 'irlanda',
+  Iceland: 'islandia',
+  Croatia: 'croacia',
+  'Czech Republic': 'republica checa chequia',
+  Turkey: 'turquia',
+  Ukraine: 'ucrania',
+  Belgium: 'belgica',
+  Romania: 'rumania',
+  Egypt: 'egipto',
+  Kenya: 'kenia',
+  'South Africa': 'sudafrica',
+  'South Korea': 'corea del sur',
+  'New Zealand': 'nueva zelanda',
+  Thailand: 'tailandia',
+  Philippines: 'filipinas',
+  Malaysia: 'malasia',
+  Singapore: 'singapur',
+  'Dominican Republic': 'republica dominicana'
+};
+
+const SEARCH_INDEX = COUNTRIES.map((c) => ({
+  country: c,
+  haystack: normalizeText(`${c.name} ${c.iso} ${c.code} ${SPANISH_ALIASES[c.code] || ''}`)
+}));
 
 export default function CountrySelector({ selectedCountry, onSelectCountry }) {
   const [countryFilter, setCountryFilter] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('All');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const searchInputRef = useRef(null);
 
+  const closeDropdown = () => {
+    setDropdownOpen(false);
+    setCountryFilter('');
+    setSelectedRegion('All');
+  };
+
+  // Close on outside tap/click (touch included), Escape, or focus leaving the panel
+  useDismiss(dropdownRef, dropdownOpen, closeDropdown);
+
+  // Focus the search box on desktop only; on touch it would pop the keyboard over the list
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    };
-
-    if (dropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+    if (dropdownOpen && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      searchInputRef.current?.focus();
     }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
   }, [dropdownOpen]);
 
-  const regions = ['All', 'LATAM', 'North America', 'Europe', 'Asia', 'Global'];
+  const filteredCountries = useMemo(() => {
+    const q = normalizeText(countryFilter);
+    return SEARCH_INDEX.filter(({ country, haystack }) => {
+      const matchesQuery = !q || haystack.includes(q);
+      const matchesRegion = selectedRegion === 'All' || country.region === selectedRegion;
+      return matchesQuery && matchesRegion;
+    }).map(({ country }) => country);
+  }, [countryFilter, selectedRegion]);
 
-  const filteredCountries = COUNTRIES.filter((c) => {
-    const q = countryFilter.toLowerCase().trim();
-    const matchesQuery = !q || c.name.toLowerCase().includes(q) || c.iso.toLowerCase().includes(q);
-    const matchesRegion = selectedRegion === 'All' || c.region === selectedRegion;
-    return matchesQuery && matchesRegion;
-  });
+  const handleSelect = (code) => {
+    onSelectCountry(code);
+    closeDropdown();
+  };
 
   const activeCountryObj =
     COUNTRIES.find(
@@ -102,7 +156,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
         {/* Dropdown Selector Button */}
         <div className="relative w-full sm:w-auto" ref={dropdownRef}>
           <button
-            onClick={() => setDropdownOpen(!dropdownOpen)}
+            onClick={() => (dropdownOpen ? closeDropdown() : setDropdownOpen(true))}
             className="w-full sm:w-64 min-h-10 flex items-center justify-between gap-2 px-4 py-2 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700/80 border border-neutral-200 dark:border-neutral-700 rounded-xl text-sm sm:text-xs font-semibold text-neutral-800 dark:text-neutral-100 transition-all shadow-2xs cursor-pointer"
             aria-expanded={dropdownOpen}
             aria-haspopup="listbox"
@@ -116,15 +170,15 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
 
           {/* Full Country Dropdown Drawer */}
           {dropdownOpen && (
-            <div className="absolute left-0 sm:left-auto right-0 top-full mt-2 w-full sm:w-88 max-w-[calc(100vw-2rem)] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl z-50 p-3 max-h-[min(26rem,calc(100vh-10rem))] overflow-y-auto">
+            <div className="absolute left-0 sm:left-auto right-0 top-full mt-2 w-full sm:w-88 max-w-[calc(100vw-2rem)] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl z-50 p-3 max-h-[min(26rem,calc(100dvh-10rem))] overflow-y-auto overscroll-contain">
               
               {/* Region Tabs inside Dropdown */}
               <div className="flex items-center gap-1 overflow-x-auto pb-2 mb-2.5 border-b border-neutral-200 dark:border-neutral-800">
-                {regions.map((reg) => (
+                {REGIONS.map((reg) => (
                   <button
                     key={reg}
                     onClick={() => setSelectedRegion(reg)}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors whitespace-nowrap cursor-pointer ${
+                    className={`min-h-8 px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors whitespace-nowrap cursor-pointer ${
                       selectedRegion === reg
                         ? 'bg-black text-white dark:bg-white dark:text-black font-bold'
                         : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800'
@@ -137,14 +191,39 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
 
               {/* Internal Search */}
               <div className="relative mb-2.5">
-                <Search className="absolute left-3 top-3 w-3.5 h-3.5 text-neutral-400" />
+                <Search className="absolute left-3 top-3.5 w-3.5 h-3.5 text-neutral-400" />
                 <input
-                  type="text"
+                  ref={searchInputRef}
+                  type="search"
                   value={countryFilter}
                   onChange={(e) => setCountryFilter(e.target.value)}
-                  placeholder="Search by country or ISO..."
-                  className="w-full min-h-9 pl-9 pr-3 py-1.5 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-xs text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-black dark:focus:border-white font-medium"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && filteredCountries.length > 0) {
+                      e.preventDefault();
+                      handleSelect(filteredCountries[0].code);
+                    }
+                  }}
+                  enterKeyHint="go"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  placeholder="Search country, ISO or español..."
+                  aria-label="Search countries"
+                  className="w-full min-h-10 pl-9 pr-9 py-1.5 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-base sm:text-xs text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-black dark:focus:border-white font-medium [&::-webkit-search-cancel-button]:appearance-none"
                 />
+                {countryFilter && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCountryFilter('');
+                      searchInputRef.current?.focus();
+                    }}
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 text-neutral-400 hover:text-black dark:hover:text-white cursor-pointer"
+                    aria-label="Clear country search"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
               </div>
 
               {/* Grid of Countries */}
@@ -156,11 +235,8 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                       key={c.code}
                       role="option"
                       aria-selected={isSelected}
-                      onClick={() => {
-                        onSelectCountry(c.code);
-                        setDropdownOpen(false);
-                      }}
-                      className={`flex items-center justify-between min-h-9 px-3 py-1.5 rounded-xl text-xs font-mono transition-all text-left cursor-pointer ${
+                      onClick={() => handleSelect(c.code)}
+                      className={`flex items-center justify-between min-h-10 sm:min-h-9 px-3 py-1.5 rounded-xl text-xs font-mono transition-all text-left cursor-pointer ${
                         isSelected
                           ? 'bg-black text-white dark:bg-white dark:text-black font-bold'
                           : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800'
@@ -176,6 +252,11 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                     </button>
                   );
                 })}
+                {filteredCountries.length === 0 && (
+                  <p className="px-3 py-4 text-center text-xs font-mono text-neutral-500 dark:text-neutral-400">
+                    No countries match "{countryFilter}"
+                  </p>
+                )}
               </div>
             </div>
           )}

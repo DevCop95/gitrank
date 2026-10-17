@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Search, LayoutGrid, List, Github, Menu, X, Sun, Moon, Bookmark, Download, FileSpreadsheet, FileCode } from 'lucide-react';
+import { useDismiss } from '../utils/useDismiss';
 
 export default function Navbar({
   searchTerm,
@@ -20,23 +21,17 @@ export default function Navbar({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const exportRef = useRef(null);
+  const headerRef = useRef(null);
+  const searchRef = useRef(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (exportRef.current && !exportRef.current.contains(e.target)) {
-        setExportOpen(false);
-      }
-    };
-    if (exportOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [exportOpen]);
+  // Tap/click outside (touch included) or Escape closes the export menu and the mobile menu
+  useDismiss(exportRef, exportOpen, () => setExportOpen(false));
+  useDismiss(headerRef, mobileMenuOpen, () => setMobileMenuOpen(false));
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 mb-4 sm:mb-6 transition-colors">
+    <header ref={headerRef} className="sticky top-0 z-40 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 mb-4 sm:mb-6 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-3">
-        
+
         {/* Brand Logo Header */}
         <div className="flex items-center justify-between w-full md:w-auto">
           <div className="flex items-center gap-2.5">
@@ -73,19 +68,44 @@ export default function Navbar({
         </div>
 
         {/* Desktop Controls (Search, Sort, Layout, Favorites, Export, Theme) */}
-        <div className={`w-full md:flex md:flex-1 md:max-w-3xl items-center gap-2 sm:gap-2.5 ${mobileMenuOpen ? 'flex flex-col mt-2 pt-3 border-t border-neutral-200 dark:border-neutral-800 md:border-0 md:pt-0 md:mt-0' : 'hidden md:flex'}`}>
-          
-          {/* Search Input */}
+        <div className="w-full md:flex md:flex-1 md:max-w-3xl items-center gap-2 sm:gap-2.5 flex flex-col md:flex-row">
+
+          {/* Search Input (always visible, also on mobile) */}
           <div className="relative flex-1 w-full">
             <Search className="absolute left-3.5 top-3.5 w-4 h-4 text-neutral-400 dark:text-neutral-500" />
             <input
-              type="text"
+              ref={searchRef}
+              type="search"
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === 'Escape') e.currentTarget.blur();
+              }}
+              enterKeyHint="search"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
+              aria-label="Search developers"
               placeholder="Search developer by name or username..."
-              className="w-full min-h-10 pl-10 pr-4 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl text-sm md:text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-black dark:focus:border-white focus:bg-white dark:focus:bg-neutral-900 transition-all placeholder-neutral-400 dark:placeholder-neutral-500 font-medium"
+              className="w-full min-h-10 pl-10 pr-10 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl text-base md:text-xs text-neutral-900 dark:text-white focus:outline-none focus:border-black dark:focus:border-white focus:bg-white dark:focus:bg-neutral-900 transition-all placeholder-neutral-400 dark:placeholder-neutral-500 font-medium [&::-webkit-search-cancel-button]:appearance-none"
             />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => {
+                  onSearchChange('');
+                  searchRef.current?.focus();
+                }}
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 p-2 text-neutral-400 hover:text-black dark:hover:text-white cursor-pointer"
+                aria-label="Clear developer search"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
+
+          {/* Remaining controls: collapsible on mobile, inline on desktop */}
+          <div className={`${mobileMenuOpen ? 'flex' : 'hidden'} md:contents flex-col w-full gap-2`}>
 
           {/* Sort Selector */}
           <div className="relative w-full md:w-auto">
@@ -201,6 +221,7 @@ export default function Navbar({
             {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
+          </div>
         </div>
 
       </div>

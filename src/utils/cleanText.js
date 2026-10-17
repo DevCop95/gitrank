@@ -15,6 +15,6 @@ export function cleanText(str) {
     .replace(/&nbsp;/g, ' ');
 
   // Collapse multiple newlines into clean space for inline bio preview
-  txt = txt.replace(/\s+/g, ' ').strip?.() || txt.replace(/\s+/g, ' ').trim();
+  txt = txt.replace(/\s+/g, ' ').trim();
   return txt;
 }

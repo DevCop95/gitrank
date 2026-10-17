@@ -12,8 +12,6 @@ export default function DeveloperModal({
   onToggleCompare,
   onNotify
 }) {
-  if (!developer) return null;
-
   const {
     rank,
     login,
@@ -32,7 +30,7 @@ export default function DeveloperModal({
     stars_received = 0,
     country = 'Worldwide',
     languages = []
-  } = developer;
+  } = developer || {};
 
   const [activeTab, setActiveTab] = useState('stats'); // 'stats' | 'badge'
   const [imgError, setImgError] = useState(false);
@@ -50,6 +48,8 @@ export default function DeveloperModal({
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
+
+  if (!developer) return null;
 
   const formatNumber = (num) => new Intl.NumberFormat('en-US').format(num || 0);
 

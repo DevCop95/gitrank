@@ -12,6 +12,7 @@ import DeveloperCompareModal from './components/DeveloperCompareModal';
 import Toast from './components/Toast';
 import { useFavorites } from './utils/useFavorites';
 import { exportToCSV, exportToJSON } from './utils/exportData';
+import { normalizeText } from './utils/normalizeText';
 import { Trophy, Activity, Search, RefreshCw, AlertCircle } from 'lucide-react';
 
 export default function App() {
@@ -188,13 +189,12 @@ export default function App() {
   const filteredDevelopers = useMemo(() => {
     return rawDevelopers.filter((dev) => {
       // Search filter
-      const q = searchTerm.toLowerCase().trim();
+      const q = normalizeText(searchTerm);
       const matchesSearch =
         !q ||
-        (dev.login && dev.login.toLowerCase().includes(q)) ||
-        (dev.name && dev.name.toLowerCase().includes(q)) ||
-        (dev.bio && dev.bio.toLowerCase().includes(q)) ||
-        (dev.location && dev.location.toLowerCase().includes(q));
+        [dev.login, dev.name, dev.bio, dev.location, dev.company].some(
+          (field) => field && normalizeText(field).includes(q)
+        );
 
       // Language filter
       const matchesLanguage =
