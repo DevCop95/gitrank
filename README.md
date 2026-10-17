@@ -36,22 +36,22 @@ GitTop **v1.0** delivers a high-precision, real-time leaderboard platform for tr
 ### Frontend & UI
 | Technology | Description | Badge |
 | :--- | :--- | :--- |
-| **React 18** | UI component library powering dynamic state and modals | `![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black)` |
-| **Vite 5** | Next-generation fast frontend build tool | `![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite&logoColor=white)` |
-| **Tailwind CSS** | Utility-first CSS framework for modern styling | `![Tailwind](https://img.shields.io/badge/-Tailwind-38B2AC?logo=tailwind-css&logoColor=white)` |
-| **Lucide Icons** | Clean, modern UI icon system | `![Lucide](https://img.shields.io/badge/-Lucide_Icons-F59E0B)` |
+| **React 18** | UI component library powering dynamic state and modals | ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=black) |
+| **Vite 5** | Next-generation fast frontend build tool | ![Vite](https://img.shields.io/badge/-Vite-646CFF?logo=vite&logoColor=white) |
+| **Tailwind CSS** | Utility-first CSS framework for modern styling | ![Tailwind](https://img.shields.io/badge/-Tailwind-38B2AC?logo=tailwind-css&logoColor=white) |
+| **Lucide Icons** | Clean, modern UI icon system | ![Lucide](https://img.shields.io/badge/-Lucide_Icons-F59E0B) |
 
 ### Data Pipeline & Backend Engine
 | Technology | Description | Badge |
 | :--- | :--- | :--- |
-| **Python 3.10+** | Multithreaded scraping engine (`ThreadPoolExecutor`) | `![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white)` |
-| **BeautifulSoup4 / Requests** | Live HTML parsing of GitHub profiles & contribution graphs | `![Scraping](https://img.shields.io/badge/-Web_Scraping-FF6F61)` |
+| **Python 3.10+** | Multithreaded scraping engine (`ThreadPoolExecutor`) | ![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white) |
+| **urllib / GitHub GraphQL API** | Live parsing of GitHub profiles & contribution graphs (standard library, no extra dependencies) | ![Scraping](https://img.shields.io/badge/-Web_Scraping-FF6F61) |
 
 ### Automation & CI/CD
 | Technology | Description | Badge |
 | :--- | :--- | :--- |
-| **GitHub Actions** | Automated 12-hour scheduled background scraper workflows | `![GitHub Actions](https://img.shields.io/badge/-GitHub_Actions-2088FF?logo=github-actions&logoColor=white)` |
-| **GitHub Pages** | Automated deployment workflow via GH-Pages action | `![GitHub Pages](https://img.shields.io/badge/-GitHub_Pages-22C55E?logo=github&logoColor=white)` |
+| **GitHub Actions** | Automated 12-hour scheduled background scraper workflows | ![GitHub Actions](https://img.shields.io/badge/-GitHub_Actions-2088FF?logo=github-actions&logoColor=white) |
+| **GitHub Pages** | Automated deployment workflow via GH-Pages action | ![GitHub Pages](https://img.shields.io/badge/-GitHub_Pages-22C55E?logo=github&logoColor=white) |
 
 ---
 

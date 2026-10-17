@@ -62,4 +62,15 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add public/data/committers.json
           git status
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): auto-update top committers dataset 100% real" && git push)
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No dataset changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(data): auto-update top committers dataset 100% real"
+          # Someone may have pushed while the scraper ran: rebase and retry instead of failing
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0
+            echo "Push attempt $attempt failed, retrying..."
+            sleep $((attempt * 5))
+          done
+          exit 1
