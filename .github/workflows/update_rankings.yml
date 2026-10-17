@@ -5,8 +5,10 @@ on:
     branches:
       - main
       - master
-    paths-ignore:
-      - public/data/committers.json
+    # Only scraper changes re-run the scrape; front-end pushes must not burn API quota
+    paths:
+      - scripts/**
+      - .github/workflows/update_rankings.yml
   schedule:
     # Se ejecuta automáticamente cada 12 horas
     - cron: '0 */12 * * *'

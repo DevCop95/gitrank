@@ -3,6 +3,7 @@ import { COUNTRIES, REGIONS } from '../data/countriesList';
 import { Search, Globe, ChevronDown, Check, X } from 'lucide-react';
 import { useDismiss } from '../utils/useDismiss';
 import { normalizeText } from '../utils/normalizeText';
+import { useI18n } from '../i18n/I18nContext';
 
 // Spanish names so "españa" or "alemania" find the English-named entries.
 const SPANISH_ALIASES = {
@@ -50,11 +51,13 @@ const SEARCH_INDEX = COUNTRIES.map((c) => ({
 }));
 
 export default function CountrySelector({ selectedCountry, onSelectCountry }) {
+  const { t } = useI18n();
   const [countryFilter, setCountryFilter] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('All');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const searchInputRef = useRef(null);
+  const listRef = useRef(null);
 
   const closeDropdown = () => {
     setDropdownOpen(false);
@@ -81,6 +84,20 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
     }).map(({ country }) => country);
   }, [countryFilter, selectedRegion]);
 
+  // Arrow keys / Home / End move between the search box and the options
+  const moveFocus = (event, index) => {
+    const options = [...(listRef.current?.querySelectorAll('[data-country-option]') || [])];
+    let next = null;
+    if (event.key === 'ArrowDown') next = options[index + 1] || options[0];
+    else if (event.key === 'ArrowUp') next = index <= 0 ? searchInputRef.current : options[index - 1];
+    else if (event.key === 'Home') next = options[0];
+    else if (event.key === 'End') next = options[options.length - 1];
+    if (next) {
+      event.preventDefault();
+      next.focus();
+    }
+  };
+
   const handleSelect = (code) => {
     onSelectCountry(code);
     closeDropdown();
@@ -94,7 +111,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
     ) || COUNTRIES[0];
 
   const quickPills = [
-    { code: 'World', label: '[GLOBAL] Worldwide' },
+    { code: 'World', label: `[GLOBAL] ${t('country.world')}` },
     { code: 'Colombia', label: '[CO] Colombia' },
     { code: 'United States', label: '[US] USA' },
     { code: 'Spain', label: '[ES] Spain' },
@@ -108,11 +125,11 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
 
   return (
     <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-3.5 sm:p-4 md:p-5 mb-4 sm:mb-6 shadow-2xs transition-colors">
-      
+
       {/* Quick Access ISO Pill Bar */}
       <div className="-mx-1 px-1 flex items-center gap-2 overflow-x-auto pb-3 mb-3 border-b border-neutral-200 dark:border-neutral-800">
         <span className="text-[10px] sm:text-[11px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider mr-1 font-semibold whitespace-nowrap shrink-0">
-          Quick Access:
+          {t('country.quickAccess')}
         </span>
         {quickPills.map((pill) => {
           const isSelected = pill.code.toLowerCase() === selectedCountry.toLowerCase();
@@ -141,10 +158,10 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="text-[10px] sm:text-[11px] uppercase font-mono tracking-widest text-neutral-400 dark:text-neutral-500 font-semibold">
-                Active Country Filter
+                {t('country.activeFilter')}
               </span>
               <span className="px-2 py-0.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-[10px] font-mono rounded-md border border-neutral-200 dark:border-neutral-700 font-semibold">
-                {activeCountryObj.region || 'Region'}
+                {activeCountryObj.region ? t(`region.${activeCountryObj.region}`) : t('country.regionFallback')}
               </span>
             </div>
             <h2 className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white tracking-tight truncate mt-0.5">
@@ -171,7 +188,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
           {/* Full Country Dropdown Drawer */}
           {dropdownOpen && (
             <div className="absolute left-0 sm:left-auto right-0 top-full mt-2 w-full sm:w-88 max-w-[calc(100vw-2rem)] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl z-50 p-3 max-h-[min(26rem,calc(100dvh-10rem))] overflow-y-auto overscroll-contain">
-              
+
               {/* Region Tabs inside Dropdown */}
               <div className="flex items-center gap-1 overflow-x-auto pb-2 mb-2.5 border-b border-neutral-200 dark:border-neutral-800">
                 {REGIONS.map((reg) => (
@@ -184,7 +201,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                         : 'text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800'
                     }`}
                   >
-                    {reg}
+                    {t(`region.${reg}`)}
                   </button>
                 ))}
               </div>
@@ -201,14 +218,16 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                     if (e.key === 'Enter' && filteredCountries.length > 0) {
                       e.preventDefault();
                       handleSelect(filteredCountries[0].code);
+                    } else if (e.key === 'ArrowDown') {
+                      moveFocus(e, -1);
                     }
                   }}
                   enterKeyHint="go"
                   autoComplete="off"
                   autoCorrect="off"
                   spellCheck={false}
-                  placeholder="Search country, ISO or español..."
-                  aria-label="Search countries"
+                  placeholder={t('country.searchPlaceholder')}
+                  aria-label={t('country.searchAria')}
                   className="w-full min-h-10 pl-9 pr-9 py-1.5 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg text-base sm:text-xs text-neutral-800 dark:text-neutral-200 focus:outline-none focus:border-black dark:focus:border-white font-medium [&::-webkit-search-cancel-button]:appearance-none"
                 />
                 {countryFilter && (
@@ -219,7 +238,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                       searchInputRef.current?.focus();
                     }}
                     className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 text-neutral-400 hover:text-black dark:hover:text-white cursor-pointer"
-                    aria-label="Clear country search"
+                    aria-label={t('country.clear')}
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -227,13 +246,15 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
               </div>
 
               {/* Grid of Countries */}
-              <div className="grid grid-cols-1 gap-1" role="listbox" aria-label="Countries">
+              <div ref={listRef} className="grid grid-cols-1 gap-1" role="listbox" aria-label={t('country.listAria')}>
                 {filteredCountries.map((c) => {
                   const isSelected = c.code.toLowerCase() === selectedCountry.toLowerCase();
                   return (
                     <button
                       key={c.code}
                       role="option"
+                      data-country-option
+                      onKeyDown={(e) => moveFocus(e, filteredCountries.indexOf(c))}
                       aria-selected={isSelected}
                       onClick={() => handleSelect(c.code)}
                       className={`flex items-center justify-between min-h-10 sm:min-h-9 px-3 py-1.5 rounded-xl text-xs font-mono transition-all text-left cursor-pointer ${
@@ -254,7 +275,7 @@ export default function CountrySelector({ selectedCountry, onSelectCountry }) {
                 })}
                 {filteredCountries.length === 0 && (
                   <p className="px-3 py-4 text-center text-xs font-mono text-neutral-500 dark:text-neutral-400">
-                    No countries match "{countryFilter}"
+                    {t('country.none', { q: countryFilter })}
                   </p>
                 )}
               </div>

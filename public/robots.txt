@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devcop95.github.io/gitrank/sitemap.xml

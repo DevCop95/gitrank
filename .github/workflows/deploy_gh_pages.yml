@@ -40,6 +40,15 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Validate dataset
+        run: npm run check:data
+
       - name: Build Web Application
         run: npm run build
 

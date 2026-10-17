@@ -10,7 +10,9 @@ import { useEffect, useRef } from 'react';
  */
 export function useDismiss(ref, open, onDismiss) {
   const callbackRef = useRef(onDismiss);
-  callbackRef.current = onDismiss;
+  useEffect(() => {
+    callbackRef.current = onDismiss;
+  });
 
   useEffect(() => {
     if (!open) return undefined;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Swords, X, UserPlus, ArrowRight } from 'lucide-react';
+import { useI18n } from '../i18n/I18nContext';
 
 export default function CompareDock({
   compareList = [],
@@ -7,12 +8,14 @@ export default function CompareDock({
   onClearCompare,
   onOpenCompareModal
 }) {
+  const { t } = useI18n();
+
   if (!compareList || compareList.length === 0) return null;
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl px-4 animate-slide-up">
       <div className="bg-black/90 dark:bg-neutral-900/90 backdrop-blur-md text-white border border-neutral-800 rounded-2xl p-3 sm:p-3.5 shadow-2xl flex items-center justify-between gap-3">
-        
+
         {/* Left info & Avatars */}
         <div className="flex items-center gap-2.5 min-w-0">
           <div className="p-2 bg-neutral-800 rounded-xl text-white shrink-0">
@@ -23,11 +26,11 @@ export default function CompareDock({
             {compareList.map((dev) => (
               <div
                 key={dev.login}
-                className="flex items-center gap-1.5 bg-neutral-900 dark:bg-neutral-800 border border-neutral-800 rounded-xl pl-1 pr-2 py-1 shrink-0"
+                className="flex items-center gap-1.5 bg-neutral-900 dark:bg-neutral-800 border border-neutral-800 rounded-xl pl-1 pr-1 py-1 shrink-0"
               >
                 <img
                   src={dev.avatar_url}
-                  alt={dev.login}
+                  alt=""
                   className="w-6 h-6 rounded-lg object-cover"
                 />
                 <span className="text-xs font-mono font-medium truncate max-w-[80px] sm:max-w-[110px]">
@@ -35,8 +38,8 @@ export default function CompareDock({
                 </span>
                 <button
                   onClick={() => onRemoveFromCompare(dev.login)}
-                  className="text-neutral-400 hover:text-white p-0.5 rounded transition-colors cursor-pointer"
-                  aria-label={`Remove ${dev.login} from comparison`}
+                  className="text-neutral-400 hover:text-white p-1.5 rounded transition-colors cursor-pointer"
+                  aria-label={t('dock.remove', { login: dev.login })}
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -46,7 +49,7 @@ export default function CompareDock({
             {compareList.length === 1 && (
               <div className="hidden sm:flex items-center gap-1.5 border border-dashed border-neutral-700 rounded-xl px-2.5 py-1 text-neutral-400 text-xs font-mono">
                 <UserPlus className="w-3.5 h-3.5" />
-                <span>Select 2nd dev</span>
+                <span>{t('dock.second')}</span>
               </div>
             )}
           </div>
@@ -58,19 +61,19 @@ export default function CompareDock({
             onClick={onClearCompare}
             className="text-neutral-400 hover:text-white text-xs font-medium px-2 py-1 transition-colors hidden sm:block cursor-pointer"
           >
-            Clear
+            {t('dock.clear')}
           </button>
 
           <button
             onClick={onOpenCompareModal}
             disabled={compareList.length < 2}
-            className={`min-h-9 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs ${
+            className={`min-h-10 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs ${
               compareList.length >= 2
                 ? 'bg-white text-black dark:bg-white dark:text-black cursor-pointer active:scale-95'
                 : 'bg-neutral-800 text-neutral-500 cursor-not-allowed border border-neutral-700'
             }`}
           >
-            <span>Compare ({compareList.length}/2)</span>
+            <span>{t('dock.compare', { n: compareList.length })}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>

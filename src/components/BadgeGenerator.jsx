@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Copy, Check, Sparkles, Share2, Code } from 'lucide-react';
+import { copyText } from '../utils/copyText';
+import { useI18n } from '../i18n/I18nContext';
 
 export default function BadgeGenerator({ developer, onNotify }) {
+  const { t } = useI18n();
   const [style, setStyle] = useState('for-the-badge');
   const [color, setColor] = useState('000000');
   const [copiedType, setCopiedType] = useState(null);
@@ -20,43 +23,44 @@ export default function BadgeGenerator({ developer, onNotify }) {
   const shieldUrl = `https://img.shields.io/badge/${encodedLabel}-${encodedMessage}-${color}?style=${style}&logo=github&logoColor=white`;
 
   const markdownSnippet = `[![GitTop Rank #${rank} in ${country}](${shieldUrl})](${shareUrl})`;
-  const htmlSnippet = `<a href="${shareUrl}"><img src="${shieldUrl}" alt="GitTop Rank #${rank} in ${country}" /></a>`;
 
-  const handleCopy = (text, type, label) => {
-    navigator.clipboard.writeText(text);
-    setCopiedType(type);
-    if (onNotify) {
-      onNotify(`${label} copied to clipboard!`, 'success');
+  const handleCopy = async (text, type, label) => {
+    const ok = await copyText(text);
+    if (ok) {
+      setCopiedType(type);
+      setTimeout(() => {
+        setCopiedType(null);
+      }, 2000);
     }
-    setTimeout(() => {
-      setCopiedType(null);
-    }, 2000);
+    if (onNotify) {
+      onNotify(ok ? t('toast.copied', { label }) : t('toast.copyFailed'), ok ? 'success' : 'info');
+    }
   };
 
   const styleOptions = [
-    { id: 'for-the-badge', label: 'For The Badge (Bold)' },
-    { id: 'flat', label: 'Flat (Standard)' },
-    { id: 'flat-square', label: 'Flat Square' },
-    { id: 'plastic', label: 'Plastic' }
+    { id: 'for-the-badge', label: t('badge.style.forTheBadge') },
+    { id: 'flat', label: t('badge.style.flat') },
+    { id: 'flat-square', label: t('badge.style.flatSquare') },
+    { id: 'plastic', label: t('badge.style.plastic') }
   ];
 
   const colorOptions = [
-    { hex: '000000', label: 'Pure Black', bg: 'bg-black' },
-    { hex: '27272a', label: 'Zinc Dark', bg: 'bg-neutral-800' },
-    { hex: '52525b', label: 'Neutral Gray', bg: 'bg-neutral-600' },
-    { hex: '71717a', label: 'Light Gray', bg: 'bg-neutral-400' }
+    { hex: '000000', label: t('badge.color.black'), bg: 'bg-black' },
+    { hex: '27272a', label: t('badge.color.zinc'), bg: 'bg-neutral-800' },
+    { hex: '52525b', label: t('badge.color.neutral'), bg: 'bg-neutral-600' },
+    { hex: '71717a', label: t('badge.color.light'), bg: 'bg-neutral-400' }
   ];
 
   return (
     <div className="space-y-4">
       <div className="bg-neutral-50 dark:bg-neutral-800/50 p-3.5 sm:p-4 rounded-xl border border-neutral-200 dark:border-neutral-800">
-        
+
         <div className="flex items-center justify-between gap-2 mb-3">
           <span className="text-xs font-mono uppercase tracking-wider text-neutral-500 font-semibold flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-neutral-600 dark:text-neutral-400" />
-            <span>Live Badge Preview</span>
+            <span>{t('badge.preview')}</span>
           </span>
-          <span className="text-[11px] text-neutral-400 font-mono">Compatible with GitHub README</span>
+          <span className="text-[11px] text-neutral-400 font-mono">{t('badge.compatible')}</span>
         </div>
 
         {/* Live Badge Preview Box */}
@@ -70,11 +74,11 @@ export default function BadgeGenerator({ developer, onNotify }) {
 
         {/* Customization Controls */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-          
+
           {/* Style Selector */}
           <div>
             <label className="text-[11px] font-mono text-neutral-500 dark:text-neutral-400 block mb-1">
-              Badge Style:
+              {t('badge.style')}
             </label>
             <select
               value={style}
@@ -92,7 +96,7 @@ export default function BadgeGenerator({ developer, onNotify }) {
           {/* Color Selector */}
           <div>
             <label className="text-[11px] font-mono text-neutral-500 dark:text-neutral-400 block mb-1">
-              Badge Tone:
+              {t('badge.tone')}
             </label>
             <div className="flex items-center gap-2 pt-1">
               {colorOptions.map((col) => (
@@ -117,21 +121,21 @@ export default function BadgeGenerator({ developer, onNotify }) {
 
       {/* Code Snippets */}
       <div className="space-y-3">
-        
+
         {/* Markdown Snippet */}
         <div className="bg-neutral-50 dark:bg-neutral-800/50 p-3 rounded-xl border border-neutral-200 dark:border-neutral-800">
           <div className="flex items-center justify-between gap-2 mb-1.5">
             <span className="text-[11px] font-mono font-semibold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
               <Code className="w-3.5 h-3.5 text-neutral-500" />
-              <span>Markdown for GitHub Profile README</span>
+              <span>{t('badge.markdown')}</span>
             </span>
 
             <button
-              onClick={() => handleCopy(markdownSnippet, 'md', 'Markdown code')}
+              onClick={() => handleCopy(markdownSnippet, 'md', t('badge.markdownLabel'))}
               className="inline-flex items-center gap-1 px-2.5 py-1 bg-black hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-black rounded-lg text-[11px] font-semibold transition-all shadow-2xs active:scale-95 cursor-pointer"
             >
               {copiedType === 'md' ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-              <span>{copiedType === 'md' ? 'Copied!' : 'Copy Markdown'}</span>
+              <span>{copiedType === 'md' ? t('badge.copied') : t('badge.copyMarkdown')}</span>
             </button>
           </div>
 
@@ -145,15 +149,15 @@ export default function BadgeGenerator({ developer, onNotify }) {
           <div className="flex items-center justify-between gap-2 mb-1.5">
             <span className="text-[11px] font-mono font-semibold text-neutral-700 dark:text-neutral-300 flex items-center gap-1.5">
               <Share2 className="w-3.5 h-3.5 text-neutral-500" />
-              <span>Direct Shareable Profile URL</span>
+              <span>{t('badge.url')}</span>
             </span>
 
             <button
-              onClick={() => handleCopy(shareUrl, 'url', 'Profile URL')}
+              onClick={() => handleCopy(shareUrl, 'url', t('badge.urlLabel'))}
               className="inline-flex items-center gap-1 px-2.5 py-1 bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-lg text-[11px] font-semibold transition-all shadow-2xs active:scale-95 cursor-pointer"
             >
               {copiedType === 'url' ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-              <span>{copiedType === 'url' ? 'Copied!' : 'Copy Link'}</span>
+              <span>{copiedType === 'url' ? t('badge.copied') : t('badge.copyLink')}</span>
             </button>
           </div>
 

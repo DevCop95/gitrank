@@ -1,4 +1,14 @@
 /**
+ * Quotes a CSV field. Text starting with = + - @ (or tab/CR) is prefixed with
+ * an apostrophe so spreadsheets do not execute it as a formula (CSV injection).
+ */
+export function csvCell(value) {
+  let text = value === undefined || value === null ? '' : String(value);
+  if (/^[=+\-@\t\r]/.test(text) && Number.isNaN(Number(text))) text = `'${text}`;
+  return `"${text.replace(/"/g, '""')}"`;
+}
+
+/**
  * Export developers list to CSV format and trigger download
  */
 export function exportToCSV(developers, countryName = 'Worldwide') {
@@ -21,19 +31,19 @@ export function exportToCSV(developers, countryName = 'Worldwide') {
   ];
 
   const rows = developers.map((dev) => [
-    dev.rank || '',
-    `"${(dev.login || '').replace(/"/g, '""')}"`,
-    `"${(dev.name || '').replace(/"/g, '""')}"`,
-    `"${(dev.country || countryName).replace(/"/g, '""')}"`,
-    dev.live_contributions || dev.estimated_commits || 0,
-    dev.estimated_commits || 0,
-    dev.stars_received || 0,
-    dev.public_repos || 0,
-    dev.followers || 0,
-    `"${(dev.location || '').replace(/"/g, '""')}"`,
-    `"${(dev.company || '').replace(/"/g, '""')}"`,
-    `"${(dev.languages || []).join(', ').replace(/"/g, '""')}"`,
-    dev.html_url || `https://github.com/${dev.login}`
+    csvCell(dev.rank),
+    csvCell(dev.login),
+    csvCell(dev.name),
+    csvCell(dev.country || countryName),
+    csvCell(dev.live_contributions || dev.estimated_commits || 0),
+    csvCell(dev.estimated_commits || 0),
+    csvCell(dev.stars_received || 0),
+    csvCell(dev.public_repos || 0),
+    csvCell(dev.followers || 0),
+    csvCell(dev.location),
+    csvCell(dev.company),
+    csvCell((dev.languages || []).join(', ')),
+    csvCell(dev.html_url || `https://github.com/${dev.login}`)
   ]);
 
   const csvContent = [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');

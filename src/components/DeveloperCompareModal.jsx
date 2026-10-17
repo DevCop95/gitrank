@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { X, Swords, GitCommit, Activity, Star, FolderGit2, Users, ExternalLink } from 'lucide-react';
 import { cleanText } from '../utils/cleanText';
+import { useFocusTrap } from '../utils/useFocusTrap';
+import { useI18n } from '../i18n/I18nContext';
 
 export default function DeveloperCompareModal({ devA, devB, onClose }) {
+  const { t, formatNumber } = useI18n();
+  const dialogRef = useRef(null);
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (event) => {
@@ -17,37 +22,37 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
     };
   }, [onClose]);
 
-  if (!devA || !devB) return null;
+  useFocusTrap(dialogRef);
 
-  const formatNumber = (num) => new Intl.NumberFormat('en-US').format(num || 0);
+  if (!devA || !devB) return null;
 
   const metrics = [
     {
-      label: 'Live Contributions',
+      label: t('compare.liveContributions'),
       icon: Activity,
       valA: devA.live_contributions || devA.estimated_commits || 0,
       valB: devB.live_contributions || devB.estimated_commits || 0
     },
     {
-      label: 'Total Commits',
+      label: t('compare.totalCommits'),
       icon: GitCommit,
       valA: devA.estimated_commits || 0,
       valB: devB.estimated_commits || 0
     },
     {
-      label: 'Stars Received',
+      label: t('compare.starsReceived'),
       icon: Star,
       valA: devA.stars_received || 0,
       valB: devB.stars_received || 0
     },
     {
-      label: 'Followers',
+      label: t('compare.followers'),
       icon: Users,
       valA: devA.followers || 0,
       valB: devB.followers || 0
     },
     {
-      label: 'Public Repositories',
+      label: t('compare.publicRepos'),
       icon: FolderGit2,
       valA: devA.public_repos || 0,
       valB: devB.public_repos || 0
@@ -70,12 +75,18 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in"
-      onMouseDown={(e) => {
+      onPointerDown={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
-        
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="compare-modal-title"
+        className="relative w-full max-w-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+      >
+
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60">
           <div className="flex items-center gap-2">
@@ -83,14 +94,14 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
               <Swords className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
-                <span>Developer Comparison</span>
+              <h2 id="compare-modal-title" className="text-sm sm:text-base font-bold text-neutral-900 dark:text-neutral-100 flex items-center gap-2">
+                <span>{t('compare.title')}</span>
                 <span className="px-2 py-0.2 bg-black text-white dark:bg-white dark:text-black text-[10px] font-mono rounded uppercase font-bold">
                   VS
                 </span>
               </h2>
               <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
-                Statistical side-by-side
+                {t('compare.subtitle')}
               </p>
             </div>
           </div>
@@ -98,7 +109,7 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
           <button
             onClick={onClose}
             className="p-2 text-neutral-500 hover:text-black dark:text-neutral-400 dark:hover:text-white bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 transition-all shadow-2xs cursor-pointer"
-            aria-label="Close comparison"
+            aria-label={t('compare.close')}
           >
             <X className="w-5 h-5" />
           </button>
@@ -106,15 +117,15 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
 
         {/* Modal Body */}
         <div className="p-4 sm:p-6 overflow-y-auto space-y-6">
-          
+
           {/* Dual Profile Matchup Cards */}
           <div className="grid grid-cols-2 gap-3 sm:gap-6 relative">
-            
+
             {/* Dev A Card */}
             <div className="p-4 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/40 text-center flex flex-col items-center justify-between">
               {scoreA > scoreB && (
                 <div className="mb-2 inline-flex items-center gap-1 px-2.5 py-0.5 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-full text-[10px] font-bold font-mono">
-                  Leader ({scoreA} wins)
+                  {t('compare.leader', { n: scoreA })}
                 </div>
               )}
               <div className="relative mb-2.5">
@@ -142,7 +153,7 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
             <div className="p-4 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-800/40 text-center flex flex-col items-center justify-between">
               {scoreB > scoreA && (
                 <div className="mb-2 inline-flex items-center gap-1 px-2.5 py-0.5 bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 rounded-full text-[10px] font-bold font-mono">
-                  Leader ({scoreB} wins)
+                  {t('compare.leader', { n: scoreB })}
                 </div>
               )}
               <div className="relative mb-2.5">
@@ -166,7 +177,7 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
           {/* Metric Comparison Rows */}
           <div className="space-y-3 bg-neutral-50 dark:bg-neutral-800/40 p-4 sm:p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800">
             <h3 className="text-xs font-mono uppercase tracking-wider text-neutral-500 font-bold mb-2">
-              Metrics Breakdown
+              {t('compare.metrics')}
             </h3>
 
             {metrics.map((m) => {
@@ -217,13 +228,13 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
           {/* Tech Stack Overlap & Comparison */}
           <div className="bg-neutral-50 dark:bg-neutral-800/40 p-4 sm:p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800">
             <h3 className="text-xs font-mono uppercase tracking-wider text-neutral-500 font-bold mb-3">
-              Technologies
+              {t('compare.technologies')}
             </h3>
 
             <div className="space-y-3">
               <div>
                 <span className="text-[11px] text-neutral-500 dark:text-neutral-400 font-mono block mb-1.5">
-                  Shared ({sharedLangs.length}):
+                  {t('compare.shared', { n: sharedLangs.length })}
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {sharedLangs.length > 0 ? (
@@ -236,7 +247,7 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
                       </span>
                     ))
                   ) : (
-                    <span className="text-xs text-neutral-400 italic">No shared technologies</span>
+                    <span className="text-xs text-neutral-400 italic">{t('compare.noShared')}</span>
                   )}
                 </div>
               </div>
@@ -244,7 +255,7 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-neutral-200 dark:border-neutral-800">
                 <div>
                   <span className="text-[11px] text-neutral-500 font-mono block mb-1">
-                    Unique to @{devA.login}:
+                    {t('compare.uniqueTo', { login: devA.login })}
                   </span>
                   <div className="flex flex-wrap gap-1">
                     {uniqueA.length > 0 ? (
@@ -254,14 +265,14 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
                         </span>
                       ))
                     ) : (
-                      <span className="text-[11px] text-neutral-400 italic">None</span>
+                      <span className="text-[11px] text-neutral-400 italic">{t('compare.none')}</span>
                     )}
                   </div>
                 </div>
 
                 <div>
                   <span className="text-[11px] text-neutral-500 font-mono block mb-1">
-                    Unique to @{devB.login}:
+                    {t('compare.uniqueTo', { login: devB.login })}
                   </span>
                   <div className="flex flex-wrap gap-1">
                     {uniqueB.length > 0 ? (
@@ -271,7 +282,7 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
                         </span>
                       ))
                     ) : (
-                      <span className="text-[11px] text-neutral-400 italic">None</span>
+                      <span className="text-[11px] text-neutral-400 italic">{t('compare.none')}</span>
                     )}
                   </div>
                 </div>
@@ -284,22 +295,22 @@ export default function DeveloperCompareModal({ devA, devB, onClose }) {
         {/* Footer */}
         <div className="p-4 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 flex items-center justify-between gap-3">
           <a
-            href={devA.html_url}
+            href={devA.html_url || `https://github.com/${devA.login}`}
             target="_blank"
             rel="noreferrer"
             className="flex-1 min-h-10 px-3 py-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 text-xs font-semibold rounded-xl transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
           >
-            <span>Visit @{devA.login}</span>
+            <span>{t('compare.visit', { login: devA.login })}</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
 
           <a
-            href={devB.html_url}
+            href={devB.html_url || `https://github.com/${devB.login}`}
             target="_blank"
             rel="noreferrer"
             className="flex-1 min-h-10 px-3 py-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-900 dark:text-neutral-100 text-xs font-semibold rounded-xl transition-all text-center flex items-center justify-center gap-1.5 cursor-pointer"
           >
-            <span>Visit @{devB.login}</span>
+            <span>{t('compare.visit', { login: devB.login })}</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>

@@ -25,6 +25,9 @@ GitTop **v1.0** delivers a high-precision, real-time leaderboard platform for tr
 - **📊 Responsive Views & Heatmaps**: Interactive Grid and Table layout options with 52-week activity heatmap preview and direct profile modals.
 - **🤖 Automated 12-Hour Sync**: GitHub Actions scheduled background sync updating 20-country rotating batches seamlessly.
 - **✨ Enhanced UX**: Click-outside auto-close dropdowns, smooth country switching, and high-contrast accessible layout tags.
+- **🌐 Bilingual UI (EN / ES)**: Language toggle in the header; defaults to the browser language and is remembered. Country search understands Spanish names and ignores accents.
+- **📱 Mobile-first popups**: Every dropdown/menu closes when you tap outside (pointer events, so it also works on iOS), with `Esc` and keyboard navigation (arrow keys, focus trap in dialogs).
+- **🔎 Smarter search**: Accent-insensitive developer search across name, login, bio, location and company.
 
 ---
 
@@ -140,11 +143,20 @@ npm run dev
 ```
 Open `http://localhost:3000` in your browser.
 
-### 3. Manually Run Live Contribution & Profile Scraper Engine
+### 3. Quality checks
+```bash
+npm run lint        # ESLint (React + hooks rules)
+npm test            # Vitest: utils, i18n parity, components, App smoke tests
+npm run check:data  # Validates public/data/committers.json
+npm run assets      # Regenerates icons / og-image (needs: pip install pillow)
+```
+The deploy workflow runs lint, tests and the dataset check before building, so a broken dataset is never published.
+
+### 4. Manually Run Live Contribution & Profile Scraper Engine
 ```bash
 python scripts/build_fast_multithreaded_real_stats.py
 ```
-This updates the next rotating batch of countries in `public/data/committers.json`. Set `SCRAPE_MODE=full` only when a complete refresh is explicitly required.
+This updates the next rotating batch of countries in `public/data/committers.json` (written with one developer per line so git diffs stay small). Set `SCRAPE_MODE=full` only when a complete refresh is explicitly required.
 
 ---
 
@@ -152,30 +164,27 @@ This updates the next rotating batch of countries in `public/data/committers.jso
 
 ```
 gittop/
-├── .github/
-│   └── workflows/
-│       ├── update_rankings.yml     # 5-Hour Rotating Batch Workflow
-│       └── deploy_gh_pages.yml     # Automated GitHub Pages Deployment
+├── .github/workflows/
+│   ├── update_rankings.yml          # 12-hour rotating batch scraper (also on scripts/ changes)
+│   └── deploy_gh_pages.yml          # Lint + tests + dataset check + Pages deployment
 ├── public/
-│   └── data/
-│       └── committers.json          # Live Updated Dataset
+│   ├── data/committers.json         # Live updated dataset
+│   ├── favicon.svg, icon-*.png, apple-touch-icon.png, og-image.png
+│   ├── manifest.webmanifest, robots.txt, sitemap.xml
 ├── scripts/
-│   ├── build_fast_multithreaded_real_stats.py # Core Live Python Engine
-│   └── test_contributions_endpoint.py
+│   ├── build_fast_multithreaded_real_stats.py   # Live Python engine (+ unit tests)
+│   ├── check-dataset.mjs            # Dataset sanity check used by CI
+│   └── generate_assets.py           # Icons / social preview generator
 ├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx
-│   │   ├── SyncStatusBadge.jsx
-│   │   ├── CountrySelector.jsx
-│   │   ├── DeveloperCard.jsx
-│   │   ├── LeaderboardTable.jsx
-│   │   └── DeveloperModal.jsx
-│   ├── data/
-│   │   └── countriesList.js         # Metadata for 73 Countries
-│   ├── utils/
-│   │   └── cleanText.js             # HTML Entity Decoder
+│   ├── components/                  # Navbar, CountrySelector, DeveloperCard, LeaderboardTable,
+│   │                                # DeveloperModal, DeveloperCompareModal, TechStackFilter, ...
+│   ├── data/countriesList.js        # Metadata for 73 countries + regions
+│   ├── i18n/                        # EN/ES dictionaries and provider
+│   ├── utils/                       # useDismiss, useFocusTrap, filterDevelopers, copyText, export, ...
+│   ├── test/setup.js                # Vitest setup
 │   ├── App.jsx
 │   └── main.jsx
+├── eslint.config.js
 ├── index.html
 ├── vite.config.js
 └── package.json

@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { X, ExternalLink, GitCommit, Activity, Star, FolderGit2, Users, MapPin, Building, Globe, ShieldCheck, Swords, Share2, Sparkles, BarChart2, Bookmark, CheckCircle2 } from 'lucide-react';
 import { cleanText } from '../utils/cleanText';
 import BadgeGenerator from './BadgeGenerator';
+import { copyText } from '../utils/copyText';
+import { useFocusTrap } from '../utils/useFocusTrap';
+import { useI18n } from '../i18n/I18nContext';
 
 export default function DeveloperModal({
   developer,
@@ -12,19 +15,20 @@ export default function DeveloperModal({
   onToggleCompare,
   onNotify
 }) {
+  const { t, formatNumber } = useI18n();
+  const dialogRef = useRef(null);
   const {
     rank,
     login,
     name,
     avatar_url,
-    html_url,
+    html_url = `https://github.com/${developer?.login}`,
     company,
     location,
     bio,
     blog,
     public_repos = 0,
     followers = 0,
-    following = 0,
     estimated_commits = 0,
     live_contributions = 0,
     stars_received = 0,
@@ -49,9 +53,9 @@ export default function DeveloperModal({
     };
   }, [onClose]);
 
-  if (!developer) return null;
+  useFocusTrap(dialogRef);
 
-  const formatNumber = (num) => new Intl.NumberFormat('en-US').format(num || 0);
+  if (!developer) return null;
 
   const cleanedBio = cleanText(bio);
   const cleanedName = cleanText(name || login);
@@ -65,29 +69,30 @@ export default function DeveloperModal({
   const favActive = isFavorite ? isFavorite(login) : false;
   const compActive = isCompared ? isCompared(login) : false;
 
-  const handleShareLink = () => {
+  const handleShareLink = async () => {
     const baseUrl = window.location.origin + window.location.pathname;
     const url = `${baseUrl}?country=${encodeURIComponent(country)}&dev=${encodeURIComponent(login)}`;
-    navigator.clipboard.writeText(url);
+    const ok = await copyText(url);
     if (onNotify) {
-      onNotify(`Direct profile link for @${login} copied!`, 'success');
+      onNotify(ok ? t('toast.profileLinkCopied', { login }) : t('toast.copyFailed'), ok ? 'success' : 'info');
     }
   };
 
   return (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in"
-      onMouseDown={(event) => {
+      onPointerDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
     >
       <div
+        ref={dialogRef}
         className="relative w-full max-w-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-t-2xl sm:rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[90vh]"
         role="dialog"
         aria-modal="true"
         aria-labelledby="developer-modal-title"
       >
-        
+
         {/* Header Drawer Bar */}
         <div className="flex items-start justify-between gap-3 p-3.5 sm:p-4 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60">
           <div className="flex items-center gap-3 min-w-0">
@@ -112,7 +117,7 @@ export default function DeveloperModal({
               <div className="flex items-center gap-2 mt-0.5">
                 <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">@{login}</span>
                 <span className="px-2 py-0.2 bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-[10px] sm:text-xs font-mono rounded font-medium">
-                  #{rank} in {country}
+                  {t('modal.rankIn', { rank, country })}
                 </span>
               </div>
             </div>
@@ -127,8 +132,9 @@ export default function DeveloperModal({
                   ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
                   : 'bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 text-neutral-400 hover:text-black dark:hover:text-white'
               }`}
-              title={favActive ? 'Remove from saved' : 'Save developer'}
-              aria-label="Toggle favorite"
+              title={favActive ? t('card.unsaveTitle') : t('card.saveTitle')}
+              aria-label={t('modal.favAria')}
+              aria-pressed={favActive}
             >
               <Bookmark className={`w-4 h-4 ${favActive ? 'fill-current' : ''}`} />
             </button>
@@ -141,8 +147,9 @@ export default function DeveloperModal({
                   ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white'
                   : 'bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 text-neutral-400 hover:text-black dark:hover:text-white'
               }`}
-              title={compActive ? 'Remove from comparison' : 'Add to comparison'}
-              aria-label="Toggle compare"
+              title={compActive ? t('modal.compareRemove') : t('modal.compareAdd')}
+              aria-label={t('modal.compareAria')}
+              aria-pressed={compActive}
             >
               <Swords className="w-4 h-4" />
             </button>
@@ -151,8 +158,8 @@ export default function DeveloperModal({
             <button
               onClick={handleShareLink}
               className="p-2 text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 transition-all shadow-2xs cursor-pointer"
-              title="Copy direct profile link"
-              aria-label="Share profile"
+              title={t('modal.shareTitle')}
+              aria-label={t('modal.shareAria')}
             >
               <Share2 className="w-4 h-4" />
             </button>
@@ -161,7 +168,7 @@ export default function DeveloperModal({
             <button
               onClick={onClose}
               className="p-2 text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white bg-white dark:bg-neutral-800 rounded-xl border border-neutral-200 dark:border-neutral-700 transition-all shadow-2xs cursor-pointer"
-              aria-label="Close modal"
+              aria-label={t('modal.close')}
             >
               <X className="w-4 h-4" />
             </button>
@@ -179,7 +186,7 @@ export default function DeveloperModal({
             }`}
           >
             <BarChart2 className="w-3.5 h-3.5" />
-            <span>Overview & Activity</span>
+            <span>{t('modal.tabOverview')}</span>
           </button>
 
           <button
@@ -191,13 +198,13 @@ export default function DeveloperModal({
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>README Badge</span>
+            <span>{t('modal.tabBadge')}</span>
           </button>
         </div>
 
         {/* Scrollable Body Content */}
         <div className="p-3.5 sm:p-5 overflow-y-auto space-y-4">
-          
+
           {activeTab === 'stats' ? (
             <>
               {/* Metadata Badges */}
@@ -231,7 +238,7 @@ export default function DeveloperModal({
               {cleanedBio && (
                 <div>
                   <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 font-semibold mb-1.5">
-                    Biography
+                    {t('modal.bio')}
                   </h3>
                   <p className="text-xs text-neutral-700 dark:text-neutral-300 bg-neutral-50 dark:bg-neutral-800/50 p-3 rounded-xl border border-neutral-200 dark:border-neutral-800 leading-relaxed">
                     "{cleanedBio}"
@@ -242,12 +249,12 @@ export default function DeveloperModal({
               {/* Key Metrics */}
               <div>
                 <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 font-semibold mb-1.5">
-                  Performance Metrics
+                  {t('modal.metrics')}
                 </h3>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                   <div className="bg-neutral-50 dark:bg-neutral-800/50 p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800">
                     <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 uppercase font-semibold flex items-center gap-1">
-                      <Activity className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> Contributions
+                      <Activity className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> {t('metric.contributions')}
                     </span>
                     <strong className="text-sm font-mono text-emerald-600 dark:text-emerald-400 font-bold block mt-1">
                       {formatNumber(live_contributions || estimated_commits)}
@@ -256,7 +263,7 @@ export default function DeveloperModal({
 
                   <div className="bg-neutral-50 dark:bg-neutral-800/50 p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800">
                     <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase font-semibold flex items-center gap-1">
-                      <GitCommit className="w-3 h-3" /> Commits
+                      <GitCommit className="w-3 h-3" /> {t('metric.commits')}
                     </span>
                     <strong className="text-sm font-mono text-neutral-900 dark:text-white block mt-1">
                       {formatNumber(estimated_commits)}
@@ -265,7 +272,7 @@ export default function DeveloperModal({
 
                   <div className="bg-neutral-50 dark:bg-neutral-800/50 p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800">
                     <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase font-semibold flex items-center gap-1">
-                      <Star className="w-3 h-3" /> Stars
+                      <Star className="w-3 h-3" /> {t('metric.stars')}
                     </span>
                     <strong className="text-sm font-mono text-neutral-900 dark:text-white block mt-1">
                       {formatNumber(stars_received)}
@@ -274,7 +281,7 @@ export default function DeveloperModal({
 
                   <div className="bg-neutral-50 dark:bg-neutral-800/50 p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800">
                     <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase font-semibold flex items-center gap-1">
-                      <FolderGit2 className="w-3 h-3" /> Repos
+                      <FolderGit2 className="w-3 h-3" /> {t('metric.repos')}
                     </span>
                     <strong className="text-sm font-mono text-neutral-900 dark:text-white block mt-1">
                       {formatNumber(public_repos)}
@@ -283,7 +290,7 @@ export default function DeveloperModal({
 
                   <div className="bg-neutral-50 dark:bg-neutral-800/50 p-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800">
                     <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400 uppercase font-semibold flex items-center gap-1">
-                      <Users className="w-3 h-3" /> Followers
+                      <Users className="w-3 h-3" /> {t('metric.followers')}
                     </span>
                     <strong className="text-sm font-mono text-neutral-900 dark:text-white block mt-1">
                       {formatNumber(followers)}
@@ -296,7 +303,7 @@ export default function DeveloperModal({
               {languages && languages.length > 0 && (
                 <div>
                   <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 font-semibold mb-1.5">
-                    Technologies
+                    {t('modal.technologies')}
                   </h3>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     {languages.map((lang) => (
@@ -315,10 +322,10 @@ export default function DeveloperModal({
               <div>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 mb-1.5">
                   <h3 className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-neutral-400 dark:text-neutral-500 font-semibold">
-                    GitHub Activity ({currentYear})
+                    {t('modal.activity', { year: currentYear })}
                   </h3>
                   <span className="text-[10px] sm:text-[11px] text-emerald-600 dark:text-emerald-400 font-mono font-semibold">
-                    {formatNumber(live_contributions || estimated_commits)} contributions
+                    {t('modal.contributionsCount', { n: formatNumber(live_contributions || estimated_commits) })}
                   </span>
                 </div>
 
@@ -326,14 +333,14 @@ export default function DeveloperModal({
                   {!imgError ? (
                     <img
                       src={realChartUrl}
-                      alt={`GitHub Contribution Graph for @${login}`}
+                      alt={t('modal.graphAlt', { login })}
                       className="w-full h-auto object-contain rounded"
                       onError={() => setImgError(true)}
                       loading="lazy"
                     />
                   ) : (
                     <div className="py-6 text-center text-xs text-neutral-500 font-mono">
-                      Contribution graph available at <a href={html_url} target="_blank" rel="noreferrer" className="underline">github.com/{login}</a>
+                      {t('modal.graphFallback')} <a href={html_url} target="_blank" rel="noreferrer" className="underline">github.com/{login}</a>
                     </div>
                   )}
                 </div>
@@ -350,7 +357,7 @@ export default function DeveloperModal({
         <div className="p-3.5 sm:p-4 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
           <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-mono font-medium">
             <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Verified GitHub Account</span>
+            <span>{t('modal.verified')}</span>
           </div>
 
           <a
@@ -359,7 +366,7 @@ export default function DeveloperModal({
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 min-h-10 px-4 py-2 bg-black hover:bg-neutral-800 dark:bg-white dark:hover:bg-neutral-200 text-white dark:text-black text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer active:scale-[0.98]"
           >
-            <span>Visit GitHub Profile</span>
+            <span>{t('modal.visit')}</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </a>
         </div>

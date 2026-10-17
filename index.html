@@ -2,10 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GitRank | Top 30 GitHub Developers Worldwide & By Country</title>
     <meta name="description" content="Precise, automated leaderboard of top 30 GitHub committers by country updated every 12 hours via GitHub Actions." />
+    <link rel="canonical" href="https://devcop95.github.io/gitrank/" />
+
+    <!-- Icons & PWA -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="theme-color" content="#fafafa" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GitTop" />
+    <meta property="og:title" content="GitTop | Top GitHub Developers Worldwide & By Country" />
+    <meta property="og:description" content="Automated leaderboard of the top GitHub committers by country. Compare developers, filter by tech stack and export the data." />
+    <meta property="og:url" content="https://devcop95.github.io/gitrank/" />
+    <meta property="og:image" content="https://devcop95.github.io/gitrank/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GitTop | Top GitHub Developers Worldwide & By Country" />
+    <meta name="twitter:description" content="Automated leaderboard of the top GitHub committers by country." />
+    <meta name="twitter:image" content="https://devcop95.github.io/gitrank/og-image.png" />
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +37,7 @@
           const theme = localStorage.getItem('gittop_theme');
           if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#09090b');
           } else {
             document.documentElement.classList.remove('dark');
           }
@@ -25,6 +47,7 @@
     <script type="module" src="./src/main.jsx"></script>
   </head>
   <body class="antialiased min-h-screen">
+    <noscript>GitTop needs JavaScript enabled to show the leaderboard.</noscript>
     <div id="root"></div>
   </body>
 </html>

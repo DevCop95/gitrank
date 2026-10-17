@@ -495,6 +495,32 @@ def process_country(c):
         "top_developers": country_devs
     }
 
+def dump_dataset(dataset, file):
+    """Writes the dataset as valid JSON with one developer per line.
+
+    Plain indent=2 spreads every developer over ~15 lines and rewrites tens of
+    thousands of lines on each run; this layout keeps the file ~3x smaller and
+    makes git diffs show only the developers that actually changed.
+    """
+    def compact(value):
+        return json.dumps(value, ensure_ascii=False, separators=(",", ":"))
+
+    country_blocks = []
+    for code, country in dataset["countries"].items():
+        meta = {key: value for key, value in country.items() if key != "top_developers"}
+        meta_json = compact(meta)[:-1]  # drop the closing brace to append the developer list
+        developers = ",\n".join("    " + compact(dev) for dev in country.get("top_developers", []))
+        country_blocks.append(
+            f'  {compact(code)}: {meta_json},"top_developers":[\n{developers}\n  ]}}'
+        )
+
+    head = {key: value for key, value in dataset.items() if key != "countries"}
+    head_lines = ",\n".join(f"{compact(key)}: {compact(value)}" for key, value in head.items())
+    file.write(
+        "{\n" + head_lines + ',\n"countries": {\n' + ",\n".join(country_blocks) + "\n}\n}\n"
+    )
+
+
 def main():
     mode = os.environ.get("SCRAPE_MODE", "batch").lower()
     if mode not in ("batch", "full"):
@@ -573,8 +599,8 @@ def main():
     validate_dataset(dataset)
 
     os.makedirs("public/data", exist_ok=True)
-    with open(out_file, "w", encoding="utf-8") as f:
-        json.dump(dataset, f, ensure_ascii=False, indent=2)
+    with open(out_file, "w", encoding="utf-8", newline="\n") as f:
+        dump_dataset(dataset, f)
 
     print(f"\nSUCCESS! Dual metric dataset saved to {out_file}!", flush=True)
 
