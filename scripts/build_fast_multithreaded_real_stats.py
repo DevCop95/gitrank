@@ -348,9 +348,17 @@ def fetch_github_repositories(username):
     return repositories
 
 
+GITHUB_LOGIN_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]{0,38}$")
+
+
+def is_valid_github_username(username):
+    """Validates GitHub logins, including legacy accounts with trailing hyphens or underscores."""
+    return bool(username and GITHUB_LOGIN_RE.fullmatch(username))
+
+
 def fetch_github_profile(item, country_name):
     username = item["username"]
-    if not re.fullmatch(r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?", username):
+    if not is_valid_github_username(username):
         raise RuntimeError(f"Invalid GitHub username from committers.top: {username!r}")
 
     profile, _ = github_api_get(f"/users/{urllib.parse.quote(username)}")
@@ -385,14 +393,40 @@ def fetch_github_profile(item, country_name):
     }
 
 
-def fetch_github_profiles(items, country_name):
+def fetch_github_profiles(items, country_name, target_count=30):
     if not items:
         raise RuntimeError(f"No GitHub profiles found for {country_name}")
+
+    valid_items = [item for item in items if is_valid_github_username(item.get("username", ""))]
+    if len(valid_items) < target_count:
+        raise RuntimeError(f"Fewer than {target_count} valid GitHub profiles found for {country_name}")
+
+    results = []
+    seen = set()
+    cursor = 0
     with ThreadPoolExecutor(max_workers=5) as executor:
-        return list(executor.map(
-            lambda item: fetch_github_profile(item, country_name),
-            items
-        ))
+        while len(results) < target_count and cursor < len(valid_items):
+            needed = target_count - len(results)
+            chunk = valid_items[cursor:cursor + needed]
+            cursor += len(chunk)
+            futures = [(item, executor.submit(fetch_github_profile, item, country_name)) for item in chunk]
+            for item, fut in futures:
+                try:
+                    profile = fut.result()
+                except RuntimeError as exc:
+                    msg = str(exc)
+                    if "HTTP 404" in msg or "user not found" in msg.lower():
+                        print(f"  Skipping missing GitHub user {item['username']} in {country_name}: {msg}", flush=True)
+                        continue
+                    raise
+                key = profile["login"].lower()
+                if key not in seen:
+                    seen.add(key)
+                    results.append(profile)
+
+    if len(results) < target_count:
+        raise RuntimeError(f"Only {len(results)} reachable GitHub profiles found for {country_name}")
+    return results[:target_count]
 
 
 def validate_dataset(dataset):
@@ -502,9 +536,8 @@ def process_country(c):
 
     print(f"Scraping live contributions & profiles for {name} ({slug})...", flush=True)
     targets = fetch_committers_top_list(slug)
-    top_30 = targets[:30]
 
-    country_devs = fetch_github_profiles(top_30, name)
+    country_devs = fetch_github_profiles(targets, name, target_count=30)
 
     # Sort strictly by Commits descending (or Live Contributions) and assign rank 1..N
     country_devs.sort(key=lambda x: x["estimated_commits"], reverse=True)

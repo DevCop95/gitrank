@@ -13,6 +13,7 @@ from build_fast_multithreaded_real_stats import (
     get_country_rotation,
     github_api_get,
     github_graphql,
+    is_valid_github_username,
     scrape_live_contributions_count,
     select_country_batch,
 )
@@ -175,6 +176,14 @@ class ScraperRegressionTests(unittest.TestCase):
         self.assertEqual(len(set(batch)), 5)
         self.assertFalse(cycle_completed)
         self.assertNotIn(next_country, batch)
+
+    def test_valid_github_username_accepts_legacy_trailing_hyphens_and_rejects_traversal(self):
+        self.assertTrue(is_valid_github_username("rr-"))
+        self.assertTrue(is_valid_github_username("v--"))
+        self.assertTrue(is_valid_github_username("legacy_user"))
+        self.assertFalse(is_valid_github_username("-leading"))
+        self.assertFalse(is_valid_github_username("../etc"))
+        self.assertFalse(is_valid_github_username(""))
 
 
 if __name__ == "__main__":
