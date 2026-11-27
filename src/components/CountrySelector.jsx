@@ -26,7 +26,6 @@ const SPANISH_ALIASES = {
   Greece: 'grecia',
   Hungary: 'hungria',
   Ireland: 'irlanda',
-  Iceland: 'islandia',
   Croatia: 'croacia',
   'Czech Republic': 'republica checa chequia',
   Turkey: 'turquia',

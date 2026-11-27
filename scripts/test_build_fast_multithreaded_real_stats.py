@@ -7,11 +7,13 @@ from email.message import Message
 from unittest.mock import patch
 
 from build_fast_multithreaded_real_stats import (
+    REPOSITORIES_QUERY,
     dump_dataset,
     fetch_github_repositories,
     get_country_rotation,
     github_api_get,
     github_graphql,
+    scrape_live_contributions_count,
     select_country_batch,
 )
 
@@ -147,6 +149,32 @@ class DumpDatasetTests(unittest.TestCase):
         self.assertEqual(json.loads(text), dataset)
         self.assertEqual(sum(1 for line in text.splitlines() if '"login"' in line), 2)
         self.assertTrue(text.endswith("\n"))
+
+
+class ScraperRegressionTests(unittest.TestCase):
+    def test_repositories_query_excludes_forks_and_orders_by_stars(self):
+        self.assertIn("isFork: false", REPOSITORIES_QUERY)
+        self.assertIn("field: STARGAZERS", REPOSITORIES_QUERY)
+
+    def test_zero_live_contributions_falls_back_to_commits(self):
+        html_resp = io.BytesIO(b"<h2>0 contributions in the last year</h2>")
+        with patch(
+            "build_fast_multithreaded_real_stats.urllib.request.urlopen",
+            return_value=html_resp,
+        ):
+            self.assertEqual(scrape_live_contributions_count("example", 6158), 6158)
+
+    def test_select_country_batch_prioritizes_failed_countries_for_retry(self):
+        batch, next_country, cycle_completed = select_country_batch(
+            next_country="Indonesia",
+            batch_size=5,
+            retry_countries=["Poland", "Bulgaria", "InvalidCountry"],
+        )
+        self.assertEqual(batch[:2], ["Poland", "Bulgaria"])
+        self.assertEqual(len(batch), 5)
+        self.assertEqual(len(set(batch)), 5)
+        self.assertFalse(cycle_completed)
+        self.assertNotIn(next_country, batch)
 
 
 if __name__ == "__main__":

@@ -103,6 +103,14 @@ const dataset = {
         { rank: 1, login: 'alice', name: 'Alice Núñez', languages: ['Python'], live_contributions: 1200, estimated_commits: 900, stars_received: 5, followers: 10, public_repos: 3, country: 'Colombia' },
         { rank: 2, login: 'bob', name: 'Bob', languages: ['Go'], live_contributions: 800, estimated_commits: 700, stars_received: 2, followers: 4, public_repos: 8, country: 'Colombia' }
       ]
+    },
+    Spain: {
+      code: 'Spain',
+      name: 'Spain',
+      iso: 'ES',
+      top_developers: [
+        { rank: 4, login: 'alice', name: 'Alice Spain', languages: ['Rust'], live_contributions: 2400, estimated_commits: 1800, stars_received: 25, followers: 40, public_repos: 12, country: 'Spain' }
+      ]
     }
   }
 };
@@ -149,5 +157,21 @@ describe('App', () => {
 
     fireEvent.keyDown(window, { key: 'Escape' });
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+  });
+
+  it('preserves ?country and ?dev deep-links under StrictMode and selects the requested country entry', async () => {
+    window.history.replaceState({}, '', '/?country=Spain&dev=alice');
+    render(
+      <React.StrictMode>
+        <I18nProvider initialLang="en">
+          <App />
+        </I18nProvider>
+      </React.StrictMode>
+    );
+
+    const dialog = await screen.findByRole('dialog');
+    expect(within(dialog).getByText('Alice Spain')).toBeTruthy();
+    expect(window.location.search).toContain('country=Spain');
+    expect(window.location.search).toContain('dev=alice');
   });
 });

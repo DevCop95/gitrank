@@ -138,7 +138,8 @@ def render_card(entry, avatar=None):
     size, ax, ay = 220, 80, 80
     d.ellipse((ax - 6, ay - 6, ax + size + 6, ay + size + 6), outline=GREEN, width=4)
     if avatar is not None:
-        img.paste(circle(avatar, size), (ax, ay), circle(avatar, size))
+        rounded = circle(avatar, size)
+        img.paste(rounded, (ax, ay), rounded)
     else:
         d.ellipse((ax, ay, ax + size, ay + size), fill=PANEL)
         initial = safe_text(name[:1] or dev["login"][:1]).upper() or "?"
@@ -233,7 +234,9 @@ def build(dataset_path, out_dir, download=True):
         avatar = fetch_avatar(entry["dev"].get("avatar_url")) if download else None
         folder = os.path.join(out_dir, "share", login)
         os.makedirs(folder, exist_ok=True)
-        render_card(entry, avatar).save(os.path.join(folder, "card.jpg"), quality=82, optimize=True, subsampling=0)
+        render_card(entry, avatar).save(
+            os.path.join(folder, "card.jpg"), quality=75, optimize=True, progressive=True, subsampling=2
+        )
         with open(os.path.join(folder, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(page_html(entry))
 

@@ -20,7 +20,6 @@ export const COUNTRIES = [
   { code: 'Panama', name: 'Panama', iso: 'PA', region: 'LATAM', flagIso: 'PA' },
   { code: 'Paraguay', name: 'Paraguay', iso: 'PY', region: 'LATAM', flagIso: 'PY' },
   { code: 'Peru', name: 'Peru', iso: 'PE', region: 'LATAM', flagIso: 'PE' },
-  { code: 'Puerto Rico', name: 'Puerto Rico', iso: 'PR', region: 'LATAM', flagIso: 'PR' },
   { code: 'Uruguay', name: 'Uruguay', iso: 'UY', region: 'LATAM', flagIso: 'UY' },
   { code: 'Venezuela', name: 'Venezuela', iso: 'VE', region: 'LATAM', flagIso: 'VE' },
 
@@ -41,7 +40,6 @@ export const COUNTRIES = [
   { code: 'Germany', name: 'Germany', iso: 'DE', region: 'Europe', flagIso: 'DE' },
   { code: 'Greece', name: 'Greece', iso: 'GR', region: 'Europe', flagIso: 'GR' },
   { code: 'Hungary', name: 'Hungary', iso: 'HU', region: 'Europe', flagIso: 'HU' },
-  { code: 'Iceland', name: 'Iceland', iso: 'IS', region: 'Europe', flagIso: 'IS' },
   { code: 'Ireland', name: 'Ireland', iso: 'IE', region: 'Europe', flagIso: 'IE' },
   { code: 'Italy', name: 'Italy', iso: 'IT', region: 'Europe', flagIso: 'IT' },
   { code: 'Latvia', name: 'Latvia', iso: 'LV', region: 'Europe', flagIso: 'LV' },

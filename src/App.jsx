@@ -17,28 +17,36 @@ import { filterDevelopers, sortDevelopers } from './utils/filterDevelopers';
 import { useI18n } from './i18n/I18nContext';
 import { Trophy, Activity, Search, AlertCircle } from 'lucide-react';
 
+function readInitialParams() {
+  const searchParams = new URLSearchParams(window.location.search);
+  return {
+    country: searchParams.get('country') || 'Colombia',
+    search: searchParams.get('search') || searchParams.get('q') || '',
+    view: searchParams.get('view') || 'grid',
+    sort: searchParams.get('sort') || 'rank',
+    lang: searchParams.get('lang') || '',
+    favoritesOnly: searchParams.get('favorites') === 'true' || searchParams.get('tab') === 'favorites',
+    devLogin: searchParams.get('dev') || ''
+  };
+}
+
 export default function App() {
   const { t } = useI18n();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
 
-  // Initialize state from URL params
-  const searchParams = new URLSearchParams(window.location.search);
-  const initialCountry = searchParams.get('country') || 'Colombia';
-  const initialSearch = searchParams.get('search') || searchParams.get('q') || '';
-  const initialView = searchParams.get('view') || 'grid';
-  const initialSort = searchParams.get('sort') || 'rank';
-  const initialLang = searchParams.get('lang') || '';
-  const initialFavoritesOnly = searchParams.get('favorites') === 'true' || searchParams.get('tab') === 'favorites';
-  const initialDevLogin = searchParams.get('dev') || '';
+  // Capture initial URL params once so URL-sync never wipes deep-links (e.g. ?dev=) before load
+  const [initialParams] = useState(readInitialParams);
+  const pendingDevRef = useRef(initialParams.devLogin);
+  const initialCountryRef = useRef(initialParams.country);
 
-  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
-  const [searchTerm, setSearchTerm] = useState(initialSearch);
-  const [viewMode, setViewMode] = useState(initialView);
-  const [sortBy, setSortBy] = useState(initialSort);
-  const [selectedLanguage, setSelectedLanguage] = useState(initialLang);
-  const [isFavoritesOnly, setIsFavoritesOnly] = useState(initialFavoritesOnly);
+  const [selectedCountry, setSelectedCountry] = useState(initialParams.country);
+  const [searchTerm, setSearchTerm] = useState(initialParams.search);
+  const [viewMode, setViewMode] = useState(initialParams.view);
+  const [sortBy, setSortBy] = useState(initialParams.sort);
+  const [selectedLanguage, setSelectedLanguage] = useState(initialParams.lang);
+  const [isFavoritesOnly, setIsFavoritesOnly] = useState(initialParams.favoritesOnly);
   const [selectedDeveloper, setSelectedDeveloper] = useState(null);
 
   // Dark Mode
@@ -123,17 +131,29 @@ export default function App() {
       const json = await res.json();
       setData(json);
 
-      // Auto-open developer if requested in URL
-      if (initialDevLogin && json.countries) {
+      // Auto-open developer if requested in URL, preferring the requested country first
+      const requestedLogin = pendingDevRef.current;
+      if (requestedLogin && json.countries) {
+        const targetLogin = requestedLogin.toLowerCase();
+        const requestedCountry = initialCountryRef.current.toLowerCase();
+        const countryEntries = Object.values(json.countries);
+        const preferred = countryEntries.find(
+          (c) => c.code?.toLowerCase() === requestedCountry || c.name?.toLowerCase() === requestedCountry
+        );
+        const orderedCountries = [
+          ...(preferred ? [preferred] : []),
+          ...countryEntries.filter((c) => c !== preferred && c.code !== 'World'),
+          ...countryEntries.filter((c) => c !== preferred && c.code === 'World')
+        ];
         let foundDev = null;
-        Object.values(json.countries).forEach((c) => {
-          if (!foundDev && c.top_developers) {
-            const dev = c.top_developers.find(
-              (d) => d.login.toLowerCase() === initialDevLogin.toLowerCase()
-            );
-            if (dev) foundDev = dev;
+        for (const c of orderedCountries) {
+          const dev = c.top_developers?.find((d) => d.login.toLowerCase() === targetLogin);
+          if (dev) {
+            foundDev = dev;
+            break;
           }
-        });
+        }
+        pendingDevRef.current = '';
         if (foundDev) setSelectedDeveloper(foundDev);
       }
       setLoading(false);
@@ -143,7 +163,7 @@ export default function App() {
       setLoadError(true);
       setLoading(false);
     }
-  }, [initialDevLogin]);
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -159,8 +179,9 @@ export default function App() {
     fetchData();
   }, [fetchData]);
 
-  // Sync state to URL params in real-time
+  // Sync state to URL params in real-time (wait until initial load settles so ?dev= isn't stripped)
   useEffect(() => {
+    if (loading) return;
     const params = new URLSearchParams();
     if (selectedCountry && selectedCountry !== 'Colombia') params.set('country', selectedCountry);
     if (searchTerm.trim()) params.set('search', searchTerm.trim());
@@ -173,7 +194,7 @@ export default function App() {
     const queryString = params.toString();
     const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
     window.history.replaceState({}, '', newUrl);
-  }, [selectedCountry, searchTerm, sortBy, selectedLanguage, viewMode, isFavoritesOnly, selectedDeveloper]);
+  }, [loading, selectedCountry, searchTerm, sortBy, selectedLanguage, viewMode, isFavoritesOnly, selectedDeveloper]);
 
   // Compute active developer list
   const rawDevelopers = useMemo(() => {

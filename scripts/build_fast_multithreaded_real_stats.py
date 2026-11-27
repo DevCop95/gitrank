@@ -25,7 +25,8 @@ query($login: String!, $cursor: String) {
       after: $cursor
       ownerAffiliations: OWNER
       privacy: PUBLIC
-      orderBy: {field: UPDATED_AT, direction: DESC}
+      isFork: false
+      orderBy: {field: STARGAZERS, direction: DESC}
     ) {
       nodes {
         isFork
@@ -313,7 +314,9 @@ def scrape_live_contributions_count(username, fallback_commits):
             html = resp.read().decode("utf-8", errors="ignore")
         match = re.search(r'([\d,]+)\s+contributions', html, re.IGNORECASE)
         if match:
-            return parse_number(match.group(1))
+            count = parse_number(match.group(1))
+            if count > 0 or fallback_commits <= 0:
+                return count
     except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError):
         pass
     return fallback_commits
@@ -427,16 +430,40 @@ def get_country_rotation():
     return rotation
 
 
-def select_country_batch(next_country=None, batch_size=20):
+def select_country_batch(next_country=None, batch_size=20, retry_countries=None):
     rotation = get_country_rotation()
+    valid_set = set(rotation)
+    retries = []
+    seen = set()
+    for code in retry_countries or ():
+        if code in valid_set and code not in seen:
+            retries.append(code)
+            seen.add(code)
+        if len(retries) >= batch_size:
+            break
+
     try:
         start = rotation.index(next_country) if next_country else 0
     except ValueError:
         start = 0
-    end = min(start + batch_size, len(rotation))
-    selected_codes = rotation[start:end]
-    next_code = rotation[end] if end < len(rotation) else rotation[0]
-    return selected_codes, next_code, end == len(rotation)
+
+    remaining_slots = max(0, batch_size - len(retries))
+    selected_from_rotation = []
+    idx = start
+    cycle_completed = False
+    while len(selected_from_rotation) < remaining_slots and idx < len(rotation):
+        code = rotation[idx]
+        idx += 1
+        if code not in seen:
+            selected_from_rotation.append(code)
+            seen.add(code)
+    if idx >= len(rotation) and remaining_slots > 0:
+        cycle_completed = True
+        next_code = rotation[0]
+    else:
+        next_code = rotation[idx] if idx < len(rotation) else rotation[0]
+
+    return retries + selected_from_rotation, next_code, cycle_completed
 
 
 def build_global_country(countries):
@@ -542,8 +569,13 @@ def main():
         batch_size = int(os.environ.get("COUNTRY_BATCH_SIZE", "20"))
         if batch_size < 1:
             raise RuntimeError("COUNTRY_BATCH_SIZE must be greater than zero")
+        stale_without_ts = [
+            code for code in rotation
+            if not existing_countries.get(code, {}).get("last_updated")
+        ]
+        retry_queue = list(previous_sync.get("failed_countries") or []) + stale_without_ts
         selected_codes, next_country, cycle_completed = select_country_batch(
-            previous_sync.get("next_country"), batch_size
+            previous_sync.get("next_country"), batch_size, retry_countries=retry_queue
         )
     else:
         selected_codes = rotation
@@ -559,13 +591,16 @@ def main():
     )
 
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    succeeded_set = set()
+    failed_set = set()
     dataset = {
         "last_updated": now,
         "update_frequency": "20 países por corrida, rotación automática cada 12 horas",
         "sync_state": {
             "mode": mode,
             "batch_size": len(selected_codes),
-            "updated_countries": selected_codes,
+            "updated_countries": [],
+            "failed_countries": [],
             "next_country": next_country,
             "cycle": previous_sync.get("cycle", 0) + int(cycle_completed),
             "cycle_completed": cycle_completed,
@@ -586,13 +621,18 @@ def main():
             try:
                 code, country_data = cf.result()
             except Exception as exc:
+                failed_set.add(country["code"])
                 print(
                     f"WARNING: {country['name']} failed; retaining previous data: {exc}",
                     flush=True,
                 )
                 continue
+            succeeded_set.add(code)
             dataset["countries"][code] = country_data
             print(f"Completed {code}: {country_data['count']} profiles", flush=True)
+
+    dataset["sync_state"]["updated_countries"] = [c for c in selected_codes if c in succeeded_set]
+    dataset["sync_state"]["failed_countries"] = [c for c in selected_codes if c in failed_set]
 
     dataset["countries"]["World"] = build_global_country(dataset["countries"])
 

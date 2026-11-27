@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "scrape": "python scripts/fetch_committers.py",
+    "scrape": "python scripts/build_fast_multithreaded_real_stats.py",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
