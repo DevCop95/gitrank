@@ -8,7 +8,7 @@ try:
 except ImportError:  # the scraper workflow runs every test file without installing Pillow
     raise unittest.SkipTest("Pillow is not installed")
 
-from build_share_pages import build, compact, page_html, pick_entries, render_card, safe_text
+from build_share_pages import build, card_filename, compact, page_html, pick_entries, render_card, safe_text
 
 DATASET = {
     "countries": {
@@ -47,12 +47,20 @@ class SharePagesTests(unittest.TestCase):
         self.assertEqual(safe_text("José  Núñez"), "José Núñez")
 
     def test_page_escapes_content_and_points_to_the_card(self):
-        page = page_html(pick_entries(DATASET)["ana"])
+        entry = pick_entries(DATASET)["ana"]
+        page = page_html(entry)
+        expected_card = card_filename(entry)
         self.assertNotIn("<b>", page)
         self.assertIn("&lt;b&gt;", page)
-        self.assertIn('property="og:image" content="https://devcop95.github.io/gitrank/share/ana/card.jpg"', page)
+        self.assertRegex(expected_card, r"^card-[0-9a-f]{10}\.jpg$")
+        self.assertIn(f'property="og:image" content="https://devcop95.github.io/gitrank/share/ana/{expected_card}"', page)
         self.assertIn("#3 in Colombia", page)
         self.assertIn("?country=Colombia&amp;dev=ana", page)
+
+    def test_card_filename_changes_when_stats_change(self):
+        entry = pick_entries(DATASET)["ana"]
+        updated = {**entry, "dev": {**entry["dev"], "rank": 2, "stars_received": 99}}
+        self.assertNotEqual(card_filename(entry), card_filename(updated))
 
     def test_card_has_the_social_size_with_and_without_avatar(self):
         entry = pick_entries(DATASET)["ana"]
@@ -67,9 +75,10 @@ class SharePagesTests(unittest.TestCase):
                 json.dump(DATASET, fh)
             out = os.path.join(tmp, "out")
             self.assertEqual(build(path, out, download=False), 3)
+            entries = pick_entries(DATASET)
             for login in ("ana", "zed", "kim"):
                 self.assertTrue(os.path.isfile(os.path.join(out, "share", login, "index.html")))
-                self.assertTrue(os.path.isfile(os.path.join(out, "share", login, "card.jpg")))
+                self.assertTrue(os.path.isfile(os.path.join(out, "share", login, card_filename(entries[login]))))
 
 
 if __name__ == "__main__":

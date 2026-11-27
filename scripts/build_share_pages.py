@@ -4,12 +4,13 @@ Social networks read Open Graph tags without running JavaScript, so a single
 index.html cannot show a different preview per developer. This script runs after
 `vite build` and writes, for every login in the dataset:
 
-    dist/share/<login>/index.html   OG/Twitter tags for that developer, then redirects to the app
-    dist/share/<login>/card.jpg     1200x630 preview with avatar, rank, country and stats
+    dist/share/<login>/index.html          OG/Twitter tags for that developer, then redirects to the app
+    dist/share/<login>/card-<hash>.jpg     1200x630 preview with content-hashed name so social crawlers refresh
 
 Usage (repo root):  python scripts/build_share_pages.py [dataset.json] [out_dir]
 Needs Pillow. Avatars are downloaded when reachable; otherwise initials are drawn.
 """
+import hashlib
 import html
 import io
 import json
@@ -178,13 +179,36 @@ def render_card(entry, avatar=None):
     return img
 
 
+def card_filename(entry):
+    """Content-hashed JPEG name so social crawlers never pair fresh OG text with a stale cached card."""
+    dev = entry["dev"]
+    payload = {
+        "key": entry["key"],
+        "name": entry.get("name"),
+        "world_rank": entry.get("world_rank"),
+        "rank": dev.get("rank"),
+        "login": dev.get("login"),
+        "display_name": dev.get("name"),
+        "avatar_url": dev.get("avatar_url"),
+        "live_contributions": dev.get("live_contributions"),
+        "estimated_commits": dev.get("estimated_commits"),
+        "stars_received": dev.get("stars_received"),
+        "followers": dev.get("followers"),
+        "languages": (dev.get("languages") or [])[:4],
+    }
+    digest = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, ensure_ascii=False).encode("utf-8")
+    ).hexdigest()[:10]
+    return f"card-{digest}.jpg"
+
+
 def page_html(entry):
     dev = entry["dev"]
     name, place = headline(entry)
     login = dev["login"]
     quoted = urllib.request.quote(login, safe="")
     page_url = f"{SITE}share/{quoted}/"
-    image_url = f"{page_url}card.jpg"
+    image_url = f"{page_url}{card_filename(entry)}"
     app_url = f"{SITE}?country={urllib.request.quote(entry['key'], safe='')}&dev={quoted}"
     title = f"{name} (@{login}) - {place} | GitTop"
     desc = (
@@ -235,7 +259,7 @@ def build(dataset_path, out_dir, download=True):
         folder = os.path.join(out_dir, "share", login)
         os.makedirs(folder, exist_ok=True)
         render_card(entry, avatar).save(
-            os.path.join(folder, "card.jpg"), quality=75, optimize=True, progressive=True, subsampling=2
+            os.path.join(folder, card_filename(entry)), quality=75, optimize=True, progressive=True, subsampling=2
         )
         with open(os.path.join(folder, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(page_html(entry))
